@@ -1,0 +1,28 @@
+<!-- Header Section -->
+<header class="header">
+    <div class="container container--narrow">
+        {% if user.is_authenticated %}
+        <p id="greeter">Hi {{profile.first_name}}</a>
+        <nav>
+            <ul>
+            <li><a href="">Home</a></li>
+            {% if user.is_superuser %}
+            <li><a href="">Menus</a></li>
+            <li><a href="">Orders</a></li>
+            {% else %}
+            <li><a href="">Your Orders</a></li>
+            {% endif %}
+            <hr>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </nav>
+        {% else %}
+        <nav>
+            <ul>
+            <li><a href="">Login</a></li>
+            <li><a href="">Register</a></li>
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</header>

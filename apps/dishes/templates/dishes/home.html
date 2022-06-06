@@ -1,0 +1,40 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+
+<h1>HOLA MUNDO</h1>
+
+ <div class="formulario">
+    <h1>Add option</h1>
+    <div class="formulario"> 
+        <form class="form" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% for field in form %}
+
+            <!-- Input:Text -->
+            <div class="form__field">
+                <label for="formInput#text">{{field.label}}</label>
+                {{field}}
+            </div>
+
+            {% endfor %}
+            <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
+        </form>
+    </div>
+</div>
+
+
+<h1>{{dish.ingrediente}}</h1>
+
+<h1>gramos</h1>
+<p>{{grams}}</p>
+
+<h1>porcentaje usado</h1>
+<p>{{grams_percent}}%</p>
+
+<h1>puntos usado</h1>
+<p>{{points}}</p>
+
+{% endblock %}

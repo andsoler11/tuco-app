@@ -1,0 +1,14 @@
+h1 {
+    color: green;
+}
+
+
+body {
+    text-align: center;
+}
+
+
+.formulario .form {
+    border-radius: 1px solid black;
+    border-radius: 20px;
+}
