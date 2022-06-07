@@ -1,6 +1,28 @@
 from django.db import models
 import uuid
 
+from django.forms import IntegerField
+
+body_images = {
+    (1, 'muy delgado'),
+    (2, 'delgado'),
+    (3, 'peso ideal'),
+    (4, 'sobrepeso'),
+    (5, 'obesidad'),
+}
+
+reproductive_states = {
+    (1, 'castrado'),
+    (2, 'entero'),
+}
+
+activity_levels = {
+    (1, 'sedentario'),
+    (2, 'actividad media'),
+    (3, 'muy activo'),
+}
+
+
 
 class Puppy(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
@@ -8,9 +30,16 @@ class Puppy(models.Model):
     owner = models.CharField(max_length=255)
     age = models.CharField(max_length=255, null=True, blank=True)
     size = models.CharField(max_length=255, null=True, blank=True)
-    body_image = models.CharField(max_length=255, null=True, blank=True)
-    reproductive_state = models.CharField(max_length=255, null=True, blank=True)
-    activity_level = models.CharField(max_length=255, null=True, blank=True)
+    # body_image = models.CharField(max_length=255, null=True, blank=True)
+    body_image = models.IntegerField(null=False, blank=False, choices=body_images, default=3)
+
+    # reproductive_state = models.CharField(max_length=255, null=True, blank=True)
+    reproductive_state = models.IntegerField(null=False, blank=False, choices=reproductive_states, default=1)
+
+
+    # activity_level = models.CharField(max_length=255, null=True, blank=True)
+    activity_level = models.IntegerField(null=False, blank=False, choices=activity_levels, default=1)
+
     sex = models.CharField(max_length=255, null=True, blank=True)
     weight = models.CharField(max_length=255, null=True, blank=True)
     points = models.CharField(max_length=255, null=True, blank=True)

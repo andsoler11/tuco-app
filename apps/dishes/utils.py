@@ -45,3 +45,35 @@ def determineGrams(activity_level, reproductive_state, body_image, weight):
     grams = (grams_percent * weight) * 10
 
     return grams, grams_percent, points
+
+
+
+def activity_mapping(activity_choice):
+    activity_choices = {
+        '1': 'bajo',
+        '2': 'medio',
+        '3': 'alto',
+    }
+
+    return activity_choices[activity_choice]
+
+
+
+def reproductive_mapping(reproductive_choice):
+    reproductive_choices = {
+        '1': 'castrado',
+        '2': 'entero',
+    }
+
+    return reproductive_choices[reproductive_choice]
+
+# def body_image_mapping(body_image_choice):
+#     body_image_choices = {
+#         '1': 'bajo',
+#         '2': 'medio',
+#         '3': 'alto',
+#         '4': 'alto',
+#         '5': 'alto',
+#     }
+
+#     return body_image_choices[body_image_choice]
