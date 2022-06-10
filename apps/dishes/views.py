@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from unicodedata import name
+from django.shortcuts import redirect, render
 from .models import Breeds
 from .forms import PuppyForm
 from .utils import *
@@ -10,6 +11,12 @@ MIDDLE_AGE = 4
 ADULT_AGE = 8
 
 # agregar campo de enfermedades
+
+# file = os.path.abspath(os.path.dirname(__file__))
+
+# with open(os.path.join(file, 'data.json')) as f:
+#     BREEDS = json.load(f)
+# BREEDS = json.load(json_data)
 
 
 def dishesHome(request):
@@ -88,9 +95,20 @@ def dishesHome(request):
             # grams = (grams_puppy_ages[age] * size_puppy_multiplier[size]) * weight
             grams = grams_puppy_ages[age] * weight
 
+        return redirect('menus', str=grams)
+
         # dish = GramsData.objects.get(puntos=points)
 
     breeds = Breeds.objects.all()
     context = {'page': page, 'dish': dish, 'form': form, 'grams': grams, 'grams_percent': grams_percent, 'points': points, 'breeds':breeds}
 
     return render(request, 'dishes/home.html', context)
+
+
+
+def menusHome(request, str):
+    page = 'menus'
+    grams = str
+
+    context = {'page': page, 'grams': grams}
+    return render(request, 'dishes/menus.html', context)
