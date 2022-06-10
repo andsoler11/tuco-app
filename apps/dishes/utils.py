@@ -66,14 +66,3 @@ def reproductive_mapping(reproductive_choice):
     }
 
     return reproductive_choices[reproductive_choice]
-
-# def body_image_mapping(body_image_choice):
-#     body_image_choices = {
-#         '1': 'bajo',
-#         '2': 'medio',
-#         '3': 'alto',
-#         '4': 'alto',
-#         '5': 'alto',
-#     }
-
-#     return body_image_choices[body_image_choice]

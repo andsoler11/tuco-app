@@ -4,36 +4,84 @@
 {% block content %}
 
 
- <div class="formulario">
-    <h1>Add option</h1>
-    <div class="formulario"> 
-        <form class="form" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-
-            {% for field in form %}
-
-            <!-- Input:Text -->
-            <div class="form__field">
-                <label for="formInput#text">{{field.label}}</label>
-                {{field}}
-            </div>
-
-            {% endfor %}
-            <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
-        </form>
+<form class="form" method="POST" >
+  {% csrf_token %}
+    <h1 class="text-center">Form</h1>
+    <!-- Progress bar -->
+    <div class="progressbar">
+      <div class="progress" id="progress"></div>
+      
+      <div
+        class="progress-step progress-step-active"
+        data-title="Intro"
+      ></div>
+      <div class="progress-step" data-title="Age"></div>
+      <div class="progress-step" data-title="Activity"></div>
+      <div class="progress-step" data-title="Weight"></div>
     </div>
-</div>
 
+    <!-- Steps -->
+    <div class="form-step form-step-active">
+      <div class="input-group">
+        <label for="username">Owner name</label>
+        {{form.owner}}
+      </div>
+      <div class="input-group">
+        <label for="position">pet name</label>
+        {{form.name}}
+      </div>
+      <div class="">
+        <a href="#" class="btn btn-next width-50 ml-auto">Next</a>
+      </div>
+    </div>
+    <div class="form-step">
+      <div class="input-group">
+        <label for="phone">Age</label>
+        {{form.age}}
+      </div>
 
-<h1>{{dish.ingrediente}}</h1>
-
-<h1>gramos</h1>
-<p>{{grams}}</p>
-
-<h1>porcentaje usado</h1>
-<p>{{grams_percent}}%</p>
-
-<h1>puntos usado</h1>
-<p>{{points}}</p>
+      <div class="input-group">
+        <label for="phone">Raza</label>
+        <select name="breed" id="breed">
+        <option value="">select</option>
+          {% for breed in breeds %}
+            <option value="{{ breed.name }}">{{ breed.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="btns-group">
+        <a href="#" class="btn btn-prev">Previous</a>
+        <a href="#" class="btn btn-next">Next</a>
+      </div>
+    </div>
+    <div class="form-step">
+      <div class="input-group">
+        <label for="dob">Activity level</label>
+        {{form.activity_level}}
+      </div>
+      <div class="input-group">
+        <label for="ID">Reproductive state</label>
+        {{form.reproductive_state}}
+      </div>
+      <div class="btns-group">
+        <a href="#" class="btn btn-prev">Previous</a>
+        <a href="#" class="btn btn-next">Next</a>
+      </div>
+    </div>
+    <div class="form-step">
+      <div class="input-group">
+        <label for="password">Body image</label>
+        {{form.body_image}}
+      </div>
+      <div class="input-group">
+        <label for="ID">Weight</label>
+        {{form.weight}}
+      </div>
+      <div class="btns-group">
+        <a href="#" class="btn btn-prev">Previous</a>
+        <input type="submit" value="Submit" class="btn" />
+      </div>
+    </div>
+  </form>
 
 {% endblock %}
