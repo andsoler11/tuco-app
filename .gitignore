@@ -1,7 +1,10 @@
 .env
+__pycache__/
+
+
+
 
 *.py[cod]
-__pycache__
 
 # C extensions
 *.so
