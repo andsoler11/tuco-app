@@ -32,11 +32,11 @@ def dishesHome(request):
         age_input = request.POST.get('age')
         body_image = int(request.POST.get('body_image'))
         weight_input = request.POST.get('weight')
-
+        print(activity_level_input)
         activity_level = activity_mapping(activity_level_input)
         reproductive_state = reproductive_mapping(reproductive_state_input)
 
-
+        
         if '.' in weight_input:
             weight = float(weight_input)
         else:

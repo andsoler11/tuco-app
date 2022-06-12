@@ -1,5 +1,5 @@
 {% extends 'main.html' %}
-
+{% load static %}
 
 {% block content %}
 
@@ -24,7 +24,7 @@
     <!-- Steps -->
     <div class="form-step form-step-active">
       <div class="input-group">
-        <label for="position">pet name</label>
+        <label for="position">nombre de tu mascota</label>
         {{form.name}}
       </div>
       <div class="">
@@ -56,10 +56,28 @@
       </div>
     </div>
     <div class="form-step">
-      <div class="input-group">
+
+      <label for="dob">Activity level</label>
+      <div class="body_image-select">
+        <input type="checkbox" id="myCheckbox1" name="activity_level" value="1" />
+        <label for="myCheckbox1"><img src="{% static 'images/activity_level_1.jpeg' %}" alt="" />sedentario</label>
+
+        <input type="checkbox" id="myCheckbox2" name="activity_level" value="2" />
+        <label for="myCheckbox2"><img src="{% static 'images/activity_level_2.jpeg' %}" alt="" />activo</label>
+
+        <input type="checkbox" id="myCheckbox3" name="activity_level" value="3" />
+        <label for="myCheckbox3"><img src="{% static 'images/activity_level_3.jpeg' %}" alt="" />muy activo</label>
+
+      </div>
+
+
+      {% comment %} <div class="input-group">
         <label for="dob">Activity level</label>
         {{form.activity_level}}
-      </div>
+      </div> {% endcomment %}
+
+
+
       <div class="input-group">
         <label for="ID">Reproductive state</label>
         {{form.reproductive_state}}
@@ -69,11 +87,53 @@
         <a href="#" class="btn btn-next">Next</a>
       </div>
     </div>
+
+
+
+
+
     <div class="form-step">
-      <div class="input-group">
-        <label for="password">Body image</label>
-        {{form.body_image}}
+
+
+      <label for="body_image">Estado Fisico</label>
+      <div class="body_image-select">
+        <input type="checkbox" id="myCheckbox1" name="body_image" value="1" />
+        <label for="myCheckbox1"><img src="{% static 'images/dog_state_1.jpeg' %}" alt="" />muy delgado</label>
+
+        <input type="checkbox" id="myCheckbox2" name="body_image" value="2" />
+        <label for="myCheckbox2"><img src="{% static 'images/dog_state_2.jpeg' %}" alt="" />delgado</label>
+
+        <input type="checkbox" id="myCheckbox3" name="body_image" value="3" />
+        <label for="myCheckbox3"><img src="{% static 'images/dog_state_3.jpeg' %}" alt="" />peso ideal</label>
+
+        <input type="checkbox" id="myCheckbox4" name="body_image" value="4" />
+        <label for="myCheckbox4"><img src="{% static 'images/dog_state_4.jpeg' %}" alt="" />sobrepeso</label>
+
+        {% comment %} <div class="checkbox-wrapper">
+          <input type="checkbox" name="body_image" value="1" />
+          <img src="{% static 'images/dog_state_1.jpeg' %}" alt="" />
+        </div> {% endcomment %}
+
+        {% comment %} <div>
+          <input type="checkbox">
+
+          <img src="{% static 'images/dog_state_1.jpeg' %}" alt="" />
+        </div> {% endcomment %}
+
+
+
       </div>
+
+
+
+
+
+      {% comment %} <div class="input-group">
+        <label for="password">Estado Fisico</label>
+        {{form.body_image}}
+      </div> {% endcomment %}
+
+
       <div class="input-group">
         <label for="ID">Weight</label>
         {{form.weight}}
