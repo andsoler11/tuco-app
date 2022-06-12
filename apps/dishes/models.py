@@ -7,7 +7,6 @@ BODY_IMAGES = {
     (2, 'delgado'),
     (3, 'peso ideal'),
     (4, 'sobrepeso'),
-    (5, 'obesidad'),
 }
 
 REPRODUCTIVE_STATES = {
@@ -30,9 +29,9 @@ class Puppy(models.Model):
     owner = models.CharField(max_length=255)
     age = models.CharField(max_length=255, null=True, blank=True)
     size = models.CharField(max_length=255, null=True, blank=True)
-    body_image = models.IntegerField(null=False, blank=False, choices=BODY_IMAGES, default=3)
-    reproductive_state = models.IntegerField(null=False, blank=False, choices=REPRODUCTIVE_STATES, default=1)
-    activity_level = models.IntegerField(null=False, blank=False, choices=ACTIVITY_LEVELS, default=1)
+    body_image = models.IntegerField(null=False, blank=False, choices=BODY_IMAGES)
+    reproductive_state = models.IntegerField(null=False, blank=False, choices=REPRODUCTIVE_STATES)
+    activity_level = models.IntegerField(null=False, blank=False, choices=ACTIVITY_LEVELS)
     breed = models.CharField(max_length=255, null=True, blank=True)
     sex = models.CharField(max_length=255, null=True, blank=True)
     weight = models.CharField(max_length=255, null=True, blank=True)
