@@ -107,7 +107,15 @@ def dishesHome(request):
 
 def menusHome(request, str):
     page = 'menus'
-    grams = str
+    grams = float(str)
 
-    context = {'page': page, 'grams': grams}
+    percent_ingredients = {}
+    percent_ingredients['hueso carnoso'] = (grams * 50) / 100
+    percent_ingredients['carnes'] = (grams * 30) / 100
+    percent_ingredients['fruta/verdura'] = (grams * 10) / 100
+    percent_ingredients['higado'] = (grams * 5) / 100
+    percent_ingredients['visceras'] = (grams * 5) / 100
+    
+
+    context = {'page': page, 'grams': grams, 'percent_ingredients': percent_ingredients}
     return render(request, 'dishes/menus.html', context)
