@@ -5,4 +5,9 @@
 
 <h1>gramos: {{grams}}</h1>
 
+
+{% for k,v in percent_ingredients.items %}
+    <p>{{k}}: {{v}} gramos</p>
+{% endfor %}
+
 {% endblock %}
