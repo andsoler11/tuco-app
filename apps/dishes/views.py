@@ -36,7 +36,7 @@ def dishesHome(request):
         reproductive_state = reproductive_mapping(reproductive_state_input)
 
         
-        if '.' in weight_input:
+        if '.' in weight_input or ',' in weight_input:
             weight = float(weight_input)
         else:
             weight = int(weight_input)
