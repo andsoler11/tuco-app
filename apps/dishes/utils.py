@@ -22,7 +22,6 @@ def activity_points(activity_level):
     return points
 
 
-
 def activity_mapping(activity_choice):
     activity_choices = {
         '1': 'bajo',
@@ -31,7 +30,6 @@ def activity_mapping(activity_choice):
     }
 
     return activity_choices[activity_choice]
-
 
 
 def reproductive_mapping(reproductive_choice):
@@ -52,10 +50,20 @@ def reproductive_state_points(reproductive_state):
     return points
 
 
+def format_weight_and_age(weight_input, age_input):
+    if '.' in weight_input or ',' in weight_input:
+            weight = float(weight_input)
+    else:
+        weight = int(weight_input)
 
+    if 'months' in age_input:
+        age = int(age_input.split(' ')[0])
+    else:
+        age = int(age_input.split(' ')[0] * 12)
 
+    return weight, age
+        
 
-####### MAIN FUNCTION
 def determineGrams(activity_level, reproductive_state, body_image, weight):
     # this is a special case for the skinny ones
     if body_image == 1:
@@ -96,6 +104,11 @@ def determineGrams(activity_level, reproductive_state, body_image, weight):
     grams = round((grams_percent * weight) * 10, 2)
 
     return grams, grams_percent, points
+
+
+
+
+
 
 
 

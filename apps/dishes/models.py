@@ -1,5 +1,4 @@
 from django.db import models
-
 import uuid
 
 BODY_IMAGES = {
@@ -19,8 +18,6 @@ ACTIVITY_LEVELS = {
     (2, 'actividad media'),
     (3, 'muy activo'),
 }
-
-
 
 
 class Puppy(models.Model):
