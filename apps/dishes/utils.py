@@ -57,33 +57,43 @@ def reproductive_state_points(reproductive_state):
 
 ####### MAIN FUNCTION
 def determineGrams(activity_level, reproductive_state, body_image, weight):
+    # this is a special case for the skinny ones
+    if body_image == 1:
+        percent_to_increase =  (weight * 10) / 100
+        weight += percent_to_increase
+    weight = round(weight, 2)
+
+    # starting getting the points from the variables
     points = 0
     points += reproductive_state_points(reproductive_state)
     points += body_points(body_image)
     points += activity_points(activity_level)
 
+    # determine the size of the dog by his weight
     size = 'large'
     if weight < 10:
         size = 'chico'
 
+    # dertermine wich percent we need
     size_percent = 'large'
     if size == 'chico' or size == 'mini':
         size_percent = 'small'
 
+    # percents array
     percents = {
         'small': [2.5, 3, 4.5],
         'large': [2, 2.5, 3]
     }
 
+    # grab the percent needed
     index_number = 2
     if points >= 0 and points <= 3:
         index_number = 0
     elif points >= 4 and points <= 6:
         index_number = 1
-
     grams_percent = percents[size_percent][index_number]
 
-    grams = (grams_percent * weight) * 10
+    grams = round((grams_percent * weight) * 10, 2)
 
     return grams, grams_percent, points
 
