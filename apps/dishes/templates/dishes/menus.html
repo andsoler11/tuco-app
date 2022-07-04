@@ -10,4 +10,9 @@
     <p>{{k}}: {{v}} gramos</p>
 {% endfor %}
 
+
+<h1>Precio diario: {{price_grams}} COP</h1>
+
+<h1>Precio mes: {% widthratio price_grams 1 30 %} COP</h1>
+
 {% endblock %}
