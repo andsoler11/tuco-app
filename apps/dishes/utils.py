@@ -6,7 +6,7 @@ def body_points(body_image):
     elif body_image == 2:
         points = 3
     else:
-        points = 5
+        points = 4
 
     return points
 
