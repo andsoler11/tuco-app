@@ -110,11 +110,11 @@ def menusHome(request, str):
     grams = float(str)
 
     percent_ingredients = {}
-    percent_ingredients['hueso carnoso'] = round((grams * 50) / 100)
-    percent_ingredients['carnes'] = round((grams * 30) / 100)
+    percent_ingredients['hueso carnoso'] = round((grams * 40) / 100)
+    percent_ingredients['carnes'] = round((grams * 35) / 100)
     percent_ingredients['fruta/verdura'] = round((grams * 10) / 100)
     percent_ingredients['higado'] = round((grams * 5) / 100)
-    percent_ingredients['visceras'] = round((grams * 5) / 100)
+    percent_ingredients['visceras'] = round((grams * 10) / 100)
 
     grams = round(grams)
     
