@@ -1,3 +1,26 @@
+def get_ingredients_percent(grams, natural_food = 'yes'):
+    percent_ingredients = {}
+    percent_ingredients['hueso carnoso'] = round((grams * 40) / 100)
+    percent_ingredients['carnes'] = round((grams * 35) / 100)
+    percent_ingredients['fruta/verdura'] = round((grams * 10) / 100)
+    percent_ingredients['higado'] = round((grams * 5) / 100)
+    percent_ingredients['visceras'] = round((grams * 10) / 100)
+    
+
+    if natural_food == 'no':
+        percent_ingredients = {}
+        percent_ingredients['carnes'] = round((grams * 80) / 100)
+        percent_ingredients['fruta'] = round((grams * 5) / 100)
+        percent_ingredients['verdura'] = round((grams * 5) / 100)
+        percent_ingredients['higado'] = round((grams * 5) / 100)
+        percent_ingredients['visceras'] = round((grams * 5) / 100)
+
+    return percent_ingredients
+
+
+
+
+
 def body_points(body_image):
     if body_image == 4 or body_image == 5:
         points = 1
