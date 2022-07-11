@@ -61,16 +61,11 @@ def menusHome(request, str, food):
     # food_type = request.session['food_type']
 
     # get the percents for each type of ingredient
-    percent_ingredients = {}
-    percent_ingredients['hueso carnoso'] = round((grams * 40) / 100)
-    percent_ingredients['carnes'] = round((grams * 35) / 100)
-    percent_ingredients['fruta/verdura'] = round((grams * 10) / 100)
-    percent_ingredients['higado'] = round((grams * 5) / 100)
-    percent_ingredients['visceras'] = round((grams * 10) / 100)
-    grams = round(grams)
-
+    percent_ingredients = get_ingredients_percent(grams)
 
     if food == 'no':
+        percent_ingredients = get_ingredients_percent(grams, 'no')
+
         week_percents = {
             'Primera semana': {},
             'Segunda semana': {},
@@ -81,7 +76,8 @@ def menusHome(request, str, food):
             week_percents['Segunda semana'][k] = round(v/1.5)
             week_percents['Tercera semana'][k] = v
 
-
+    # round the final grams
+    grams = round(grams)
 
     # get the price
     price = 7000 # this is by 500 grams
