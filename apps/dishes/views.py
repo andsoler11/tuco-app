@@ -52,7 +52,6 @@ def dishesHome(request):
     return render(request, 'dishes/home.html', context)
 
 
-
 def menusHome(request, str, food):
     page = 'menus'
     grams = float(str)
@@ -63,6 +62,9 @@ def menusHome(request, str, food):
     # get the percents for each type of ingredient
     percent_ingredients = get_ingredients_percent(grams)
 
+    # round the final grams
+    grams = round(grams)
+
     if food == 'no':
         percent_ingredients = get_ingredients_percent(grams, 'no')
 
@@ -71,14 +73,17 @@ def menusHome(request, str, food):
             'Segunda semana': {},
             'Tercera semana': {}
         }
+
+        total_grams = 0
         for k,v in percent_ingredients.items():
             week_percents['Primera semana'][k] = round(v/2)
             week_percents['Segunda semana'][k] = round(v/1.5)
             week_percents['Tercera semana'][k] = v
+            total_grams += round(v/2) + round(v/1.5) + v
 
-    # round the final grams
-    grams = round(grams)
-
+        # round the final grams
+        grams = round(total_grams)
+    
     # get the price
     price = 7000 # this is by 500 grams
     price_grams = round((grams / 500) * price)
