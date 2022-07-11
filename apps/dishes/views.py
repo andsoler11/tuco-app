@@ -1,3 +1,4 @@
+import string
 from unicodedata import name
 from django.shortcuts import redirect, render
 from .models import Breeds
@@ -25,14 +26,17 @@ def dishesHome(request):
         age_input = request.POST.get('age')
         body_image = int(request.POST.get('body_image'))
         weight_input = request.POST.get('weight')
-
+        food_input = request.POST.get('natural_food')
         activity_level = activity_mapping(activity_level_input)
         reproductive_state = reproductive_mapping(reproductive_state_input)
         weight, age = format_weight_and_age(weight_input, age_input)
 
-        grams, grams_percent, points = determineGrams(activity_level, reproductive_state, body_image, weight)
+        # mind using sessions in the future
+        # request.session['food_type'] = food_input
 
-        return redirect('menus', str=grams)
+        grams, grams_percent, points = determineGrams(activity_level, reproductive_state, body_image, weight)
+    
+        return redirect('menus', str=grams, food=food_input)
 
     breeds = Breeds.objects.all()
     context = {
@@ -49,9 +53,12 @@ def dishesHome(request):
 
 
 
-def menusHome(request, str):
+def menusHome(request, str, food):
     page = 'menus'
     grams = float(str)
+
+    # mind using sessions in the future
+    # food_type = request.session['food_type']
 
     # get the percents for each type of ingredient
     percent_ingredients = {}
@@ -62,6 +69,20 @@ def menusHome(request, str):
     percent_ingredients['visceras'] = round((grams * 10) / 100)
     grams = round(grams)
 
+
+    if food == 'no':
+        week_percents = {
+            'Primera semana': {},
+            'Segunda semana': {},
+            'Tercera semana': {}
+        }
+        for k,v in percent_ingredients.items():
+            week_percents['Primera semana'][k] = round(v/2)
+            week_percents['Segunda semana'][k] = round(v/1.5)
+            week_percents['Tercera semana'][k] = v
+
+
+
     # get the price
     price = 7000 # this is by 500 grams
     price_grams = round((grams / 500) * price)
@@ -70,7 +91,11 @@ def menusHome(request, str):
         'page': page, 
         'grams': grams, 
         'percent_ingredients': percent_ingredients, 
-        'price_grams': price_grams
+        'price_grams': price_grams,
     }
+
+    if food == 'no':
+        context['week_percents'] = week_percents
+
 
     return render(request, 'dishes/menus.html', context)

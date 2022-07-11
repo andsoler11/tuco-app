@@ -3,16 +3,31 @@
 
 {% block content %}
 
-<h1>gramos: {{grams}}</h1>
 
 
-{% for k,v in percent_ingredients.items %}
-    <p>{{k}}: {{v}} gramos</p>
-{% endfor %}
+{% if week_percents is not null %}
 
+    <h1>gramos ultima semana: {{grams}}</h1>
 
-<h1>Precio diario: {{price_grams}} COP</h1>
+    {% for k,v in week_percents.items %}
+        <h3>{{k}}:</h3>
+        {% for food_name, data in v.items %}
+            <p>{{food_name}}: {{data}} gramos</p>
+        {% endfor %}
+    {% endfor %}
 
-<h1>Precio mes: {% widthratio price_grams 1 30 %} COP</h1>
+{% else %}
+
+    <h1>gramos: {{grams}}</h1>
+
+    {% for k,v in percent_ingredients.items %}
+        <p>{{k}}: {{v}} gramos</p>
+    {% endfor %}
+
+    <h1>Precio diario: {{price_grams}} COP</h1>
+
+    <h1>Precio mes: {% widthratio price_grams 1 30 %} COP</h1>
+{% endif %}
+
 
 {% endblock %}
