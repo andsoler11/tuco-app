@@ -7,7 +7,8 @@
 
 {% if week_percents is not null %}
 
-    <h1>gramos ultima semana: {{grams}}</h1>
+    <h1>Precio gramos totales: {{price_grams}} COP</h1>
+    <h1>gramos totales: {{grams}}</h1>
 
     {% for k,v in week_percents.items %}
         <h3>{{k}}:</h3>
@@ -15,6 +16,8 @@
             <p>{{food_name}}: {{data}} gramos</p>
         {% endfor %}
     {% endfor %}
+
+
 
 {% else %}
 
