@@ -89,7 +89,7 @@ def format_weight_and_age(weight_input, age_input):
 
 def determineGrams(activity_level, reproductive_state, body_image, weight):
     # this is a special case for the skinny ones
-    if body_image == 'muy delgado':
+    if body_image == 'muy_delgado':
         percent_to_increase =  (weight * 10) / 100
         weight += percent_to_increase
     weight = round(weight, 2)
