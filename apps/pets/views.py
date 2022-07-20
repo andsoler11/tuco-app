@@ -1,8 +1,11 @@
+from django.contrib.auth.decorators import login_required
 from multiprocessing import context
 from django.shortcuts import render, redirect
 from apps.dishes.models import Puppy
 from django.contrib.auth.models import User
 
+
+@login_required(login_url='login')
 def listPets(request):
     page = 'pets'
     user_id = User.objects.get(username=request.user.username)
@@ -16,7 +19,7 @@ def listPets(request):
     return render(request, 'list.html', context)
 
 
-
+@login_required(login_url='login')
 def deletePet(request, pk):
     pet = Puppy.objects.get(id=pk)
 
