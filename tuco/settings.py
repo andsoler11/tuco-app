@@ -39,7 +39,7 @@ DJANGO_APPS = [
 
 SITE_ID = 1
 THIRD_PARTY_APPS = ["rest_framework"]
-LOCAL_APPS = ['apps.dishes', 'apps.users']
+LOCAL_APPS = ['apps.dishes', 'apps.users', 'apps.pets']
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
