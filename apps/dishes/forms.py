@@ -5,7 +5,18 @@ from .models import Puppy, Breeds
 class PuppyForm(ModelForm):
     class Meta:
         model = Puppy
-        fields = ['name', 'owner', 'age', 'breed','body_image', 'reproductive_state', 'activity_level', 'weight']
+        fields = [
+            'name', 
+            'owner', 
+            'age', 
+            'breed',
+            'body_image', 
+            'reproductive_state', 
+            'activity_level', 
+            'weight', 
+            'allergies',
+            'special_needs',
+        ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

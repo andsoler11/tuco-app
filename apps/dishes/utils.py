@@ -22,11 +22,11 @@ def get_ingredients_percent(grams, natural_food = 'yes'):
 
 
 def body_points(body_image):
-    if body_image == 4 or body_image == 5:
+    if body_image == 'sobrepeso':
         points = 1
-    elif body_image == 3:
+    elif body_image == 'peso_ideal':
         points = 2
-    elif body_image == 2:
+    elif body_image == 'delgado':
         points = 3
     else:
         points = 4
@@ -47,9 +47,9 @@ def activity_points(activity_level):
 
 def activity_mapping(activity_choice):
     activity_choices = {
-        '1': 'bajo',
-        '2': 'medio',
-        '3': 'alto',
+        'sedentario': 'bajo',
+        'actividad media': 'medio',
+        'muy activo': 'alto',
     }
 
     return activity_choices[activity_choice]
@@ -89,7 +89,7 @@ def format_weight_and_age(weight_input, age_input):
 
 def determineGrams(activity_level, reproductive_state, body_image, weight):
     # this is a special case for the skinny ones
-    if body_image == 1:
+    if body_image == 'muy delgado':
         percent_to_increase =  (weight * 10) / 100
         weight += percent_to_increase
     weight = round(weight, 2)

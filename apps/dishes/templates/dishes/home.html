@@ -15,11 +15,12 @@
         class="progress-step progress-step-active"
         data-title="Intro"
       ></div>
-      <div class="progress-step" data-title="food"></div>
-      <div class="progress-step" data-title="Age"></div>
-      <div class="progress-step" data-title="Activity"></div>
-      <div class="progress-step" data-title="Weight"></div>
-      <div class="progress-step" data-title="form"></div>
+      <div class="progress-step" data-title="Comida"></div>
+      <div class="progress-step" data-title="Edad"></div>
+      <div class="progress-step" data-title="Actividad"></div>
+      <div class="progress-step" data-title="Peso"></div>
+      <div class="progress-step" data-title="Alergias"></div>
+      <div class="progress-step" data-title="Nombre"></div>
     </div>
 
     <!-- Steps -->
@@ -58,7 +59,7 @@
       <div class="input-group">
         <label for="phone">Raza</label>
 
-        <input list="breed">
+        <input list="breed" name="breed">
         <datalist id="breed">
         <option value="">select</option>
           {% for breed in breeds %}
@@ -77,13 +78,13 @@
 
       <label for="dob">Activity level</label>
       <div class="body_image-select">
-        <input type="checkbox" id="myCheckbox1" name="activity_level" value="1" />
+        <input type="checkbox" id="myCheckbox1" name="activity_level" value="bajo" />
         <label for="myCheckbox1"><img src="{% static 'images/activity_level_1.jpeg' %}" alt="" />sedentario</label>
 
-        <input type="checkbox" id="myCheckbox2" name="activity_level" value="2" />
+        <input type="checkbox" id="myCheckbox2" name="activity_level" value="medio" />
         <label for="myCheckbox2"><img src="{% static 'images/activity_level_2.jpeg' %}" alt="" />activo</label>
 
-        <input type="checkbox" id="myCheckbox3" name="activity_level" value="3" />
+        <input type="checkbox" id="myCheckbox3" name="activity_level" value="alto" />
         <label for="myCheckbox3"><img src="{% static 'images/activity_level_3.jpeg' %}" alt="" />muy activo</label>
 
       </div>
@@ -115,16 +116,16 @@
 
       <label for="body_image">Estado Fisico</label>
       <div class="body_image-select">
-        <input type="checkbox" id="myCheckbox4" name="body_image" value="1" />
+        <input type="checkbox" id="myCheckbox4" name="body_image" value="muy_delgado" />
         <label for="myCheckbox4"><img src="{% static 'images/dog_state_1.jpeg' %}" alt="" />muy delgado</label>
 
-        <input type="checkbox" id="myCheckbox5" name="body_image" value="2" />
+        <input type="checkbox" id="myCheckbox5" name="body_image" value="delgado" />
         <label for="myCheckbox5"><img src="{% static 'images/dog_state_2.jpeg' %}" alt="" />delgado</label>
 
-        <input type="checkbox" id="myCheckbox6" name="body_image" value="3" />
+        <input type="checkbox" id="myCheckbox6" name="body_image" value="peso_ideal" />
         <label for="myCheckbox6"><img src="{% static 'images/dog_state_3.jpeg' %}" alt="" />peso ideal</label>
 
-        <input type="checkbox" id="myCheckbox7" name="body_image" value="4" />
+        <input type="checkbox" id="myCheckbox7" name="body_image" value="sobrepeso" />
         <label for="myCheckbox7"><img src="{% static 'images/dog_state_4.jpeg' %}" alt="" />sobrepeso</label>
 
         {% comment %} <div class="checkbox-wrapper">
@@ -152,15 +153,42 @@
       </div> {% endcomment %}
 
 
-      <div class="input-group">
+    <div class="input-group">
         <label for="ID">Weight</label>
         {{form.weight}}
+    </div>
+        <div class="btns-group">
+          <a href="#" class="btn btn-prev">Previous</a>
+          <a href="#" class="btn btn-next">Next</a>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="form-step">
+      <div class="input-group">
+        <label for="username">Alergias</label>
+        {{form.allergies}}
       </div>
+
+      <div class="input-group">
+        <label for="username">Necesidades Especiales</label>
+        {{form.special_needs}}
+      </div>
+
       <div class="btns-group">
         <a href="#" class="btn btn-prev">Previous</a>
         <a href="#" class="btn btn-next">Next</a>
       </div>
     </div>
+
+
+
+
+
+
     <div class="form-step">
       <div class="input-group">
         <label for="username">Owner name</label>

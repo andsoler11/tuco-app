@@ -5,12 +5,12 @@
         <p id="greeter">Hi {{profile.first_name}}</a>
         <nav>
             <ul>
-            <li><a href="">Home</a></li>
+            <li><a href="{% url 'login' %}">Home</a></li>
             {% if user.is_superuser %}
-            <li><a href="">Menus</a></li>
-            <li><a href="">Orders</a></li>
+                <li><a href="">Menus</a></li>
+                <li><a href="">Orders</a></li>
             {% else %}
-            <li><a href="">Your Orders</a></li>
+                <li><a href="{% url 'list-pets' %}">Your Pets</a></li>
             {% endif %}
             <hr>
             <li><a href="{% url 'logout' %}">Logout</a></li>

@@ -4,6 +4,10 @@
 {% block content %}
 
 
+<h1>Nombre Mascota: {{puppy_data.name}}</h1>
+<h3>Alergias: {{allergies}}</h1>
+<h3>Necesidades Especiales: {{special_needs}}</h1>
+
 
 {% if week_percents is not null %}
 
@@ -16,8 +20,6 @@
             <p>{{food_name}}: {{data}} gramos</p>
         {% endfor %}
     {% endfor %}
-
-
 
 {% else %}
 
