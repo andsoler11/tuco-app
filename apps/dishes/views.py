@@ -13,30 +13,6 @@ MIDDLE_AGE = 4
 ADULT_AGE = 8
 
 
-# agregar campo de enfermedades
-
-# consume alimentacion natural? si o no   (esto va despues del nombre de la mascota)
-# agregar opcion come barf --> si o no
-# si no come barf nos manda a otra opcion con porcentajes distintos
-# hacer mismas preguntas que el formulario de ahorita
-# hacer base de datos con los que no estan en barf para asi saber cuantas semanas llevan en transicion
-# colocar los outs en semanas --> por dia pero mostrando diario disinto dependiendo de la semana
-
-
-##### codigo para insertar en db
-
-# file = os.path.abspath(os.path.dirname(__file__))
-
-# with open(os.path.join(file, 'data_2.json')) as f:
-#     BREEDS = json.load(f)
-
-# b = Breeds.objects.all()
-# b.delete()
-
-# for i in BREEDS:
-#     print(i)
-#     Breeds.objects.create(name=i['name'], life_span=i['life_span'], breed_group=i['breed_group'], image_url=i['image_url'])
-
 @login_required(login_url='login')
 def dishesHome(request):
     page = 'multistep-form'
