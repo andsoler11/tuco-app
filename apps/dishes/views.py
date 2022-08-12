@@ -33,7 +33,6 @@ def dishesHome(request):
 
         # mind using sessions in the future
         # request.session['food_type'] = food_input
-
         grams, grams_percent, points = determineGrams(activity_level, reproductive_state, body_image, weight)
         
         puppy = Puppy(

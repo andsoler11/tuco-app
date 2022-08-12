@@ -88,12 +88,6 @@ def format_weight_and_age(weight_input, age_input):
         
 
 def determineGrams(activity_level, reproductive_state, body_image, weight):
-    # this is a special case for the skinny ones
-    if body_image == 'muy_delgado':
-        percent_to_increase =  (weight * 10) / 100
-        weight += percent_to_increase
-    weight = round(weight, 2)
-
     # starting getting the points from the variables
     points = 0
     points += reproductive_state_points(reproductive_state)
@@ -104,6 +98,12 @@ def determineGrams(activity_level, reproductive_state, body_image, weight):
     size = 'large'
     if weight < 10:
         size = 'chico'
+
+    # this is a special case for the skinny ones
+    if body_image == 'muy_delgado':
+        percent_to_increase =  (weight * 10) / 100
+        weight += percent_to_increase
+    weight = round(weight, 2)
 
     # dertermine wich percent we need
     size_percent = 'large'
@@ -121,18 +121,9 @@ def determineGrams(activity_level, reproductive_state, body_image, weight):
     if points >= 0 and points <= 3:
         index_number = 0
     elif points >= 4 and points <= 6:
-        index_number = 1
+        index_number = 1    
     grams_percent = percents[size_percent][index_number]
 
     grams = round((grams_percent * weight) * 10, 2)
 
     return grams, grams_percent, points
-
-
-
-
-
-
-
-
-
