@@ -1,0 +1,25 @@
+:root {
+  /* font sizes */
+  --desktop-font-size: 1.2rem;
+  --desktop-line-height: 1.5;
+  --mobile-font-size: 1rem;
+  --mobile-line-height: 1.4;
+  
+  /* colors */
+  --white: #fff;
+  --primary-color: #202B3E;
+  --secondary-color: #F4F3DE;
+  --tertiary-color: #5B7097;
+  --background-color: #84AEAF;
+  --text-color: var(--primary-color);
+  --text-color-light: var(--white);
+  --link-color: blue;
+  --link-color-alt: darkblue;
+
+  /* breakpoints */
+  --small: 576px;
+  --medium: 768px;
+  --large: 992px;
+  --extralarge: 1200px;
+  --xxl: 1400px;
+}

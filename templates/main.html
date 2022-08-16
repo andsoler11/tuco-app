@@ -10,7 +10,7 @@
     {% render_bundle 'main_style' %}
     <title>{{page}}</title>
 </head>
-<div>
+<body>
     {% include 'nav-bar.html' %}
 
     {% if messages %}
@@ -28,6 +28,6 @@
 
     {% endblock content %}
 
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
-<script src="{% static 'js/main.js' %}"></script>
 </html>

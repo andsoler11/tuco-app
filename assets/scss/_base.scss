@@ -1,0 +1,20 @@
+body,
+input {
+  background-color: var(--background-color);
+  font-size: var(--mobile-font-size);
+  line-height: var(--mobile-line-height);
+}
+
+
+/* Mobile Styling */
+@media screen and (min-width: var(--large)) {
+  body,
+  input {
+    font-size: var(--desktop-font-size);
+    line-height: var(--desktop-line-height);
+  }
+
+  table {
+    table-layout: auto;
+  }
+}
