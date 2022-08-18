@@ -1,30 +1,38 @@
+<script>
+    function openMenu() {
+        const menu = document.querySelector('.header');
+        menu.classList.toggle('open');
+    }
+</script>
+
 <!-- Header Section -->
 <header class="header">
-    <div class="container container--narrow">
-        {% if user.is_authenticated %}
-        <!-- <p id="greeter">Hi {{profile.first_name}}</a> -->
-        <nav>
-            <ul>
-            <li><a href="{% url 'login' %}">Home</a></li>
-            {% if user.is_superuser %}
-                <li><a href="">Menus</a></li>
-                <li><a href="">Orders</a></li>
-            {% else %}
-                <li><a href="{% url 'list-pets' %}">Your Pets</a></li>
-            {% endif %}
-            <hr>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
-            </ul>
-        </nav>
+    <img src="/static/images/forever-dog-logo-mobile.svg" width="157" height="27" />
+    <button type="button" class="hamburguer" aria-label="menu" onclick="openMenu()">
+        <span></span>
+        <span></span>
+    </button>
+    {% if user.is_authenticated %}
+    <!-- <p id="greeter">Hi {{profile.first_name}}</a> -->
+    <nav>
+        <ul>
+        <li><a href="{% url 'login' %}">Home</a></li>
+        {% if user.is_superuser %}
+            <li><a href="">Menus</a></li>
+            <li><a href="">Orders</a></li>
         {% else %}
-        <div class="nav-bar__container">
-            <nav>
-                <ul class="nav-bar">
-                <li><a href="{% url 'login' %}">Login</a></li>
-                <li><a href="{% url 'register' %}">Register</a></li>
-                </ul>
-            </nav>
-        </div>
+            <li><a href="{% url 'list-pets' %}">Your Pets</a></li>
         {% endif %}
-    </div>
+        <hr>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+    </nav>
+    {% else %}
+    <nav>
+        <ul class="nav-bar">
+        <li><a href="{% url 'login' %}">Login</a></li>
+        <li><a href="{% url 'register' %}">Register</a></li>
+        </ul>
+    </nav>
+    {% endif %}
 </header>
