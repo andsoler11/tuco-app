@@ -78,6 +78,7 @@ def menusHome(request, pk):
     food = puppy_data.is_barf_active
     allergies = puppy_data.allergies
     special_needs = puppy_data.special_needs
+    weight = puppy_data.weight
 
     # mind using sessions in the future
     # food_type = request.session['food_type']
@@ -107,9 +108,17 @@ def menusHome(request, pk):
         # round the final grams
         grams = round(total_grams)
     
-    # get the price
-    price = 7000 # this is by 500 grams
-    price_grams = round((grams / 500) * price)
+
+    if (weight < 10):
+        price = 1432
+    elif (weight >= 10 and weight < 25):
+        price = 1382
+    elif (weight >= 25 and weight < 40):
+        price = 1333
+    elif weight >= 40:
+        price = 1284
+
+    price_grams = round((grams / 110) * price)
     
     context = {
         'page': page, 
