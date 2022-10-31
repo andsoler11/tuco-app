@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 {% load static %}
+{% load bootstrap5 %}
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{% static 'styles/main.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/nav-bar.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/multistep-form.css' %}" />
+    <script src="https://kit.fontawesome.com/1ce4185475.js" crossorigin="anonymous"></script>
     <title>{{page}}</title>
 </head>
 <div>
     {% include 'nav-bar.html' %}
 
-    {% if messages %}
+    {% comment %} {% if messages %}
         {% for message in messages %}
         <div style="display: flex; justify-content: center;">
             <div class="alert alert--{{message.tags}}">
@@ -19,7 +23,13 @@
             </div>
         </div>
         {% endfor %}
-    {% endif %}
+    {% endif %} {% endcomment %}
+
+    {% comment %} <div style="display: flex; justify-content: center;">
+        <div class="alert alert--error error-txt">
+            <p class="alert__message">username or password is incorrect</p>
+        </div>
+    </div> {% endcomment %}
 
 
     {% block content %}

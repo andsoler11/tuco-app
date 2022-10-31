@@ -1,30 +1,50 @@
+{% load static %}
+
 <!-- Header Section -->
-<header class="header">
-    <div class="container container--narrow">
-        {% if user.is_authenticated %}
-        <p id="greeter">Hi {{profile.first_name}}</a>
-        <nav>
-            <ul>
-            <li><a href="{% url 'login' %}">Home</a></li>
-            {% if user.is_superuser %}
-                <li><a href="">Menus</a></li>
-                <li><a href="">Orders</a></li>
-            {% else %}
-                <li><a href="{% url 'list-pets' %}">Your Pets</a></li>
-            {% endif %}
-            <hr>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
-            </ul>
-        </nav>
-        {% else %}
-        <div class="nav-bar__container">
-            <nav>
-                <ul class="nav-bar">
-                <li><a href="{% url 'login' %}">Login</a></li>
-                <li><a href="{% url 'register' %}">Register</a></li>
-                </ul>
-            </nav>
-        </div>
-        {% endif %}
+<header class="homepage_header">
+    <div class="homepage_header__logo">
+        <img src="{% static 'images/main_logo.svg' %}" alt="logo">
+
+        
+    </div>
+    <div class="homepage_header__menu">
+        <ul class="homepage_header__nav">
+            <li class="homepage_header__nav__item"><a href="{% url 'login' %}">Inicio</a></li>
+            <li class="homepage_header__nav__item"><a href="{% url 'list-pets' %}">Pets</a></li>
+            <li class="homepage_header__nav__item"><a href="index.php">Item</a></li>
+            <li class="homepage_header__nav__item"><a href="">Item</a></li>
+            <li class="homepage_header__nav__item"><a href="">Item</a></li>
+            <li class="homepage_header__nav__item"><a href="">Item</a></li>
+        </ul>
+    </div>
+    
+    {% comment %} {% if not request.user.is_authenticated %}
+    <div class="homepage_header__login">
+        <ul class="homepage_header__nav">
+            <li class="homepage_header__nav__item"><a href="{% url 'login' %}"><img src="static/images/tiktok_logo.png" class="navbar_logo" /></a></li>
+            <li class="homepage_header__nav__item"><a href="{% url 'register' %}"><img src="static/images/facebook_logo.png" class="navbar_logo" /></a></li>
+            <li class="homepage_header__nav__item"><a href="{% url 'register' %}"><img src="static/images/instagram_logo.png" class="navbar_logo" /></a></li>
+            
+        </ul>
+    </div>
+    {% else %}
+
+    <div class="homepage_header__login">
+        <ul class="homepage_header__nav">
+            <li class="homepage_header__nav__item_user">{{ user.email }}</li>
+            <li class="homepage_header__nav__item"><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
+        </ul>
+    </div>
+    {% endif %} {% endcomment %}
+
+    <div class="homepage_header__login">
+        <ul class="homepage_header__nav">
+            <li class="homepage_header__nav__item"><a href="{% url 'login' %}"><img src="{% static 'images/tiktok_logo.png' %}" class="navbar_logo" /></a></li>
+            <li class="homepage_header__nav__item"><a href="{% url 'register' %}"><img src="{% static 'images/facebook_logo.png' %}" class="navbar_logo" /></a></li>
+            <li class="homepage_header__nav__item"><a href="{% url 'register' %}"><img src="{% static 'images/instagram_logo.png' %}" class="navbar_logo" /></a></li>
+            
+        </ul>
     </div>
 </header>
+
+
