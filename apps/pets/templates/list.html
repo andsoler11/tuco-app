@@ -3,18 +3,29 @@
 
 {% block content %}
 
-{% for pet in pets %}
-    {% comment %} <a href="{% url 'menus' pet.id %}">{{pet.name}}</a>  <a href="{% url 'menus' pet.id %}" style="margin-left: 10px;" > -> DELETE</a><br> {% endcomment %}
+<div class="main_container">
+    <div class="main_form_container">
+        <div class="wrapper">
+          <section class="form login">
 
-    <div style="display: flex;">
-        <a href="{% url 'menus' pet.id %}" style="color: black; font-size: 20px">{{pet.name}}</a> 
-        <form method="POST" action="{% url 'delete-pet' pet.id %}">
-            {% csrf_token %}
-            <input type="submit" value="Delete" class="botton" style="margin-left: 10px; background-color: red; color: white; cursor: pointer;" />
-        </form>
+            {% for pet in pets %}
+                {% comment %} <a href="{% url 'menus' pet.id %}">{{pet.name}}</a>  <a href="{% url 'menus' pet.id %}" style="margin-left: 10px;" > -> DELETE</a><br> {% endcomment %}
+
+                <div style="display: flex;">
+                    <a href="{% url 'menus' pet.id %}" style="color: white; font-size: 20px">{{pet.name}}</a> 
+                    <form method="POST" action="{% url 'delete-pet' pet.id %}">
+                        {% csrf_token %}
+                        <input type="submit" value="Delete" class="botton" style="margin-left: 10px; background-color: red; color: white; cursor: pointer;" />
+                    </form>
+                </div>
+
+            {% endfor %}
+
+
+        </section>
     </div>
-
-{% endfor %}
+  </div>  
+</div>
 
 
 {% endblock %}

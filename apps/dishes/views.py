@@ -1,3 +1,4 @@
+from pprint import pprint
 from django.contrib.auth.decorators import login_required
 import string
 from unicodedata import name
@@ -34,6 +35,15 @@ def dishesHome(request):
         # mind using sessions in the future
         # request.session['food_type'] = food_input
         grams, grams_percent, points = determineGrams(activity_level, reproductive_state, body_image, weight)
+
+        pprint(activity_level)
+        pprint(reproductive_state)
+        pprint(age_input)
+        pprint(body_image)
+        pprint(weight_input)
+        pprint(food_input)
+        pprint(weight)
+        pprint(age)
         
         puppy = Puppy(
             owner=request.user, 
