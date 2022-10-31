@@ -1,4 +1,8 @@
 /* top bar */
+:root {
+--hamburguer-height: 2px;
+--hamburguer-width: 34px;
+}
 
 .header {
   align-items: center;
@@ -6,75 +10,65 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
-  transition: all 0.2s ease-out;
-  transition-property: background-color;
+  padding: calc(var(--base-space) * 3) calc(var(--base-space) * 2);
+  justify-content: space-between;
 
   nav {
     flex-basis: 100%;
   }
 
-  &.open {
-    background-color: var(--accent-color);
-
-    .hamburguer {
-      span{
-        background-color: var(--primary-color);
-        transform: rotate(135deg);
-  
-        &:nth-child(2) {
-          transform: rotate(-135deg);
-        }
-      }
-  
-      &::before,
-      &::after {
-        background-color: var(--accent-color);
-      }
-    }
-  }
-}
-
-:root {
---hamburguer-height: 2px;
---hamburguer-width: 34px;
-}
-
-.hamburguer {
-  border: 0;
-  background-color: transparent;
-  padding: 0;
-  
-  span {
-    background-color: var(--accent-color);
-    display: block;
-    height: var(--hamburguer-height);
-    transition: all 0.2s ease-in;
-    transition-property: transform, background-color;
-    width: var(--hamburguer-width);
-
-    &:nth-child(2) {
-      margin-top: calc(var(--hamburguer-height) * -1);
-    }
+  .logo {
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
-  &::before,
-  &::after {
-    background-color: var(--accent-color);
+  .hamburguer {
     border: 0;
-    content: '';
-    display: block;
-    height: var(--hamburguer-height);
-    width: var(--hamburguer-width);
-    transition: all 0.2s ease-out;
-    transition-property: background-color;
+    background-color: transparent;
+    padding: 0;
+    
+    span {
+      background-color: var(--accent-color);
+      display: block;
+      height: var(--hamburguer-height);
+      width: var(--hamburguer-width);
+    }
+  
+    &::before,
+    &::after {
+      background-color: var(--accent-color);
+      border: 0;
+      content: '';
+      display: block;
+      height: var(--hamburguer-height);
+      width: var(--hamburguer-width);
+    }
+  
+    &::before {
+      margin-bottom: 9px;
+    }
+  
+    &::after {
+      margin-top: 9px;
+    }
+  
   }
-
-  &::before {
-    margin-bottom: 9px;
+  
+  .account-button {
+    background-color: transparent;
+    background-image: url('/static/images/user-icon.svg');
+    background-repeat: no-repeat;
+    border: 0;
+    height: 30px;
+    width: 30px;
   }
-
-  &::after {
-    margin-top: 9px;
+  
+  .cart-button {
+    background-color: transparent;
+    background-image: url('/static/images/cart-icon.svg');
+    background-repeat: no-repeat;
+    border: 0;
+    height: 30px;
+    width: 30px;
   }
 }

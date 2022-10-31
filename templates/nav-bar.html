@@ -1,38 +1,65 @@
 <script>
-    function openMenu() {
-        const menu = document.querySelector('.header');
+    function toggleMenu() {
+        const menu = document.querySelector('.menu');
         menu.classList.toggle('open');
     }
 </script>
 
 <!-- Header Section -->
 <header class="header">
-    <img src="/static/images/forever-dog-logo-mobile.svg" width="157" height="27" />
-    <button type="button" class="hamburguer" aria-label="menu" onclick="openMenu()">
-        <span></span>
+    <button type="button" class="hamburguer" aria-label="menu" onclick="toggleMenu()">
         <span></span>
     </button>
-    {% if user.is_authenticated %}
+
+    <img class="logo" src="/static/images/forever-dog-logo-mobile.svg" width="157" height="27" />
+
+    <div>
+        <button type="button" class="account-button" aria-label="Cuenta de usuario"></button>
+        <button type="button" class="cart-button" aria-label="Carrito de compras"></button>
+    </div>
+
+    <nav class="menu">
+        <header>
+            <img src="/static/images/forever-dog-logo-blue.svg" width="157" height="27" alt="">
+            <button class="close-menu" type="button" aria-label="Cerrar menú" onclick="toggleMenu()"></button>
+        </header>
+        <ul>
+            <li><a href="#">Cómo funciona Forever Dog?</a></li>
+            <li><a href="#">Beneficios</a></li>
+            <li><a href="#">Nuestra cocina</a></li>
+            <li><a href="#">Conócenos</a></li>
+            <li><a href="#">Preguntas frecuentes</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Contáctanos</a></li>
+        </ul>
+        <footer>
+            <a href="#">Tiktok</a>
+            <a href="#">Facebook</a>
+            <a href="#">Instagram</a>
+        </footer>
+    </nav>
+</header>
+
+{% if user.is_authenticated %}
     <!-- <p id="greeter">Hi {{profile.first_name}}</a> -->
     <nav>
         <ul>
-        <li><a href="{% url 'login' %}">Home</a></li>
-        {% if user.is_superuser %}
-            <li><a href="">Menus</a></li>
-            <li><a href="">Orders</a></li>
-        {% else %}
-            <li><a href="{% url 'list-pets' %}">Your Pets</a></li>
-        {% endif %}
-        <hr>
-        <li><a href="{% url 'logout' %}">Logout</a></li>
+            <li><a href="{% url 'login' %}">Home</a></li>
+            {% if user.is_superuser %}
+                <li><a href="">Menus</a></li>
+                <li><a href="">Orders</a></li>
+            {% else %}
+                <li><a href="{% url 'list-pets' %}">Your Pets</a></li>
+            {% endif %}
+            <hr>
+            <li><a class="button" href="{% url 'logout' %}">Logout</a></li>
         </ul>
     </nav>
-    {% else %}
+{% else %}
     <nav>
         <ul class="nav-bar">
-        <li><a href="{% url 'login' %}">Login</a></li>
-        <li><a href="{% url 'register' %}">Register</a></li>
+            <li><a class="button" href="{% url 'login' %}">Login</a></li>
+            <li><a class="button" href="{% url 'register' %}">Register</a></li>
         </ul>
     </nav>
-    {% endif %}
-</header>
+{% endif %}
