@@ -1,0 +1,61 @@
+{% load static %}
+
+
+<div class="footer-container">
+    <div class="footer-container_box">
+        <div class="footer_image_container">
+            <img src="{% static 'images/main_logo.svg' %}" alt="logo" class="footer_image">
+        </div>
+
+        <div class="footer_media_image_container">
+            <a href="{% url 'login' %}"><img src="{% static 'images/tiktok_logo.svg' %}" alt="tiktok" class="footer_media_image"></a>
+            <a href="{% url 'login' %}"><img src="{% static 'images/facebook_logo.svg' %}" alt="facebook" class="footer_media_image"></a>
+            <a href="{% url 'login' %}"><img src="{% static 'images/instagram_logo.svg' %}" alt="instagram" class="footer_media_image"></a>
+        </div>
+
+        <div class="footer_links_account_container">
+            <div class="footer_links_account_data">
+                <h3>Mi cuenta</h3>
+                <ul>
+                    <li><a href="#">Mis pedidos</a></li>
+                    <li><a href="#">Programa de referidos</a></li>
+                    <li><a href="#">Política de envíos y devoluciones</a></li>
+                </ul>
+            </div>
+
+            <div class="footer_links_account_data">
+                <h3>Nuestra Cocina</h3>
+                <ul>
+                    <li><a href="#">¿Cómo funciona Forever Dog?</a></li>
+                    <li><a href="#">Beneficios</a></li>
+                    <li><a href="#">Nuestros menús</a></li>
+                    <li><a href="#">Nuestros ingredientes</a></li>
+                    <li><a href="#">Nuestro proceso</a></li>
+                </ul>
+            </div>
+
+            <div class="footer_links_account_data">
+                <h3>Conócenos</h3>
+                <ul>
+                    <li><a href="#">¿Por qué Forerver Dog?</a></li>
+                    <li><a href="#">Nuestra historia</a></li>
+                    <li><a href="#">Preguntas frecuentes</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer_bottom">
+            <div class="footer_bottom__left">   
+                <p class="footer_bottom__left__text footer_bottom_text">Política de privacidad</p>
+                <p class="footer_bottom__left__text footer_bottom_text">Política de cookies</p>
+            </div>
+
+            <div class="footer_bottom__right">
+                <p class="footer_bottom__right__text footer_bottom_text">©  2022  Forever Dog. Todos los Derechos reservados</p>
+            </div>
+
+        </div>
+    </div>
+</div>
