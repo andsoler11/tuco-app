@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Bitte');
+@import url('https://fonts.googleapis.com/css?family=Bitter');
 
 *{
     margin: 0;
@@ -76,4 +76,72 @@
     margin: 0px 50px;
 }
 
+
+.hamburger {
+    display: none;
+}
+
+
+
+
+@media screen and (max-width: 800px) {
+
+    .hamburger {
+        display: block;
+    }
+
+
+    .homepage_header {
+        padding: 10px 20px;
+        flex-direction: column;
+        height: unset;
+    }
+
+    .homepage_header__logo {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .homepage_header__logo img{
+        width: 80px;
+    }
+
+    .homepage_header__logo:hover {
+        transform: unset;
+    }
+
+    .homepage_header__nav {
+        margin-top: 10px;
+        border-top: 1px solid #F4F3DE;
+        flex-direction: column;
+        width: 100%;
+        align-items: flex-end;
+        padding-top: 10px;
+    }
+
+    .homepage_header__login {
+        display: none;
+    }
+
+    .homepage_header__nav {
+        display: none;
+    }
+
+
+    
+
+
+
+
+}
+
+
+@media screen and (min-width: 801px) {
+    .homepage_header__nav {
+      display: flex !important;
+    }
+  }
 

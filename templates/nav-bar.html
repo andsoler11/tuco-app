@@ -4,9 +4,11 @@
 <header class="homepage_header">
     <div class="homepage_header__logo">
         <img src="{% static 'images/main_logo.svg' %}" alt="logo">
-
-        
+        <button class="hamburger" onclick="openMenu();">Menu</button>
     </div>
+
+    
+
     <div class="homepage_header__menu">
         <ul class="homepage_header__nav">
             <li class="homepage_header__nav__item"><a href="{% url 'login' %}">Inicio</a></li>
