@@ -173,3 +173,16 @@ function changeImgCarousel(elementId) {
   let value = activeValue.childNodes[1].id;
   document.getElementById('input_weight_image').setAttribute('value', value);
 }
+
+
+
+
+function openMenu() {
+  const menu = document.querySelector(".homepage_header__nav");
+
+  if (menu.style.display == 'none' || menu.style.display == '') {
+    menu.style.display = 'flex';
+  } else {
+    menu.style.display = 'none';
+  }
+}
