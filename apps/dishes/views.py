@@ -23,7 +23,8 @@ def dishesHome(request):
     grams = 0
     grams_percent = 0
     dish = ''
-
+    user = None 
+    
     if request.method == 'POST':
         activity_level        = request.POST.get('activity_level')
         reproductive_state    = request.POST.get('reproductive_state')
@@ -32,7 +33,7 @@ def dishesHome(request):
         weight_input          = request.POST.get('weight')
         food_input            = request.POST.get('natural_food')
         weight, age           = format_weight_and_age(weight_input, age_input)
-
+        
         # mind using sessions in the future
         # request.session['food_type'] = food_input
         grams, grams_percent, points = determineGrams(activity_level, reproductive_state, body_image, weight)
@@ -41,7 +42,7 @@ def dishesHome(request):
         if request.POST.get('name_contact') and request.POST.get('email_contact'):
             email = request.POST.get('email_contact')
             name = request.POST.get('name_contact')
-            user = None
+            
 
             if not '@' in email:
                 return render(request, 'dishes/dishes-home.html', {'page': page, 'form': form, 'error': 'El email no es valido'})
