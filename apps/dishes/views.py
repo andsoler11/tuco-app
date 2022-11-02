@@ -24,7 +24,8 @@ def dishesHome(request):
     grams_percent = 0
     dish = ''
     user = None 
-    
+
+
     if request.method == 'POST':
         activity_level        = request.POST.get('activity_level')
         reproductive_state    = request.POST.get('reproductive_state')
@@ -40,19 +41,21 @@ def dishesHome(request):
 
 
         if request.POST.get('name_contact') and request.POST.get('email_contact'):
-            email = request.POST.get('email_contact')
-            name = request.POST.get('name_contact')
             
-
+            email = request.POST.get('email_contact').lower()
+            name = request.POST.get('name_contact').lower()
+            
             if not '@' in email:
                 return render(request, 'dishes/dishes-home.html', {'page': page, 'form': form, 'error': 'El email no es valido'})
 
-            user = User(
-                username=email,
-                email=email,
-                first_name=name,
-            )
-            user.save()
+            user = User.objects.get(username=email)
+            if user is None:
+                user = User(
+                    username=email,
+                    email=email,
+                    first_name=name,
+                )
+                user.save()
 
         if user is not None:
             user_upload = user
