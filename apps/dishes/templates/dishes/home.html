@@ -26,7 +26,7 @@
 
                 <div class="form_name_input">
                   <div class="field input">
-                    <input type="text" name="name" placeholder="Nombre" value="">
+                    <input type="text" name="name" placeholder="Nombre" value="" id="input_name" onchange="getName();">
                   </div>
                 </div>
 
@@ -222,12 +222,60 @@
             </div>
           </div>
 
-          <div class="field button">
-            <input type="submit" value="Submit" class="btn" />
-          </div>
+          {% if request.user.is_authenticated %}
+            <div class="field button">
+              <input type="submit" value="Completar" class="btn" />
+            </div>
+          {% else %}
+            <div class="field button">
+              <button type="button" id="nextBtn" onclick="nextPrev(1)">Continuar</button>
+            </div>
+          {% endif %}
 
           <div class="link"><a href="{% url 'login' %}">Cancelar</a></div>
       </div>
+
+
+      {% if not request.user.is_authenticated %}
+          <div class="multistep_form_tab contact_detail_tab">
+            <div class="form_back_section">
+              <div class="back_icon_container">
+                <i class="fa fa-angle-left"></i>
+                <button type="button" onclick="nextPrev(-1)" class="multistep_form_back_button"><p>Volver</p></button>
+            </div>
+            </div> 
+
+            <div class="form_header_image">
+              <img src="{% static 'images/contact_detail_image2.svg' %}">
+            </div>
+
+
+            <div class="form_header">
+              <h3>¡Ya tenemos la dieta perfecta para <span id="name_container"></span>!</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
+            </div>
+
+            <div class="form_name_input">
+              <div class="field input">
+                <input type="text" name="name_contact" placeholder="Nombre dueño" value="">
+              </div>
+            </div>
+
+            <div class="form_name_input">
+              <div class="field input">
+                <input type="text" name="email_contact" placeholder="Correo electrónico" value="">
+              </div>
+            </div>
+
+            <div class="field button">
+              <input type="submit" value="Conocer dieta" class="btn" />
+            </div>
+
+            <div class="link"><a href="{% url 'login' %}">Cancelar</a></div>
+          </div>
+
+      {% endif %}
+
 
 
           </form>

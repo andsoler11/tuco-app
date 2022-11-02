@@ -127,3 +127,12 @@ def determineGrams(activity_level, reproductive_state, body_image, weight):
     grams = round((grams_percent * weight) * 10, 2)
 
     return grams, grams_percent, points
+
+
+
+def get_percents_data(total_grams, grams_dict):
+    percents_data = {}
+    for key, value in grams_dict.items():
+        percents_data[key] = round((value * 100) / total_grams, 2)
+
+    return percents_data

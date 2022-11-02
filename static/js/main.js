@@ -186,3 +186,12 @@ function openMenu() {
     menu.style.display = 'none';
   }
 }
+
+
+
+
+const getName = () => {
+  let name = document.getElementById('input_name').value;
+  let nameContainer = document.getElementById('name_container');
+  nameContainer.innerHTML = name;
+}

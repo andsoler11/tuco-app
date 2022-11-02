@@ -3,7 +3,8 @@ from django.contrib.auth.decorators import login_required
 import string
 from unicodedata import name
 from django.shortcuts import redirect, render
-from .models import Breeds, Puppy
+from django.contrib.auth.models import User
+from .models import Breeds, Puppy, ContactDetail
 from .forms import PuppyForm
 from .utils import *
 import json
@@ -14,7 +15,7 @@ MIDDLE_AGE = 4
 ADULT_AGE = 8
 
 
-@login_required(login_url='login')
+# @login_required(login_url='login')
 def dishesHome(request):
     page = 'multistep-form'
     form = PuppyForm()
@@ -36,17 +37,29 @@ def dishesHome(request):
         # request.session['food_type'] = food_input
         grams, grams_percent, points = determineGrams(activity_level, reproductive_state, body_image, weight)
 
-        pprint(activity_level)
-        pprint(reproductive_state)
-        pprint(age_input)
-        pprint(body_image)
-        pprint(weight_input)
-        pprint(food_input)
-        pprint(weight)
-        pprint(age)
-        
+
+        if request.POST.get('name_contact') and request.POST.get('email_contact'):
+            email = request.POST.get('email_contact')
+            name = request.POST.get('name_contact')
+            user = None
+
+            if not '@' in email:
+                return render(request, 'dishes/dishes-home.html', {'page': page, 'form': form, 'error': 'El email no es valido'})
+
+            user = User(
+                username=email,
+                email=email,
+                first_name=name,
+            )
+            user.save()
+
+        if user is not None:
+            user_upload = user
+        else:
+            user_upload = request.user
+            
         puppy = Puppy(
-            owner=request.user, 
+            owner=user_upload, 
             name=request.POST.get('name'), 
             age=age_input,
             body_image=body_image,
@@ -64,6 +77,14 @@ def dishesHome(request):
         puppy.save()
         pk = puppy.id
 
+        if request.POST.get('name_contact') and request.POST.get('email_contact'):
+            contact = ContactDetail(
+                    name_contact=name,
+                    email_contact=email,
+                    pet=puppy
+                )
+            contact.save()
+
         return redirect('menus', pk=pk)
 
     breeds = Breeds.objects.all()
@@ -79,7 +100,7 @@ def dishesHome(request):
 
     return render(request, 'dishes/home.html', context)
 
-@login_required(login_url='login')
+# @login_required(login_url='login')
 def menusHome(request, pk):
     page = 'menus'
     puppy_data = Puppy.objects.get(id=pk)
@@ -117,6 +138,9 @@ def menusHome(request, pk):
 
         # round the final grams
         grams = round(total_grams)
+
+    
+    percents_data = get_percents_data(grams, percent_ingredients)
     
 
     if (weight < 10):
@@ -134,7 +158,8 @@ def menusHome(request, pk):
         'page': page, 
         'grams': grams, 
         'puppy_data': puppy_data,
-        'percent_ingredients': percent_ingredients, 
+        'percent_ingredients': percents_data, 
+        'grams_ingredients': percent_ingredients, 
         'price_grams': price_grams,
         'allergies': allergies,
         'special_needs': special_needs
@@ -142,7 +167,6 @@ def menusHome(request, pk):
 
     if food == 'no':
         context['week_percents'] = week_percents
-
 
     return render(request, 'dishes/menus.html', context)
 

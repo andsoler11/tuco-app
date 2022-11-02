@@ -27,4 +27,12 @@ def deletePet(request, pk):
         # borramos de la BS y redireccionamos
         pet.delete()
         return redirect('list-pets')
+
+
+def editPet(request, pk):
+    pet = Puppy.objects.get(id=pk)
+    context = {
+        'pet': pet
+    }
+    return render(request, 'edit.html', context)
     
