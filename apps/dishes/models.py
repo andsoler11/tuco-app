@@ -77,3 +77,15 @@ class Breeds(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+
+
+class ContactDetail(models.Model):
+    id                  = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+    name_contact        = models.CharField(max_length=255, default='')
+    email_contact       = models.CharField(max_length=255, default='')
+    created             = models.DateTimeField(auto_now_add=True)
+    pet                 = models.ForeignKey(Puppy, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return str(self.name_contact)
