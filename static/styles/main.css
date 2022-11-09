@@ -521,3 +521,77 @@ form .name-details .field:last-child {
 }
 
 
+.main_form_container {
+  overflow-y: auto;
+  max-height: 40rem;
+}
+
+
+.form.login {
+  overflow-y: auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* breeds table */
+.breed-table {
+  border-collapse: collapse;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width:100%;
+  table-layout: fixed;
+}
+
+.breed-table th {
+  background-color: #FFC397;
+  color: #202B3E;
+  font-weight: 400;
+  font-size: 16px;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.breed-table td {
+  padding: 10px 0;
+  text-align: center;
+  font-size: 14px;
+  color: #c2c7ca;
+}
+
+.breed-table tr:nth-child(even) {
+  background-color: #202B3E;
+}
+
+.breed-table tr:nth-child(odd) {
+  background-color: #2B3A4F;
+}
+
+
+.breed-table a {
+  color: #FFC397;
+}
+
+
+.breed-tabl tr td a:hover {
+  text-decoration: underline;
+}
+
+.breed-tabl tr td {
+  padding: 10px 0;
+  text-align: center;
+  font-size: 14px;
+  color: #c2c7ca;
+  width: 100%;
+}

@@ -14,6 +14,29 @@ YOUNG_AGE = 2
 MIDDLE_AGE = 4
 ADULT_AGE = 8
 
+puppy_ages = {
+    'small': 11,
+    'medium': 12,
+    'large': 18,
+    'giant': 24
+}
+
+
+grams_puppy_ages = {
+    1: 100,
+    2: 100,
+    3: 90,
+    4: 80,
+    5: 70,
+    6: 60,
+    7: 60,
+    8: 50,
+    9: 50,
+    10: 40,
+    11: 40,
+    12: 30
+}
+
 
 # @login_required(login_url='login')
 def dishesHome(request):
@@ -33,15 +56,22 @@ def dishesHome(request):
         body_image            = request.POST.get('body_image')
         weight_input          = request.POST.get('weight')
         food_input            = request.POST.get('natural_food')
+        breed_input           = request.POST.get('breed')
         weight, age           = format_weight_and_age(weight_input, age_input)
         
-        # mind using sessions in the future
-        # request.session['food_type'] = food_input
-        grams, grams_percent, points = determineGrams(activity_level, reproductive_state, body_image, weight)
+        breed_data = Breeds.objects.get(name=breed_input)
+        breed_size = breed_data.breed_size
+        age_threshold = puppy_ages[breed_size]
+
+        if age <= age_threshold:
+            grams_percent = grams_puppy_ages[age] / 10
+            grams = grams_puppy_ages[age] * weight
+            points = 0
+        else:
+            grams, grams_percent, points = determineGrams(activity_level, reproductive_state, body_image, weight)
 
 
         if request.POST.get('name_contact') and request.POST.get('email_contact'):
-            
             email = request.POST.get('email_contact').lower()
             name = request.POST.get('name_contact').lower()
             
@@ -92,6 +122,7 @@ def dishesHome(request):
         return redirect('menus', pk=pk)
 
     breeds = Breeds.objects.all()
+
     context = {
         'page': page, 
         'dish': dish, 
@@ -174,5 +205,18 @@ def menusHome(request, pk):
 
     return render(request, 'dishes/menus.html', context)
 
+
+
+def editPet(request, pk):
+    puppy = Puppy.objects.get(id=pk)
+    form = PuppyForm(instance=puppy)
+
+    if request.method == 'POST':
+        puppy.delete()
+        return dishesHome(request)
+
+    context = {'puppy':puppy, 'page': 'edit-pet', 'form': form}
+
+    return render(request, 'dishes/edit-pet.html', context)
 
 

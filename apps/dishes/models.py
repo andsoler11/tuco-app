@@ -74,6 +74,7 @@ class Breeds(models.Model):
     life_span   = models.CharField(max_length=255, null=True, blank=True)
     breed_group = models.CharField(max_length=255, null=True, blank=True)
     image_url   = models.CharField(max_length=255, null=True, blank=True)
+    breed_size  = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return str(self.name)
