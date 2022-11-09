@@ -8,18 +8,28 @@
         <div class="wrapper">
           <section class="form login">
 
-            {% for pet in pets %}
+            
                 {% comment %} <a href="{% url 'menus' pet.id %}">{{pet.name}}</a>  <a href="{% url 'menus' pet.id %}" style="margin-left: 10px;" > -> DELETE</a><br> {% endcomment %}
 
-                <div style="display: flex;">
-                    <a href="{% url 'menus' pet.id %}" style="color: white; font-size: 20px">{{pet.name}}</a> 
-                    <form method="POST" action="{% url 'delete-pet' pet.id %}">
-                        {% csrf_token %}
-                        <input type="submit" value="Delete" class="botton" style="margin-left: 10px; background-color: red; color: white; cursor: pointer;" />
-                    </form>
-                </div>
+                <table class="breed-table">
+                    <tr>
+                        <th>Name</th>
+                        <th>options</th>
+                    </tr>
+                    {% for pet in pets %}
+                    <tr>
+                        <td><a href="{% url 'menus' pet.id %}">{{pet.name}}</a> </td>
+                        <td>
+                            <a href="{% url 'edit-pet' pet.id %}">Edit</a>
+                            <form method="POST" action="{% url 'delete-pet' pet.id %}">
+                                {% csrf_token %}
+                                <input type="submit" value="Delete" class="botton" style="background-color: red;color: white;cursor: pointer;border: none;padding: 5px;" />
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
 
-            {% endfor %}
 
 
         </section>

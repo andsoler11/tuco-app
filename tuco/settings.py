@@ -40,7 +40,7 @@ DJANGO_APPS = [
 
 SITE_ID = 1
 THIRD_PARTY_APPS = ["rest_framework", "livereload", "bootstrap5"]
-LOCAL_APPS = ['apps.dishes', 'apps.users', 'apps.pets']
+LOCAL_APPS = ['apps.dishes', 'apps.users', 'apps.pets', 'controls']
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
