@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-<!-- {% load static %} -->
-<!-- {% load bootstrap5 %} -->
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -23,7 +21,6 @@
     <title>{{page.capitalize}} - Forever Dog</title>
 </head>
 <body>
-<!-- <div> -->
     {% include 'nav-bar.html' %}
 
     {% comment %} {% if messages %}
@@ -42,14 +39,11 @@
         </div>
     </div> {% endcomment %}
 
-
     {% block content %}
 
     {% endblock content %}
 
-
     {% include 'footer.html' %}
-
 </body>
 <script src="{% static 'js/main.js' %}"></script>
 </html>
