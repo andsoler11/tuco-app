@@ -7,65 +7,64 @@
 <div class="main_container">
     <div class="main_form_container">
         <div class="form_wrapper">
-          <section class="form login">
-              <header>
-                <h1>Regístrate</h1>
-              </header>
+            <section class="form login">
+                <header>
+                    <h1>Regístrate</h1>
+                </header>
 
-              <hr />
+                <hr />
 
-              <form action="{% url 'register' %}" method="POST">
-                {% csrf_token %}
-                  <div class="field input">
-                      {% comment %} <label>Usuario</label> {% endcomment %}
-                      <input type="text" name="email" placeholder="Email" value="">
-                  </div>
-                  <div class="field input">
-                      {% comment %} <label>Contrasenia</label> {% endcomment %}
-                      <input type="password" name="password" placeholder="Password">
-                      {% comment %} <i class="fas fa-eye"></i> {% endcomment %}
-                  </div>
+                <form action="{% url 'register' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="field input">
+                        {% comment %} <label>Usuario</label> {% endcomment %}
+                        <input type="text" name="email" placeholder="Email" value="">
+                    </div>
+                    <div class="field input">
+                        {% comment %} <label>Contrasenia</label> {% endcomment %}
+                        <input type="password" name="password" placeholder="Password">
+                        {% comment %} <i class="fas fa-eye"></i> {% endcomment %}
+                    </div>
 
-                  <div class="field input">
-                    {% comment %} <label>Contrasenia</label> {% endcomment %}
-                    <input type="password" name="password" placeholder="Confirm password">
-                    {% comment %} <i class="fas fa-eye"></i> {% endcomment %}
-                </div>
-  
-                <div class="field button">
-                    <input type="submit" value="Continuar">
-                </div>
-              </form>
-              <div class="link">Ya tienes una cuenta? <a href="{% url 'login' %}">Ingresa</a></div>
-          </section>
-      </div>
-    </div>  
+                    <div class="field input">
+                        {% comment %} <label>Contrasenia</label> {% endcomment %}
+                        <input type="password" name="password" placeholder="Confirm password">
+                        {% comment %} <i class="fas fa-eye"></i> {% endcomment %}
+                    </div>
+
+                    <div class="field button">
+                        <input type="submit" value="Continuar">
+                    </div>
+                </form>
+                <div class="link">Ya tienes una cuenta? <a href="{% url 'login' %}">Ingresa</a></div>
+            </section>
+        </div>
+    </div>
 </div>
 
 {% else %}
 
 <div class="main_container">
-  <!-- <div class="main_form_container"> -->
-      {% if messages|length > 0 %}
-      <div style="display: flex; justify-content: center;">
+    {% if messages|length > 0 %}
+    <div style="display: flex; justify-content: center;">
         <div class="alert alert--{{message.tags}}">
             {% for message in messages %}
-              <p class="alert__message">{{message}}</p>
+            <p class="alert__message">{{message}}</p>
             {% endfor %}
-          </div>
-      </div>
-      {% endif %}
+        </div>
+    </div>
+    {% endif %}
 
-      <div class="form_wrapper">
+    <div class="form_wrapper">
         <section class="form login">
             <header>
-              <h1>Inicia sesión</h1>
+                <h1>Inicia sesión</h1>
             </header>
 
             <hr />
 
             <form action="{% url 'login' %}" method="POST">
-              {% csrf_token %}
+                {% csrf_token %}
                 <div class="field input">
                     {% comment %} <label>Usuario</label> {% endcomment %}
                     <input type="text" name="email" placeholder="Email" value="">
@@ -79,12 +78,11 @@
                 <div class="field button">
                     <input type="submit" value="Continuar">
                 </div>
-                
+
             </form>
             <div class="link">No tienes cuenta? <a href="{% url 'register' %}">Registrate</a></div>
         </section>
-      </div>
-  <!-- </div>   -->
+    </div>
 </div>
 
 {% endif %}
