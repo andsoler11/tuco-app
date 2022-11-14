@@ -1,18 +1,15 @@
-@import url('https://fonts.googleapis.com/css?family=Bitte');
-
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  text-decoration: none;
-  font-family: 'Bitter', sans-serif;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Bitter', sans-serif;
 }
-
 
 .multistep_form_tab {
     display: none;
 }
-  
+
 .step.active {
     opacity: 1;
 }
@@ -21,7 +18,6 @@
     background-color: #04AA6D;
 }
 
-
 .multistep_form_back_button {
     border: none;
     background-color: inherit;
@@ -29,29 +25,28 @@
     cursor: pointer;
 }
 
-
 .multistep_form_tab {
     height: 100%;
 }
 
 .form_back_section {
-  height: 40px;
-  width: 100%;
+    height: 40px;
+    width: 100%;
 }
 
 .back_icon_container {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .back_icon_container i {
-  color: #c2c7ca;
-  font-size: 20px;
-  position: relative;
-  bottom: 3px;
+    color: #c2c7ca;
+    font-size: 20px;
+    position: relative;
+    bottom: 3px;
 }
 
 .back_icon_container a {
@@ -64,8 +59,6 @@
     font-size: 13px;
     margin-left: 5px;
 }
-
-
 
 .form_header {
     height: 140px;
@@ -96,8 +89,6 @@
     width: 47%;
 }
 
-
-
 input[placeholder="raza"] {
     width: 100%;
     height: 50px;
@@ -109,10 +100,6 @@ input[placeholder="raza"] {
     margin-bottom: 15px;
     appearance: none;
 }
-
-
-
-
 
 .radio_inputs_container,
 .radio_inputs_container__activity {
@@ -132,9 +119,6 @@ input[placeholder="raza"] {
     margin-right: 5px;
 }
 
-
-
-
 .radio_inputs_container__activity p {
     display: flex;
     justify-content: space-evenly;
@@ -150,8 +134,6 @@ input[placeholder="raza"] {
     margin-bottom: 5px;
 }
 
-
-
 .activity_image_container {
     display: flex;
     justify-content: center;
@@ -159,16 +141,6 @@ input[placeholder="raza"] {
     margin-bottom: 10px;
     height: 180px;
 }
-
-
-
-
-
-
-
-
-
-
 
 .carousel_container {
     width: 100%;

@@ -1,20 +1,29 @@
 <!DOCTYPE html>
-{% load static %}
-{% load bootstrap5 %}
+<!-- {% load static %} -->
+<!-- {% load bootstrap5 %} -->
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+    
+    <link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100;0,300;0,400;0,500;0,600;1,100;1,300;1,400;1,500;1,600&display=swap');
+    </style> 
+
+    <link rel="stylesheet" href="{% static 'styles/variables.css' %}" />
     <link rel="stylesheet" href="{% static 'styles/main.css' %}" />
     <link rel="stylesheet" href="{% static 'styles/nav-bar.css' %}" />
     <link rel="stylesheet" href="{% static 'styles/multistep-form.css' %}" />
     <link rel="stylesheet" href="{% static 'styles/footer.css' %}" />
     <link rel="stylesheet" href="{% static 'styles/menus.css' %}" />
     <script src="https://kit.fontawesome.com/1ce4185475.js" crossorigin="anonymous"></script>
-    <title>{{page}}</title>
+    <title>{{page.capitalize}} - Forever Dog</title>
 </head>
-<div>
+<body>
+<!-- <div> -->
     {% include 'nav-bar.html' %}
 
     {% comment %} {% if messages %}

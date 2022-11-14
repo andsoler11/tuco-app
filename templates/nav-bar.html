@@ -4,10 +4,8 @@
 <header class="homepage_header">
     <div class="homepage_header__logo">
         <img src="{% static 'images/main_logo.svg' %}" alt="logo">
-        <button class="hamburger" onclick="openMenu();">Menu</button>
+        <button class="hamburger" onclick="toggleMenu();"><span></span>Menu</button>
     </div>
-
-    
 
     <div class="homepage_header__menu">
         <ul class="homepage_header__nav">
@@ -20,6 +18,11 @@
             {% if request.user.is_authenticated %}
                 <li class="homepage_header__nav__item"><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
             {% endif %}
+        </ul>
+        <ul class="homepage_header__social">
+            <li class="homepage_header__nav__item"><a href="{% url 'login' %}"><img src="{% static 'images/tiktok_logo.svg' %}" class="navbar_logo" /></a></li>
+            <li class="homepage_header__nav__item"><a href="{% url 'register' %}"><img src="{% static 'images/facebook_logo.svg' %}" class="navbar_logo" /></a></li>
+            <li class="homepage_header__nav__item"><a href="{% url 'register' %}"><img src="{% static 'images/instagram_logo.svg' %}" class="navbar_logo" /></a></li>
         </ul>
     </div>
     
@@ -41,14 +44,6 @@
         </ul>
     </div>
     {% endif %} {% endcomment %}
-
-    <div class="homepage_header__login">
-        <ul class="homepage_header__nav">
-            <li class="homepage_header__nav__item"><a href="{% url 'login' %}"><img src="{% static 'images/tiktok_logo.svg' %}" class="navbar_logo" /></a></li>
-            <li class="homepage_header__nav__item"><a href="{% url 'register' %}"><img src="{% static 'images/facebook_logo.svg' %}" class="navbar_logo" /></a></li>
-            <li class="homepage_header__nav__item"><a href="{% url 'register' %}"><img src="{% static 'images/instagram_logo.svg' %}" class="navbar_logo" /></a></li>
-        </ul>
-    </div>
 </header>
 
 
