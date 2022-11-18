@@ -22,23 +22,7 @@ puppy_ages = {
 }
 
 
-grams_puppy_ages = {
-    1: 100,
-    2: 100,
-    3: 90,
-    4: 80,
-    5: 70,
-    6: 60,
-    7: 60,
-    8: 50,
-    9: 50,
-    10: 40,
-    11: 40,
-    12: 30
-}
 
-
-# @login_required(login_url='login')
 def dishesHome(request):
     page = 'multistep-form'
     form = PuppyForm()
@@ -46,31 +30,28 @@ def dishesHome(request):
     grams = 0
     grams_percent = 0
     dish = ''
-    user = None 
-
+    user = None
 
     if request.method == 'POST':
-        activity_level        = request.POST.get('activity_level')
-        reproductive_state    = request.POST.get('reproductive_state')
-        age_input             = request.POST.get('age')
-        body_image            = request.POST.get('body_image')
-        weight_input          = request.POST.get('weight')
-        food_input            = request.POST.get('natural_food')
-        breed_input           = request.POST.get('breed')
-        weight, age           = format_weight_and_age(weight_input, age_input)
-        
-        breed_data = Breeds.objects.get(name=breed_input)
-        breed_size = breed_data.breed_size
-        age_threshold = puppy_ages[breed_size]
+        activity_level_input        = request.POST.get('activity_level')
+        reproductive_state_input    = request.POST.get('reproductive_state')
+        body_image_input            = request.POST.get('body_image')
 
-        if age <= age_threshold:
-            grams_percent = grams_puppy_ages[age] / 10
-            grams = grams_puppy_ages[age] * weight
-            points = 0
-        else:
-            grams, grams_percent, points = determineGrams(activity_level, reproductive_state, body_image, weight)
+        age, age_type    = validate_age_inputs(request.POST.get('age'), request.POST.get('age_type'))     
+        weight           = format_weight(request.POST.get('weight'))
+
+        # get the data!
+        grams, grams_percent, points = determineGrams(
+            activity_level=activity_level_input, 
+            reproductive_state=reproductive_state_input, 
+            body_image=body_image_input, 
+            weight=weight,
+            age_type=age_type,
+            age=age
+        )
 
 
+        ################ section for user contact ################
         if request.POST.get('name_contact') and request.POST.get('email_contact'):
             email = request.POST.get('email_contact').lower()
             name = request.POST.get('name_contact').lower()
@@ -91,14 +72,17 @@ def dishesHome(request):
             user_upload = user
         else:
             user_upload = request.user
-            
+        ##########################################################
+
+
+
         puppy = Puppy(
             owner=user_upload, 
             name=request.POST.get('name'), 
-            age=age_input,
-            body_image=body_image,
-            reproductive_state=reproductive_state,
-            activity_level=activity_level,
+            age=age,
+            body_image=body_image_input,
+            reproductive_state=reproductive_state_input,
+            activity_level=activity_level_input,
             allergies=request.POST.get('allergies'),
             special_needs=request.POST.get('special_needs'),
             breed=request.POST.get('breed'),
@@ -106,11 +90,14 @@ def dishesHome(request):
             grams=grams,
             grams_percent=grams_percent,
             points=points,
-            is_barf_active=food_input
+            is_barf_active=request.POST.get('natural_food')
         )
         puppy.save()
         pk = puppy.id
 
+
+
+        ################ section for user contact ################
         if request.POST.get('name_contact') and request.POST.get('email_contact'):
             contact = ContactDetail(
                     name_contact=name,
@@ -118,8 +105,11 @@ def dishesHome(request):
                     pet=puppy
                 )
             contact.save()
+        ##########################################################
 
         return redirect('menus', pk=pk)
+
+
 
     breeds = Breeds.objects.all()
 
@@ -135,11 +125,12 @@ def dishesHome(request):
 
     return render(request, 'dishes/home.html', context)
 
+
 # @login_required(login_url='login')
 def menusHome(request, pk):
     page = 'menus'
     puppy_data = Puppy.objects.get(id=pk)
-
+    pprint(puppy_data.__dict__)
     grams = puppy_data.grams
     food = puppy_data.is_barf_active
     allergies = puppy_data.allergies

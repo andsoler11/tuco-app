@@ -385,6 +385,7 @@ form .name-details .field:last-child {
 }
 
 .form form .input input, 
+.form form .input select, 
 #id_allergies, #id_special_needs {
   height: 50px;
   width: 100%;

@@ -41,12 +41,19 @@ SPECIAL_NEEDS_DATA = {
     ('Ganancia de peso', 'Ganancia de peso'),
 }
 
+AGE_TYPES = {
+    ('meses', 'meses'),
+    ('años', 'años'),
+}
+
+
 
 class Puppy(models.Model):
     id                  = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     owner               = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     name                = models.CharField(max_length=255)
     age                 = models.IntegerField(default=0)
+    age_type            = models.CharField(max_length=255, null=False, blank=False, choices=AGE_TYPES, default='años')
 
     body_image          = models.CharField(max_length=255, null=False, blank=False, choices=BODY_IMAGES)
     reproductive_state  = models.CharField(max_length=255, null=False, blank=False, choices=REPRODUCTIVE_STATES)
