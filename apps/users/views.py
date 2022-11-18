@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from apps.users.models import Profile
 import hashlib
 from .forms import CustomUserCreationForm
-
+from pprint import pprint
 
 def renderHomepage(request):
     """Render the homepage"""
@@ -48,6 +48,7 @@ def registerUser(request):
 
     
     if request.method == 'POST':
+        pprint(request.POST)
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
@@ -60,10 +61,12 @@ def registerUser(request):
             return redirect('dishes')
 
         else:
-            messages.error(request, 'An error has occurred during registration')
+            for msg in form.errors:
+                pprint(form.errors[msg])
+                messages.error(request, f"{form.errors[msg]}")
     
 
-    context = {'page': page}
+    context = {'page': page, 'form': form}
     return render(request, 'users/login_register.html', context)
 
 
