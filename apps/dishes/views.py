@@ -109,8 +109,6 @@ def dishesHome(request):
 
         return redirect('menus', pk=pk)
 
-
-
     breeds = Breeds.objects.all()
 
     context = {

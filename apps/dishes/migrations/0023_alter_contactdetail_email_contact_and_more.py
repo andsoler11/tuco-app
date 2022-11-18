@@ -34,14 +34,14 @@ class Migration(migrations.Migration):
             name='special_needs',
             field=models.CharField(choices=[('Digestión', 'Digestión'), ('Ariticulaciones', 'Ariticulaciones'), ('Hiperactividad', 'Hiperactividad'), ('Piel', 'Piel'), ('Ganancia de peso', 'Ganancia de peso'), ('Ansiedad', 'Ansiedad'), ('Control de peso', 'Control de peso'), ('Cancer', 'Cancer'), ('Urinario-renal', 'Urinario-renal'), ('Cardiovascular', 'Cardiovascular'), ('Aliento', 'Aliento'), ('Ninguna', 'Ninguna'), ('Diabetes', 'Diabetes')], default='Ninguna', max_length=255),
         ),
-        migrations.CreateModel(
-            name='ContactDetail',
-            fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False, unique=True)),
-                ('email_contact', models.CharField(max_length=255)),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('name_contact', models.CharField(max_length=255)),
-                ('pet', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='dishes.puppy')),
-            ],
-        ),
+        # migrations.CreateModel(
+        #     name='ContactDetail',
+        #     fields=[
+        #         ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False, unique=True)),
+        #         ('email_contact', models.CharField(max_length=255)),
+        #         ('created', models.DateTimeField(auto_now_add=True)),
+        #         ('name_contact', models.CharField(max_length=255)),
+        #         ('pet', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='dishes.puppy')),
+        #     ],
+        # ),
     ]

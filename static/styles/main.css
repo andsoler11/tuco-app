@@ -54,6 +54,10 @@
     margin-bottom: 10px;
 }
 
+.alert--success {
+    color: #2ecc71;
+}
+
 .form {
     padding: calc(var(--base-space) * 4);
     display: flex;
