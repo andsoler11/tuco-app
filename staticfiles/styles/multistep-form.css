@@ -1,0 +1,176 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Bitter', sans-serif;
+}
+
+.multistep_form_tab {
+    display: none;
+}
+
+.step.active {
+    opacity: 1;
+}
+
+.step.finish {
+    background-color: #04AA6D;
+}
+
+.multistep_form_back_button {
+    border: none;
+    background-color: inherit;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.multistep_form_tab {
+    height: 100%;
+}
+
+.form_back_section {
+    height: 40px;
+    width: 100%;
+}
+
+.back_icon_container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.back_icon_container i {
+    color: #c2c7ca;
+    font-size: 20px;
+    position: relative;
+    bottom: 3px;
+}
+
+.back_icon_container a {
+    color: #c2c7ca;
+    width: 50px;
+}
+
+.back_icon_container p {
+    color: #c2c7ca;
+    font-size: 13px;
+    margin-left: 5px;
+}
+
+.form_header {
+    height: 140px;
+    width: 100%;
+}
+
+.form_header h3 {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.form_header p {
+    color: #c2c7ca;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+
+.form_age_sex_input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form_age_sex_input .input {
+    width: 47%;
+}
+
+input[placeholder="raza"] {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #c2c7ca;
+    border-radius: 5px;
+    padding: 0 15px;
+    font-size: 16px;
+    color: #c2c7ca;
+    margin-bottom: 15px;
+    appearance: none;
+}
+
+.radio_inputs_container,
+.radio_inputs_container__activity {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.radio_inputs_container p {
+    color: #c2c7ca;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.radio_inputs_container p input {
+    margin-right: 5px;
+}
+
+.radio_inputs_container__activity p {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-direction: column;
+    color: #c2c7ca;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.radio_inputs_container__activity p input {
+    margin-bottom: 5px;
+}
+
+.activity_image_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    height: 180px;
+}
+
+.carousel_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.carousel_container .carousel {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrow_container i {
+    color: #FFC397;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+
+.carousel-item {
+    display: none;
+}
+
+.carousel-item.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

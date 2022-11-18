@@ -3,7 +3,8 @@ from apps.users import views
 
 
 urlpatterns = [
-    path('', views.userLogin, name="login"),
+    path('', views.renderHomepage, name="homepage"),
+    path('login', views.userLogin, name="login"),
     path('register/', views.registerUser, name="register"),
     path('logout/', views.logoutUser, name='logout'),
 ]

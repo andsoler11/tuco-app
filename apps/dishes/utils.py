@@ -1,3 +1,47 @@
+
+MONTHS_PERCENTS = {
+    2: 10,
+    3: 10,
+    4: 9,
+    5: 9,
+    6: 8,
+    7: 8,
+    8: 7,
+    9: 7,
+    10: 6,
+    11: 6,
+    12: 6,
+}
+
+
+SUPLEMENTOS ={
+    'huevo_codorniz_semana': {
+        9: 2, # hasta 9 kilos
+        15: 4, # hasta 15 kilos
+        30: 7, # hasta 30 kilos
+        60: 10, # mas de 30 kilos
+    },
+    'omega_3_diario': {
+        0: 1000, # menos de 10 kilos, 1000 gramos (1 capsula) diaria
+        10: 1300, # hasta 10 kilos, 1300 gramos (1 capsula) diarias
+    },
+    'kefir_diario': {
+        0: '1 cucharadita', # menos de 10 kilos
+        10: '1 cucharada', # hasta 10 kilos
+    },
+    'caldo_de_huesos_diario': {
+        0: '1/2 cucharadita', # menos de 10 kilos
+        10: '1 cucharadita', # hasta 10 kilos
+    },
+    'arandanos_diario': {
+        0: 15, # menos de 10 kilos, 15 gramos diarios
+        10: 30, # hasta 10 kilos, 30 gramos diarios
+    }
+}
+
+
+
+
 def get_ingredients_percent(grams, natural_food = 'yes'):
     percent_ingredients = {}
     percent_ingredients['hueso carnoso'] = round((grams * 40) / 100)
@@ -73,21 +117,23 @@ def reproductive_state_points(reproductive_state):
     return points
 
 
-def format_weight_and_age(weight_input, age_input):
+def format_weight(weight_input):
     if '.' in weight_input or ',' in weight_input:
-            weight = float(weight_input)
+        weight = float(weight_input)
     else:
         weight = int(weight_input)
 
-    if 'months' in age_input:
-        age = int(age_input.split(' ')[0])
-    else:
-        age = int(age_input.split(' ')[0] * 12)
-
-    return weight, age
+    return weight
         
 
-def determineGrams(activity_level, reproductive_state, body_image, weight):
+def determineGrams(activity_level, reproductive_state, body_image, weight, age_type, age):
+    if age_type == 'months':
+        grams = round((weight * MONTHS_PERCENTS[int(age)]) * 10, 2)
+        grams_percent = MONTHS_PERCENTS[int(age)]
+        points = 0
+
+        return grams, grams_percent, points
+
     # starting getting the points from the variables
     points = 0
     points += reproductive_state_points(reproductive_state)
@@ -95,19 +141,8 @@ def determineGrams(activity_level, reproductive_state, body_image, weight):
     points += activity_points(activity_level)
 
     # determine the size of the dog by his weight
-    size = 'large'
-    if weight < 10:
-        size = 'chico'
-
-    # this is a special case for the skinny ones
-    if body_image == 'muy_delgado':
-        percent_to_increase =  (weight * 10) / 100
-        weight += percent_to_increase
-    weight = round(weight, 2)
-
-    # dertermine wich percent we need
     size_percent = 'large'
-    if size == 'chico' or size == 'mini':
+    if weight < 10:
         size_percent = 'small'
 
     # percents array
@@ -124,6 +159,10 @@ def determineGrams(activity_level, reproductive_state, body_image, weight):
         index_number = 1    
     grams_percent = percents[size_percent][index_number]
 
+
+    if body_image == 'muy_delgado':
+        grams_percent = 6
+
     grams = round((grams_percent * weight) * 10, 2)
 
     return grams, grams_percent, points
@@ -136,3 +175,12 @@ def get_percents_data(total_grams, grams_dict):
         percents_data[key] = round((value * 100) / total_grams, 2)
 
     return percents_data
+
+
+
+def validate_age_inputs(age_input, age_type_input):
+    if age_type_input == 'months' and int(age_input) > 12:
+        age_input = round(int(age_input) / 12, 0)
+        age_type_input = 'years'
+
+    return age_input, age_type_input

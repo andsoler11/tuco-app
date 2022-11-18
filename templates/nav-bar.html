@@ -9,14 +9,15 @@
 
     <div class="homepage_header__menu">
         <ul class="homepage_header__nav">
-            <li class="homepage_header__nav__item"><a href="{% url 'login' %}">Inicio</a></li>
+            <li class="homepage_header__nav__item"><a href="{% url 'homepage' %}">Inicio</a></li>
             <li class="homepage_header__nav__item"><a href="{% url 'list-pets' %}">Mascotas</a></li>
             <li class="homepage_header__nav__item"><a href="{% url 'dishes' %}">Formular</a></li>
             <li class="homepage_header__nav__item"><a href="">Item</a></li>
             <li class="homepage_header__nav__item"><a href="">Item</a></li>
-
             {% if request.user.is_authenticated %}
                 <li class="homepage_header__nav__item"><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
+            {% else %}
+                <li class="homepage_header__nav__item"><a href="{% url 'login' %}">Ingresar</a></li>
             {% endif %}
         </ul>
         <ul class="homepage_header__social">
@@ -25,25 +26,6 @@
             <li class="homepage_header__nav__item"><a href="{% url 'register' %}"><img src="{% static 'images/instagram_logo.svg' %}" class="navbar_logo" /></a></li>
         </ul>
     </div>
-    
-    {% comment %} {% if not request.user.is_authenticated %}
-    <div class="homepage_header__login">
-        <ul class="homepage_header__nav">
-            <li class="homepage_header__nav__item"><a href="{% url 'login' %}"><img src="static/images/tiktok_logo.png" class="navbar_logo" /></a></li>
-            <li class="homepage_header__nav__item"><a href="{% url 'register' %}"><img src="static/images/facebook_logo.png" class="navbar_logo" /></a></li>
-            <li class="homepage_header__nav__item"><a href="{% url 'register' %}"><img src="static/images/instagram_logo.png" class="navbar_logo" /></a></li>
-            
-        </ul>
-    </div>
-    {% else %}
-
-    <div class="homepage_header__login">
-        <ul class="homepage_header__nav">
-            <li class="homepage_header__nav__item_user">{{ user.email }}</li>
-            <li class="homepage_header__nav__item"><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
-        </ul>
-    </div>
-    {% endif %} {% endcomment %}
 </header>
 
 
