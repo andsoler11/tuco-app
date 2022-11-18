@@ -7,7 +7,7 @@
   <div class="main_form_container">
       <div class="wrapper">
         <section class="form login">
-          <form class="form" method="POST">
+          <form method="POST">
             {% csrf_token %}
 
 
@@ -34,13 +34,21 @@
                   <div class="field input">
                     <input type="number" name="age" placeholder="Edad" value="{{ puppy.age }}">
                   </div>
-                  <div class="field input">
-                    <input list="sex" name="reproductive_state" placeholder="Estado" value="{{ puppy.reproductive_state }}">
-                    <datalist id="sex">
-                      <option value="castrado">Castrado</option>
-                      <option value="entero">Entero</option>
-                    </datalist> 
+
+
+                  <div class="field input input_age_type">
+                    <select id="sex" name="age_type" option="años">
+                      <option value="años">Años</option>
+                      <option value="meses">Meses</option>
+                    </select>                     
                   </div>
+                </div>
+
+                <div class="field input">
+                  <select id="sex" name="reproductive_state" placeholder="Estado" option="castrado">
+                    <option value="castrado">Castrado</option>
+                    <option value="entero">Entero</option>
+                  </select>                     
                 </div>
 
                 <div class="form_breed_input">

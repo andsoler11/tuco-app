@@ -50,6 +50,7 @@ htmlcov/
 .agignore
 
 # OS X artifacts
+.DS_Store
 *.DS_Store
 
 # Logging

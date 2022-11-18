@@ -7,6 +7,12 @@ import hashlib
 from .forms import CustomUserCreationForm
 
 
+def renderHomepage(request):
+    """Render the homepage"""
+    context = {'page': 'homepage'}
+    return render(request, 'homepage.html', context)
+
+
 def userLogin(request):
     """function to login a user"""
     page = 'login'
