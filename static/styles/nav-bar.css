@@ -29,11 +29,6 @@
     height: 100%;
 }
 
-.homepage_header__nav {
-    flex-grow: 1;
-    margin: 0 calc(var(--base-space) * 7);
-}
-
 .homepage_header__nav,
 .homepage_header__social {
     align-items: center;
@@ -41,6 +36,12 @@
     flex-direction: row;
     justify-content: space-between;
     list-style: none;
+}
+
+.homepage_header__nav {
+    flex-grow: 1;
+    justify-content: space-evenly;
+    margin: 0;
 }
 
 .homepage_header__nav__item{
