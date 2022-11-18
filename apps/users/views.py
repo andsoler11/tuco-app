@@ -48,7 +48,6 @@ def registerUser(request):
 
     
     if request.method == 'POST':
-        pprint(request.POST)
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
@@ -62,7 +61,6 @@ def registerUser(request):
 
         else:
             for msg in form.errors:
-                pprint(form.errors[msg])
                 messages.error(request, f"{form.errors[msg]}")
     
 

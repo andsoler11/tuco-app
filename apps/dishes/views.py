@@ -128,7 +128,6 @@ def dishesHome(request):
 def menusHome(request, pk):
     page = 'menus'
     puppy_data = Puppy.objects.get(id=pk)
-    pprint(puppy_data.__dict__)
     grams = puppy_data.grams
     food = puppy_data.is_barf_active
     allergies = puppy_data.allergies

@@ -12,7 +12,7 @@ environ.Env.read_env(BASE_DIR / '.env')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
-
+CSRF_TRUSTED_ORIGINS = ['https://web-production-714b.up.railway.app', 'https://*.127.0.0.1']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
