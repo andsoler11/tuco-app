@@ -1,3 +1,5 @@
+import re
+import json
 
 MONTHS_PERCENTS = {
     2: 10,
@@ -184,3 +186,82 @@ def validate_age_inputs(age_input, age_type_input):
         age_type_input = 'years'
 
     return age_input, age_type_input
+
+
+
+# def get_suplements_data(age_type, age, weight, natural_food):
+#     suplements_data = {}
+#     if age_type == 'years':
+#         if int(age) < 1:
+#             suplements_data['huevo_codorniz_semana'] = SUPLEMENTOS['huevo_codorniz_semana'][9]
+#             suplements_data['omega_3_diario'] = SUPLEMENTOS['omega_3_diario'][0]
+#             suplements_data['kefir_diario'] = SUPLEMENTOS['kefir_diario'][0]
+#             suplements_data['caldo_de_huesos_diario'] = SUPLEMENTOS['caldo_de_huesos_diario'][0]
+#             suplements_data['arandanos_diario'] = SUPLEMENTOS['arandanos_diario'][0]
+#         elif int(age) >= 1 and int(age) <= 2:
+#             suplements_data['huevo_codorniz_semana'] = SUPLEMENTOS['huevo_codorniz_semana'][15]
+#             suplements_data['omega_3_diario'] = SUPLEMENTOS['omega_3_diario'][10]
+#             suplements_data['kefir_diario'] = SUPLEMENTOS['kefir_diario'][10]
+#             suplements_data['caldo_de_huesos_diario'] = SUPLEMENTOS['caldo_de_huesos_diario'][10]
+#             suplements_data['arandanos_diario'] = SUPLEMENTOS['arandanos_diario'][10]
+#         elif int(age) >= 3 and int(age) <= 4:
+#             suplements_data['huevo_codorniz_semana'] = SUPLEMENTOS['huevo_codorniz_semana'][30]
+#             suplements_data['omega_3_diario'] = SUPLEMENTOS['omega_3_diario'][10]
+#             suplements_data['kefir_diario'] = SUPLEMENTOS['kefir_diario'][10]
+#             suplements_data['caldo_de_huesos_diario'] = SUPLEMENTOS['caldo_de_huesos_diario'][10]
+#             suplements_data['arandanos_diario'] = SUPLEMENTOS['arandanos_diario'][10]
+#         elif int(age) >= 5 and int(age) <= 7:
+#             suplements_data['huevo_codorniz_semana'] = SUPLEMENTOS['huevo_codorniz_semana'][60]
+#             suplements
+
+
+def convert_string_to_array(string):
+    array = string.split('\r\n')
+    upload_array = {}
+        
+    for item in array:
+        item = item.strip()
+        if item == '':
+            continue
+
+        if re.search(r'\d+', item):
+            number = re.findall(r'\d+', item)
+            ingredient = re.findall(r'\D+', item)
+            ingredient_name = ingredient[0].strip()
+
+
+            if len(number) > 1:
+                number = number[0] + '.' + number[1]
+            else:
+                number = number[0]
+
+
+            upload_array[ingredient_name] = number
+
+    return upload_array
+
+
+
+def convert_json_to_string(json_string):
+    array = json.loads(json_string)
+    output_string = ''
+    for k,v in array.items():
+        output_string += f'{k} {v}% \r\n'
+
+    return output_string 
+
+
+
+def get_price_from_weight(grams, weight):
+    if (weight < 10):
+        price = 1432
+    elif (weight >= 10 and weight < 25):
+        price = 1382
+    elif (weight >= 25 and weight < 40):
+        price = 1333
+    elif weight >= 40:
+        price = 1284
+
+    price_grams = round((grams / 110) * price)
+
+    return price_grams

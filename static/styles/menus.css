@@ -130,3 +130,7 @@
     margin-bottom: 10px;
     font-weight: 900;
 }
+
+.menu_link a {
+    color: blue !important;
+}

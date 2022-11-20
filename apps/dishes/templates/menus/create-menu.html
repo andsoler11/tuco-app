@@ -1,0 +1,34 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+
+<div class="main_container">
+    <div class="main_form_container">
+        <div class="wrapper">
+          <section class="form login">
+
+            <form method="POST">
+                {% csrf_token %}
+                {% for input in form %}
+
+                    <div class="field input">
+                        <label>{{ input.label }}</label>
+                        {{ input }}
+                    </div>
+        
+                {% endfor %}
+
+                <div class="field button">
+                    <input type="submit" value="Continuar">
+                </div>
+                <div class="link"><a href="{% url 'menus-list' %}">Cancelar</a></div>
+            </form>
+
+        </section>
+    </div>
+  </div>  
+</div>
+
+
+{% endblock %}
