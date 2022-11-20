@@ -133,7 +133,8 @@ form .name-details .field:last-child {
 .form form .input input,
 #id_allergies,
 #id_special_needs,
-.form form .input select {
+.form form .input select,
+.form-control {
     height: 50px;
     width: 100%;
     font-size: 16px;
@@ -142,6 +143,16 @@ form .name-details .field:last-child {
     background-color: #202B3E;
     color: #fff;
 }
+
+.input > label {
+    color: #c2c7ca;
+    font-size: 18px;
+}
+
+.form-control {
+    margin: 8px 0px;
+}
+
 
 .form form .input input:focus {
     box-shadow: 0 0 0 1px #FFC397, 0 0 0 1px #FFC397;

@@ -4,12 +4,12 @@ import string
 from unicodedata import name
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
-from .models import Breeds, Puppy, ContactDetail
-from .forms import PuppyForm
+from .models import Breeds, Puppy, ContactDetail, Menus
+from .forms import PuppyForm, MenusForm
 from .utils import *
 import json
 import os
-
+import re
 YOUNG_AGE = 2
 MIDDLE_AGE = 4
 ADULT_AGE = 8
@@ -128,6 +128,7 @@ def dishesHome(request):
 def menusHome(request, pk):
     page = 'menus'
     puppy_data = Puppy.objects.get(id=pk)
+    available_menus = Menus.objects.all()
     grams = puppy_data.grams
     food = puppy_data.is_barf_active
     allergies = puppy_data.allergies
@@ -185,7 +186,8 @@ def menusHome(request, pk):
         'grams_ingredients': percent_ingredients, 
         'price_grams': price_grams,
         'allergies': allergies,
-        'special_needs': special_needs
+        'special_needs': special_needs,
+        'available_menus': available_menus,
     }
 
     if food == 'no':
@@ -208,3 +210,141 @@ def editPet(request, pk):
     return render(request, 'dishes/edit-pet.html', context)
 
 
+def createMenu(request):
+    form = MenusForm()
+
+    if request.method == 'POST':
+        percents_array = convert_string_to_array(request.POST.get('percents'))
+        nutrition_data = convert_string_to_array(request.POST.get('nutrition_information'))
+
+        menu = Menus(
+            name=request.POST.get('name'),
+            percents=json.dumps(percents_array),
+            description=request.POST.get('description'),
+            ingredients_description=request.POST.get('ingredients_description'),
+            nutrition_information=json.dumps(nutrition_data),
+        )
+        menu.save()
+        return redirect('menus-list')
+
+    context = {'form':form, 'page': 'create-menu'}
+    return render(request, 'menus/create-menu.html', context)
+
+
+def listMenus(request):
+    menus = Menus.objects.all()
+    context = {'menus':menus, 'page': 'menus-list'}
+    return render(request, 'menus/menus-list.html', context)
+
+
+
+def deleteMenu(request, pk):
+    menu = Menus.objects.get(id=pk)
+
+    if request.method == 'POST':
+        # borramos de la BS y redireccionamos
+        menu.delete()
+        return redirect('menus-list')
+
+
+def updateMenu(request, pk):
+    menu = Menus.objects.get(id=pk)
+    
+    if request.method == 'POST':
+        menu.delete()
+        return createMenu(request)
+
+
+    menu.percents = convert_json_to_string(menu.percents)
+    menu.nutrition_information = convert_json_to_string(menu.nutrition_information)
+
+    form = MenusForm(instance=menu)
+    context = {'menu':menu, 'page': 'update-menu', 'form': form}
+
+    return render(request, 'menus/create-menu.html', context)
+    
+
+
+def menuSelection(request):
+    menus = Menus.objects.all()
+
+    # get all puppies grams related to user
+    puppies = Puppy.objects.filter(owner=request.user)
+    puppies_grams = {}
+    for puppy in puppies:
+        puppies_grams[puppy.name] = { 'grams': puppy.grams, 'weight': puppy.weight, 'id': puppy.id }
+
+
+
+
+    for menu in menus:
+        menu.prices = {}
+        nutrition_information = json.loads(menu.nutrition_information)
+        menu.nutrition_information = nutrition_information
+        percents = json.loads(menu.percents)
+
+        ############# NO BORRAR, CONTIENE EL CODIGO PARA CALCULAR LOS GRAMOS POR CADA INGREDIENTE POR CADA MASCOTA QUE TENGA EL USUARIO! ############
+        # for k, v in puppies_grams.items():
+        #     menu.prices[k] = {}
+        #     v = float(v)
+        #     for percent_name, percent_value in percents.items():
+        #         if '.' in percent_value:
+        #             percent_value = float(percent_value)
+        #         else:
+        #             percent_value = int(percent_value)
+
+        #         menu.prices[k][percent_name] = round((v * percent_value) / 100)
+
+        for k, v in puppies_grams.items():
+            grams = float(v.get('grams'))
+            weight = float(v.get('weight'))
+            menu.prices[k] = {'price': get_price_from_weight(grams, weight), 'grams': grams, 'id': v.get('id')}
+
+    context = {'menus':menus, 'page': 'menu-selection'}
+    return render(request, 'dishes/menu-selection.html', context)
+
+
+def menuDetail(request, pk):
+    menu = Menus.objects.get(id=pk)
+    menu.percents = json.loads(menu.percents)
+    menu.nutrition_information = json.loads(menu.nutrition_information)
+
+    menu.prices = {}
+
+    # get last puppy created
+    puppy = Puppy.objects.filter(owner=request.user).last()
+    puppies_grams = { 
+        puppy.name: {
+            'grams': float(puppy.grams),
+            'price': get_price_from_weight(float(puppy.grams), float(puppy.weight)),
+            'id' : puppy.id
+        }
+    }
+    menu.prices = puppies_grams
+
+    context = {'menu':menu, 'page': 'menu-detail'}
+    return render(request, 'dishes/menu-selection.html', context)
+
+
+def menuPet(request, pk):
+    puppy = Puppy.objects.get(id=pk)
+
+    if puppy.menu is None:
+        return redirect('menu-selection')
+
+    menu = Menus.objects.get(id=puppy.menu.id)
+    menu.percents = json.loads(menu.percents)
+    menu.nutrition_information = json.loads(menu.nutrition_information)
+
+    menu.prices = {}
+    puppies_grams = { 
+        puppy.name: {
+            'grams': float(puppy.grams),
+            'price': get_price_from_weight(float(puppy.grams), float(puppy.weight)),
+            'id' : puppy.id
+        }
+    }
+    menu.prices = puppies_grams
+
+    context = {'menu':menu, 'page': 'menu-pet', 'puppy': puppy}
+    return render(request, 'dishes/menu-pet.html', context)

@@ -11,7 +11,14 @@
                     <img src="{% static 'images/diet_header_image.png' %}" alt="">
                 </div>
 
+                {% for menu in available_menus %}
                 <div class="diet_data_container">
+                    <h2 class="menu_title">{{ menu.name }}</h2>
+                    <div class="link menu_link"><a href="{% url 'menu-detail' menu.id %}">Ver menu</a></div>
+                </div>
+                {% endfor %}
+
+                {% comment %} <div class="diet_data_container">
                     <h2 class="diet_title">Menú para {{ puppy_data.name }}</h2>
 
                     <p>Lorem Sumplementos funcionales para mejorar su salud. adipiscing elit, Sin carbohidratos, cereales o aditivos. consectetur adipiscing elit, sed do eiusmod.</p>
@@ -37,7 +44,7 @@
                     <div class="field input">
                         <button class="add-btn update-cart">Agregar al carrito</button>
                     </div>
-                </div>
+                </div> {% endcomment %}
 
                 
                 

@@ -15,6 +15,7 @@
             <li class="homepage_header__nav__item"><a href="">Item</a></li>
             <li class="homepage_header__nav__item"><a href="">Item</a></li>
             {% if request.user.is_authenticated %}
+                <li class="homepage_header__nav__item"><a href="{% url 'menu-selection' %}">Menus</a></li>
                 <li class="homepage_header__nav__item"><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
             {% else %}
                 <li class="homepage_header__nav__item"><a href="{% url 'login' %}">Ingresar</a></li>
