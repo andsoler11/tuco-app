@@ -1,7 +1,7 @@
 :root {
     --base-space: 8px;
     --hamburguer-height: 2px;
-    --hamburguer-width: 34px;
+    --hamburguer-width: 30px;
     --header-height-desktop: 128px;
     --header-height-mobile: 82px;
 }

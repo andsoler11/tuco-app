@@ -3,8 +3,12 @@
 <!-- Header Section -->
 <header class="homepage_header">
     <div class="homepage_header__logo">
-        <img src="{% static 'images/main_logo.svg' %}" alt="logo">
         <button class="hamburger" onclick="toggleMenu();"><span></span>Menu</button>
+        <img class="logo" src="{% static 'images/main_logo.svg' %}" alt="logo">
+        <div class="top-shelf-icons">
+            <img src="{% static 'images/user-icon.svg' %}" alt="user">
+            <img src="{% static 'images/cart-icon.svg' %}" alt="cart">
+        </div>
     </div>
 
     <div class="homepage_header__menu">

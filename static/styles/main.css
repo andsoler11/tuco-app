@@ -12,8 +12,8 @@
     background-color: #84AEAF;
     background-image: url(../images/main_container_background.png);
     background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+    background-size: contain;
+    background-position: center bottom;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -199,8 +199,7 @@ form .name-details .field:last-child {
  */
 @media screen and (max-width: 992px) {
     .main_container {
-        background-size: auto 65%;
-        background-position: center center;
+        background-size: 138% auto;
         min-height: calc(100vh - var(--header-height-mobile));
         padding: calc(var(--base-space) * 4) 0;
     }
@@ -227,8 +226,7 @@ form .name-details .field:last-child {
 
 @media screen and (max-width: 576px) {
     .main_container {
-        background-size: auto 80%;
-        background-position: 11% 60%;
+        background-position: bottom center;
         padding: calc(var(--base-space) * 3) 0;
     }
 
