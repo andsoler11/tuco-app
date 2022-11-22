@@ -70,6 +70,9 @@ class Puppy(models.Model):
     is_barf_active      = models.CharField(max_length=255, null=True, blank=True)
     created             = models.DateTimeField(auto_now_add=True)
 
+
+    menu                = models.ForeignKey('Menus', on_delete=models.DO_NOTHING, null=True, blank=True)
+
     def __str__(self):
         return str(self.name)
 
@@ -97,3 +100,17 @@ class ContactDetail(models.Model):
 
     def __str__(self):
         return str(self.name_contact)
+
+
+
+class Menus(models.Model):
+    id                  = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+    name                = models.CharField(max_length=255, default='default_name')
+    description         = models.TextField(null=True, blank=True)
+    ingredients_description = models.TextField(null=True, blank=True)
+    nutrition_information   = models.TextField(null=True, blank=True)
+    percents                = models.TextField(null=True, blank=True)
+    created             = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.name)

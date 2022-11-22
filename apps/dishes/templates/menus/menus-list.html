@@ -7,21 +7,19 @@
     <div class="main_form_container">
         <div class="wrapper">
           <section class="form login">
-
+                <a href="{% url 'menus-create' %}">Crear</a>
             
-                {% comment %} <a href="{% url 'menus' pet.id %}">{{pet.name}}</a>  <a href="{% url 'menus' pet.id %}" style="margin-left: 10px;" > -> DELETE</a><br> {% endcomment %}
-
                 <table class="breed-table">
                     <tr>
                         <th>Name</th>
                         <th>options</th>
                     </tr>
-                    {% for pet in pets %}
+                    {% for menu in menus %}
                     <tr>
-                        <td><a href="{% url 'menu-pet' pet.id %}">{{pet.name}}</a> </td>
+                        <td><a href="{% url 'menus' menu.id %}">{{menu.name}}</a> </td>
                         <td>
-                            <a href="{% url 'edit-pet' pet.id %}">Edit</a>
-                            <form method="POST" action="{% url 'delete-pet' pet.id %}">
+                            <a href="{% url 'menus-update' menu.id %}">Edit</a>
+                            <form method="POST" action="{% url 'menus-delete' menu.id %}">
                                 {% csrf_token %}
                                 <input type="submit" value="Delete" class="botton" style="background-color: red;color: white;cursor: pointer;border: none;padding: 5px;" />
                             </form>

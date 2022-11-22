@@ -1,0 +1,69 @@
+
+.diet_data_container {
+    border: 1px solid rgba(158, 158, 158, 0.475);
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 10px;
+    box-shadow: 0 0 128px 0 rgba(154, 153, 153, 0.3),
+        0 32px 64px -48px rgba(164, 164, 164, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+}
+
+
+.menu_title {
+    text-align: center;
+}
+
+
+.menu_data__description {
+    margin-top: 1rem;
+}
+
+
+.menu_data__nutrition {
+    text-align: left;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.menu_data__price {
+    width: 100%;
+}
+
+.menu_data__price > p > img {
+    margin-right: 0.5rem;
+}
+
+.menu_data__price > button {
+    margin-bottom: 1rem;
+    background: #FFC397;
+    color: #202B3E;
+    height: 25px;
+    border: 1px solid #c2c7ca;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+
+}
+
+.menu_data__price > button:hover {
+    background: #ff9d57;
+    color: #202B3E;
+    border: 1px solid #c2c7ca;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.menu_data__price strong {
+    font-size: 19px;
+    font-weight: 700;
+}
