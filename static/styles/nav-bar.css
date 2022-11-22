@@ -107,11 +107,15 @@
     .homepage_header__logo .logo-desktop {
         display: none;
     }
-    
-    .homepage_header__logo .logo-mobile {
+
+    .homepage_header__logo a {
         display: inline-flex;
         justify-self: center;
-        max-width: var(--logo-mobile-max-width);
+    }
+
+    .homepage_header__logo .logo-mobile {
+        display: block;
+        max-width: var(--logo-tablet-max-width);
         width: 40vw;
     }
 
@@ -260,6 +264,10 @@
 }
 
 @media screen and (max-width: 576px) {
+    .homepage_header__logo .logo-mobile {
+        max-width: var(--logo-mobile-max-width);
+    }
+
     .homepage_header__nav__item {
         margin: 0;
         text-align: right;
