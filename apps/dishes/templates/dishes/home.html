@@ -271,4 +271,11 @@
     </div>  
 </main>
 
+<!-- Trigger showTab for the first time in the wizard html only -->
+<script>
+    window.addEventListener('load', () => {
+        showTab(currentTab || 0);
+    }, { once: true });
+</script>
+
 {% endblock %}

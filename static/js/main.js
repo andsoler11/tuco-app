@@ -47,7 +47,6 @@
 // }
 
 let currentTab = 0;
-showTab(currentTab);
 
 function showTab(n) {
   // This function will display the specified tab of the form ...
