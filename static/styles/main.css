@@ -7,6 +7,14 @@
     font-weight: 400;
 }
 
+h1, h2, h3, h4 {
+    font-weight: 500;
+}
+
+b, strong {
+    font-weight: 600;
+}
+
 .main_container {
     align-items: center;
     background-color: #84AEAF;
@@ -198,6 +206,98 @@ form .name-details .field:last-child {
     height: 100%;
 }
 
+.main_container--home {
+    font-size: 18px;
+    justify-content: flex-start;
+    line-height: 1.5;
+    padding: 0;
+}
+
+.home-wrapper {
+    width: 100%;
+}
+
+.home-wrapper.hero {
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../images/comida-natural-perros-gatos-wild-balance1.png');
+    background-position: center bottom;
+    background-size: cover;
+}
+
+.home-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(100vh - var(--header-height-desktop));
+    margin: 0 auto;
+    max-width: 992px;
+    padding: calc(var(--base-space) * 8);
+    text-align: center;
+    width: 100%;
+}
+
+.home-section h1 {
+    font-size: 48px;
+    margin-bottom: calc(var(--base-space) * 3);
+}
+
+.home-section h2 {
+    font-size: 36px;
+    margin-bottom: calc(var(--base-space) * 4);
+}
+
+.hero {
+    align-items: center;
+    color: #fff;
+}
+
+.hero p {
+    font-size: 24px;
+    width: 60%;
+}
+
+.how-it-works.home-wrapper {
+    background-color: #FFF;
+    color: #202B3E;
+}
+
+.how-it-works ol {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: calc(var(--base-space) * 7);
+    padding-left: calc(var(--base-space) * 3);
+}
+
+.how-it-works li {
+    flex-basis: calc(50% - (var(--base-space) * 4));
+    margin-bottom: calc(var(--base-space) * 3);
+    text-align: left;
+}
+
+.benefits-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.benefits-row div {
+    flex-basis: 25%;
+}
+
+.link-button {
+    align-self: center;
+    background-color: #202B3E;
+    color: #FFC397;
+    min-width: 220px;
+    padding: calc(var(--base-space) * 2);
+    transition: color 0.3s ease-out;
+}
+
+.link-button:hover {
+    color: #FFF;
+}
+
 /*
  * Breakpoints from: https://getbootstrap.com/docs/5.0/layout/breakpoints/
  */
@@ -225,6 +325,16 @@ form .name-details .field:last-child {
 
     .form form .field {
         margin-bottom: 15px;
+    }
+
+    .main_container--home {
+        font-size: 18px;
+        padding: 0;
+    }
+
+    .home-section {
+        min-height: calc(100vh - var(--header-height-mobile));
+        padding: calc(var(--base-space) * 6);
     }
 }
 
@@ -264,6 +374,40 @@ form .name-details .field:last-child {
 
     .form form .button input {
         font-size: 14px;
+    }
+
+    .main_container--home {
+        font-size: 18px;
+        padding: 0;
+    }
+
+    .home-section {
+        min-height: calc(100vh - var(--header-height-mobile));
+        padding: calc(var(--base-space) * 8) calc(var(--base-space) * 2);
+    }
+
+    .home-section h1 {
+        font-size: 36px;
+    }
+
+    .home-section h2 {
+        font-size: 26px;
+    }
+
+    .hero p {
+        width: auto;
+    }
+
+    .how-it-works ol {
+        margin-bottom: calc(var(--base-space) * 3);
+    }
+
+    .how-it-works li {
+        flex-basis: auto;
+    }
+
+    .link-button {
+        align-self: stretch;
     }
 }
 
