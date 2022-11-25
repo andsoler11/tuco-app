@@ -4,7 +4,7 @@
 
 {% if page == 'register' %}
 
-<div class="main_container">
+<main class="main_container">
     <div class="main_form_container">
         <div class="form_wrapper">
             {% if messages|length > 0 %}
@@ -49,11 +49,11 @@
             </section>
         </div>
     </div>
-</div>
+</main>
 
 {% else %}
 
-<div class="main_container">
+<main class="main_container">
     {% if messages|length > 0 %}
     <div style="display: flex; justify-content: center;">
         <div class="alert alert--{{message.tags}}">
@@ -92,7 +92,7 @@
             <div class="link">No tienes cuenta? <a href="{% url 'register' %}">Registrate</a></div>
         </section>
     </div>
-</div>
+</main>
 
 {% endif %}
 {% endblock %}

@@ -46,10 +46,7 @@
 //     ((progressActive.length - 1) / (progressSteps.length - 1)) * 100 + "%";
 // }
 
-
 let currentTab = 0;
-showTab(currentTab);
-
 
 function showTab(n) {
   // This function will display the specified tab of the form ...
@@ -92,8 +89,6 @@ function nextPrev(n) {
   showTab(currentTab);
 }
 
-
-
 // function fixStepIndicator(n) {
 //   // This function removes the "active" class of all steps...
 //   var i, x = document.getElementsByClassName("step");
@@ -103,12 +98,6 @@ function nextPrev(n) {
 //   //... and adds the "active" class to the current step:
 //   x[n].className += " active";
 // }
-
-
-
-
-
-
 
 // activity script
 function changeImg(elementValue) {
@@ -128,20 +117,12 @@ function changeImg(elementValue) {
   }
 }
 
-
-
-
-
-
 function selectImgCarousel(element){
   document.getElementById('input_weight_image').value = element.id;
 }
 
-
-
 function changeImgCarousel(elementId) {
   let carouselItems = document.getElementsByClassName("carousel-item");
-
 
   if (elementId == 'next') {
     for (let i = 0; i < carouselItems.length; i++) {

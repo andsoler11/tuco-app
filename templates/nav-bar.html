@@ -3,8 +3,15 @@
 <!-- Header Section -->
 <header class="homepage_header">
     <div class="homepage_header__logo">
-        <img src="{% static 'images/main_logo.svg' %}" alt="logo">
         <button class="hamburger" onclick="toggleMenu();"><span></span>Menu</button>
+        <a href="/">
+            <img class="logo logo-desktop" src="{% static 'images/main_logo.svg' %}" alt="logo">
+            <img class="logo logo-mobile" src="{% static 'images/logo-mobile.svg' %}" alt="logo">
+        </a>
+        <div class="top-shelf-icons">
+            <img src="{% static 'images/user-icon.svg' %}" alt="user">
+            <img src="{% static 'images/cart-icon.svg' %}" alt="cart">
+        </div>
     </div>
 
     <div class="homepage_header__menu">
@@ -12,8 +19,6 @@
             <li class="homepage_header__nav__item"><a href="{% url 'homepage' %}">Inicio</a></li>
             <li class="homepage_header__nav__item"><a href="{% url 'list-pets' %}">Mascotas</a></li>
             <li class="homepage_header__nav__item"><a href="{% url 'dishes' %}">Formular</a></li>
-            <li class="homepage_header__nav__item"><a href="">Item</a></li>
-            <li class="homepage_header__nav__item"><a href="">Item</a></li>
             {% if request.user.is_authenticated %}
                 <li class="homepage_header__nav__item"><a href="{% url 'menu-selection' %}">Menus</a></li>
                 <li class="homepage_header__nav__item"><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
