@@ -265,3 +265,16 @@ def get_price_from_weight(grams, weight):
     price_grams = round((grams / 110) * price)
 
     return price_grams
+
+
+
+# def migrate_breeds_from_local_to_production():
+#     breeds = Breeds.objects.using('local').all()
+#     for breed in breeds:
+#         new_breed = Breeds(
+#             name=breed.name,
+#             life_span=breed.life_span,
+#             breed_group=breed.breed_group,
+#             image_url=breed.image_url,
+#         )
+#         new_breed.save()

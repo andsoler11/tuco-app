@@ -74,7 +74,7 @@ def dishesHome(request):
             user_upload = request.user
         ##########################################################
 
-
+        menus = Menus.objects.all().order_by('created')
 
         puppy = Puppy(
             owner=user_upload, 
@@ -90,8 +90,9 @@ def dishesHome(request):
             grams=grams,
             grams_percent=grams_percent,
             points=points,
-            is_barf_active=request.POST.get('natural_food')
+            is_barf_active=request.POST.get('natural_food'),
         )
+        
         puppy.save()
         pk = puppy.id
 
@@ -125,73 +126,75 @@ def dishesHome(request):
 
 
 # @login_required(login_url='login')
-def menusHome(request, pk):
+def menusHome(request, pk=None):
     page = 'menus'
-    puppy_data = Puppy.objects.get(id=pk)
     available_menus = Menus.objects.all()
-    grams = puppy_data.grams
-    food = puppy_data.is_barf_active
-    allergies = puppy_data.allergies
-    special_needs = puppy_data.special_needs
-    weight = puppy_data.weight
+    # if pk is not None:
+    #     puppy_data = Puppy.objects.get(id=pk)
+    #     
+    #     grams = puppy_data.grams
+    #     food = puppy_data.is_barf_active
+    #     allergies = puppy_data.allergies
+    #     special_needs = puppy_data.special_needs
+    #     weight = puppy_data.weight
 
-    # mind using sessions in the future
-    # food_type = request.session['food_type']
+    # # mind using sessions in the future
+    # # food_type = request.session['food_type']
 
-    # get the percents for each type of ingredient
-    percent_ingredients = get_ingredients_percent(grams)
+    # # get the percents for each type of ingredient
+    # percent_ingredients = get_ingredients_percent(grams)
 
-    # round the final grams
-    grams = round(grams)
+    # # round the final grams
+    # grams = round(grams)
 
-    if food == 'no':
-        percent_ingredients = get_ingredients_percent(grams, 'no')
+    # if food == 'no':
+    #     percent_ingredients = get_ingredients_percent(grams, 'no')
 
-        week_percents = {
-            'Primera semana': {},
-            'Segunda semana': {},
-            'Tercera semana': {}
-        }
+    #     week_percents = {
+    #         'Primera semana': {},
+    #         'Segunda semana': {},
+    #         'Tercera semana': {}
+    #     }
 
-        total_grams = 0
-        for k,v in percent_ingredients.items():
-            week_percents['Primera semana'][k] = round(v/2)
-            week_percents['Segunda semana'][k] = round(v/1.5)
-            week_percents['Tercera semana'][k] = v
-            total_grams += round(v/2) + round(v/1.5) + v
+    #     total_grams = 0
+    #     for k,v in percent_ingredients.items():
+    #         week_percents['Primera semana'][k] = round(v/2)
+    #         week_percents['Segunda semana'][k] = round(v/1.5)
+    #         week_percents['Tercera semana'][k] = v
+    #         total_grams += round(v/2) + round(v/1.5) + v
 
-        # round the final grams
-        grams = round(total_grams)
+    #     # round the final grams
+    #     grams = round(total_grams)
 
     
-    percents_data = get_percents_data(grams, percent_ingredients)
+    # percents_data = get_percents_data(grams, percent_ingredients)
     
 
-    if (weight < 10):
-        price = 1432
-    elif (weight >= 10 and weight < 25):
-        price = 1382
-    elif (weight >= 25 and weight < 40):
-        price = 1333
-    elif weight >= 40:
-        price = 1284
+    # if (weight < 10):
+    #     price = 1432
+    # elif (weight >= 10 and weight < 25):
+    #     price = 1382
+    # elif (weight >= 25 and weight < 40):
+    #     price = 1333
+    # elif weight >= 40:
+    #     price = 1284
 
-    price_grams = round((grams / 110) * price)
+    # price_grams = round((grams / 110) * price)
     
     context = {
         'page': page, 
-        'grams': grams, 
-        'puppy_data': puppy_data,
-        'percent_ingredients': percents_data, 
-        'grams_ingredients': percent_ingredients, 
-        'price_grams': price_grams,
-        'allergies': allergies,
-        'special_needs': special_needs,
+        # 'grams': grams, 
+        # 'puppy_data': puppy_data,
+        # 'percent_ingredients': percents_data, 
+        # 'grams_ingredients': percent_ingredients, 
+        # 'price_grams': price_grams,
+        # 'allergies': allergies,
+        # 'special_needs': special_needs,
         'available_menus': available_menus,
     }
 
-    if food == 'no':
-        context['week_percents'] = week_percents
+    # if food == 'no':
+    #     context['week_percents'] = week_percents
 
     return render(request, 'dishes/menus.html', context)
 
@@ -304,25 +307,52 @@ def menuSelection(request):
     return render(request, 'dishes/menu-selection.html', context)
 
 
-def menuDetail(request, pk):
-    menu = Menus.objects.get(id=pk)
+def menuDetail(request, menu_id, pet_id=None):
+    menu = Menus.objects.get(id=menu_id)
     menu.percents = json.loads(menu.percents)
     menu.nutrition_information = json.loads(menu.nutrition_information)
+    button_message = 'Agregar al carrito'
 
     menu.prices = {}
 
-    # get last puppy created
-    puppy = Puppy.objects.filter(owner=request.user).last()
-    puppies_grams = { 
-        puppy.name: {
-            'grams': float(puppy.grams),
-            'price': get_price_from_weight(float(puppy.grams), float(puppy.weight)),
-            'id' : puppy.id
+    if pet_id:
+        puppy = Puppy.objects.get(id=pet_id)
+        button_message = 'Seleccionar menú'
+        puppies_grams = { 
+            puppy.name: {
+                'grams': float(puppy.grams),
+                'price': get_price_from_weight(float(puppy.grams), float(puppy.weight)),
+                'id' : puppy.id
+            }
         }
-    }
-    menu.prices = puppies_grams
+        menu.prices = puppies_grams
+    else:
+        # get last puppy created
+        puppy = Puppy.objects.filter(owner=request.user).last()
+        puppies_grams = { 
+            puppy.name: {
+                'grams': float(puppy.grams),
+                'price': get_price_from_weight(float(puppy.grams), float(puppy.weight)),
+                'id' : puppy.id
+            }
+        }
+        menu.prices = puppies_grams
+    
+    if request.method == 'POST':
+        if pet_id:
+            puppy.menu_id = menu.id
+            puppy.save()
+            return redirect('list-pets')
+        else:
+            return redirect('menu-selection')
 
-    context = {'menu':menu, 'page': 'menu-detail'}
+    context = {
+        'menu':menu, 
+        'page': 'menu-detail', 
+        'button_message': button_message, 
+        'pet': puppy
+    }
+    
     return render(request, 'dishes/menu-selection.html', context)
 
 

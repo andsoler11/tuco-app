@@ -15,6 +15,8 @@
                     <tr>
                         <th>Name</th>
                         <th>options</th>
+                        <th>Menu</th>
+                        <th>Menu options</th>
                     </tr>
                     {% for pet in pets %}
                     <tr>
@@ -26,6 +28,8 @@
                                 <input type="submit" value="Delete" class="botton" style="background-color: red;color: white;cursor: pointer;border: none;padding: 5px;" />
                             </form>
                         </td>
+                        <td>{{pet.menu.name}}</td>
+                        <td><a href="{% url 'edit-pet-menu' pet.id %}">Change menu</a></td>
                     </tr>
                     {% endfor %}
                 </table>

@@ -1,0 +1,32 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+<main class="main_container">
+    <div class="main_form_container main_form_container__diet">
+        <div class="wrapper diet_wrapper">
+            <section class="form login  diet_container">
+                <div class="back_icon_container">
+                    <i class="fa fa-angle-left"></i>
+                    <a href="{{ request.META.HTTP_REFERER }}" class="multistep_form_back_button">
+                      <p>Volver</p>
+                    </a>
+                </div>
+
+                {% for menu in menus %}
+                <div class="diet_data_container">
+                    <h2 class="menu_title">{{ menu.name }}</h2>
+                    <div class="link menu_link"><a href="{% url 'menu-detail' menu.id pet.id %}">Ver menu</a></div>
+                </div>
+                {% endfor %}
+
+
+        </section>
+    </div>
+  </div>  
+</main>
+
+
+{% endblock %}
