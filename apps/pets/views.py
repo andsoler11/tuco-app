@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from multiprocessing import context
 from django.shortcuts import render, redirect
-from apps.dishes.models import Puppy
+from apps.dishes.models import Puppy, Menus
 from django.contrib.auth.models import User
 
 
@@ -9,7 +9,11 @@ from django.contrib.auth.models import User
 def listPets(request):
     page = 'pets'
     user_id = User.objects.get(username=request.user.username)
-    pets = Puppy.objects.filter(owner_id=user_id)
+    pets = Puppy.objects.filter(owner_id=user_id).order_by('name')
+
+    for pet in pets:
+        if pet.menu_id is not None:
+            pet.menu = Menus.objects.get(id=pet.menu_id)
     
     context = {
         'page': page, 
@@ -28,3 +32,21 @@ def deletePet(request, pk):
         pet.delete()
         return redirect('list-pets')
     
+
+def editPetMenu(request, pk):
+    pet = Puppy.objects.get(id=pk)
+    menus = Menus.objects.all()
+
+    if request.method == 'POST':
+        menu_id = request.POST.get('menu')
+        menu = Menus.objects.get(id=menu_id)
+        pet.menu_id = menu.id
+        pet.save()
+        return redirect('list-pets')
+
+    context = {
+        'pet': pet,
+        'menus': menus
+    }
+
+    return render(request, 'menu-edit.html', context)

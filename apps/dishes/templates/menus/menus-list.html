@@ -7,7 +7,7 @@
     <div class="main_form_container">
         <div class="wrapper">
           <section class="form login">
-                <a href="{% url 'menus-create' %}">Crear</a>
+                <a href="{% url 'menus-create' %}" style='color: white;'>Crear</a>
             
                 <table class="breed-table">
                     <tr>
@@ -16,7 +16,7 @@
                     </tr>
                     {% for menu in menus %}
                     <tr>
-                        <td><a href="{% url 'menus' menu.id %}">{{menu.name}}</a> </td>
+                        <td><a href="{% url 'menu-detail' menu.id %}">{{menu.name}}</a> </td>
                         <td>
                             <a href="{% url 'menus-update' menu.id %}">Edit</a>
                             <form method="POST" action="{% url 'menus-delete' menu.id %}">

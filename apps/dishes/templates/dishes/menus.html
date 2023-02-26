@@ -14,7 +14,11 @@
                 {% for menu in available_menus %}
                 <div class="diet_data_container">
                     <h2 class="menu_title">{{ menu.name }}</h2>
-                    <div class="link menu_link"><a href="{% url 'menu-detail' menu.id %}">Ver menu</a></div>
+                    {% if pet %}
+                        <a href="{% url 'menu-detail' menu.id pet.id %}">Ver menu</a>
+                    {% else %}
+                        <a href="{% url 'menu-detail' menu.id %}">Ver menu</a>
+                    {% endif %}
                 </div>
                 {% endfor %}
 
@@ -50,7 +54,7 @@
                 
 
 
-                <h1>Nombre Mascota: {{puppy_data.name}}</h1>
+                {% comment %} <h1>Nombre Mascota: {{puppy_data.name}}</h1>
                 <h3>Alergias: {{allergies}}</h1>
                 <h3>Necesidades Especiales: {{special_needs}}</h1>
 
@@ -77,7 +81,7 @@
                     <h1>Precio diario: {{price_grams}} COP</h1>
 
                     <h1>Precio mes: {% widthratio price_grams 1 30 %} COP</h1>
-                {% endif %}
+                {% endif %} {% endcomment %}
 
          </section>
         </div>

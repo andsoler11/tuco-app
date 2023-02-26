@@ -166,6 +166,10 @@ django_heroku.settings(locals())
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_RECEIVER = os.environ.get('EMAIL_RECEIVER')
+
 # LOGGING = {
 #     'version': 1,
 #     'disable_existing_loggers': False,

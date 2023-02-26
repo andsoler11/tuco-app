@@ -7,6 +7,13 @@
     <div class="main_form_container main_form_container__diet">
         <div class="wrapper diet_wrapper">
             <section class="form login  diet_container">
+                
+                <div class="back_icon_container">
+                    <i class="fa fa-angle-left"></i>
+                    <a href="{{ request.META.HTTP_REFERER }}" class="multistep_form_back_button">
+                      <p>Volver</p>
+                    </a>
+                </div>
 
                 {% if menus %}
                     {% for menu in menus %}
@@ -36,7 +43,7 @@
                                 <p class="prices_container__text price_month">${% widthratio data.price 1 30 as price_month %}{{ price_month|intcomma }} Mensual</p>         
                                 <p class="prices_container__text">${{data.price|intcomma}} al día</p>        
                                 
-                                <button class="add-btn update-cart">Agregar al carrito</button>
+                                <button class="add-btn update-cart">{{button_message}}</button>
 
                             </div>
                             {% endfor %}
@@ -70,7 +77,11 @@
                                 <p class="prices_container__text price_month">${% widthratio data.price 1 30 as price_month %}{{ price_month|intcomma }} Mensual</p>         
                                 <p class="prices_container__text">${{data.price|intcomma}} al día</p>
                                 
-                                <button class="add-btn update-cart">Agregar al carrito</button>
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <button class="add-btn update-cart">{{button_message}}</button>
+                                </form>
+                                
 
                             </div>
                             {% endfor %}

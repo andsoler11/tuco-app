@@ -1,0 +1,23 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+
+<div class="main_container">
+    <div class="main_form_container">
+        <div class="wrapper">
+          <section class="form login">
+
+                <h1 style='color: white;'>{{message}}</h1>
+                <form method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary" style='cursor: pointer;'>Send email</button>
+                </form>
+
+            </section>
+        </div>
+    </div>      
+</div>
+
+{% endblock %}
