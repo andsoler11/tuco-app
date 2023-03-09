@@ -129,14 +129,9 @@ def dishesHome(request):
 def menusHome(request, pk=None):
     page = 'menus'
     available_menus = Menus.objects.all()
-    # if pk is not None:
-    #     puppy_data = Puppy.objects.get(id=pk)
-    #     
-    #     grams = puppy_data.grams
-    #     food = puppy_data.is_barf_active
-    #     allergies = puppy_data.allergies
-    #     special_needs = puppy_data.special_needs
-    #     weight = puppy_data.weight
+    puppy_data = None
+    if pk is not None:
+        puppy_data = Puppy.objects.get(id=pk)
 
     # # mind using sessions in the future
     # # food_type = request.session['food_type']
@@ -183,6 +178,7 @@ def menusHome(request, pk=None):
     
     context = {
         'page': page, 
+        'pet': puppy_data,
         # 'grams': grams, 
         # 'puppy_data': puppy_data,
         # 'percent_ingredients': percents_data, 
@@ -329,6 +325,10 @@ def menuDetail(request, menu_id, pet_id=None):
     else:
         # get last puppy created
         puppy = Puppy.objects.filter(owner=request.user).last()
+
+        if puppy is None:
+            return redirect('dishes')
+
         puppies_grams = { 
             puppy.name: {
                 'grams': float(puppy.grams),
@@ -337,6 +337,8 @@ def menuDetail(request, menu_id, pet_id=None):
             }
         }
         menu.prices = puppies_grams
+
+    
     
     if request.method == 'POST':
         if pet_id:
