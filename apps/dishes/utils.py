@@ -129,12 +129,14 @@ def format_weight(weight_input):
         
 
 def determineGrams(activity_level, reproductive_state, body_image, weight, age_type, age):
-    if age_type == 'months':
-        grams = round((weight * MONTHS_PERCENTS[int(age)]) * 10, 2)
-        grams_percent = MONTHS_PERCENTS[int(age)]
+    if age_type == 'meses' and int(age) <= 12:
+        grams = round((6 * weight) * 10, 2)
+        grams_percent = 6
         points = 0
 
         return grams, grams_percent, points
+    elif age_type == 'meses' and int(age) > 12:
+        age = round(int(age) / 12, 2)
 
     # starting getting the points from the variables
     points = 0
@@ -253,16 +255,16 @@ def convert_json_to_string(json_string):
 
 
 def get_price_from_weight(grams, weight):
-    if (weight < 10):
-        price = 1432
-    elif (weight >= 10 and weight < 25):
-        price = 1382
-    elif (weight >= 25 and weight < 40):
-        price = 1333
-    elif weight >= 40:
-        price = 1284
+    if grams <= 345:
+        price = 2220
+    elif grams > 345 and grams <= 500:
+        price = 1975
+    elif grams > 500 and grams <= 800:
+        price = 1925
+    else:
+        price = 1900
 
-    price_grams = round((grams / 110) * price)
+    price_grams = round((grams / 100) * price)
 
     return price_grams
 
