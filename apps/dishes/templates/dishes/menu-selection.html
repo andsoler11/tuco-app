@@ -51,42 +51,82 @@
                     </div>
                     {% endfor %}
                 {% else %}
-                    <div class="diet_data_container">
-                            
-                        <h2 class="menu_title">{{ menu.name }}</h2>
-
-                        <div class="menu_data__description">
-                            <p class="menu_data__description--text">{{ menu.description }}</p>
-                        </div>
-
-                        <div class="menu_data__description">
-                            <p class="menu_data__description--text">{{ menu.ingredients_description }}</p>
-                        </div>
-
-                        <div class="menu_data__nutrition">
-                        {% for k,v in menu.nutrition_information.items %}
-                            <p class="menu_data__nutrition--text">{{ k }} {{ v }}%</p>
-                        {% endfor %}
-                        </div>
-                        
-                        {% if menu.prices %}
-                            {% for pet_name,data in menu.prices.items %}
-                            <div class="menu_data__price">
-                                <p class="total_grams_container__text"><img src="{% static 'images/calendar.svg' %}"><strong>{{pet_name}}</strong> necesita {{data.grams}} gr díarios</p> 
-                                <p class="total_grams_container__text"><img src="{% static 'images/food_can.svg' %}">2 porciones: {% widthratio data.grams 2 1 %} grms c/u</p> 
-                                <p class="prices_container__text price_month">${% widthratio data.price 1 30 as price_month %}{{ price_month|intcomma }} Mensual</p>         
-                                <p class="prices_container__text">${{data.price|intcomma}} al día</p>
+                    {% if menu.name == 'Iniciación'%}
+                        <div class="diet_data_container">
                                 
-                                <form method="POST">
-                                    {% csrf_token %}
-                                    <button class="add-btn update-cart">{{button_message}}</button>
-                                </form>
-                                
+                            <h2 class="menu_title">{{ menu.name }}</h2>
 
+                            <div class="menu_data__description">
+                                <p class="menu_data__description--text">{{ menu.description }}</p>
                             </div>
+
+                            <div class="menu_data__description">
+                                <p class="menu_data__description--text">{{ menu.ingredients_description }}</p>
+                            </div>
+
+                            <div class="menu_data__nutrition">
+                            {% for k,v in menu.nutrition_information.items %}
+                                <p class="menu_data__nutrition--text">{{ k }} {{ v }}%</p>
                             {% endfor %}
-                        {% endif %}
-                    </div>
+                            </div>
+                            
+                            {% if menu.prices %}
+                                {% for pet_name,data in menu.prices.items %}
+                                <div class="menu_data__price">
+                                    <p class="prices_container__text price_month">${% widthratio data.price 1 30 as price_month %}{{ price_month|intcomma }} Mensual</p>         
+                                    <p class="prices_container__text">${{data.price|intcomma}} al día</p>
+                                    
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <button class="add-btn update-cart">{{button_message}}</button>
+                                    </form>
+                                    
+
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+
+                    {% else %}
+
+                        <div class="diet_data_container">
+                                
+                            <h2 class="menu_title">{{ menu.name }}</h2>
+
+                            <div class="menu_data__description">
+                                <p class="menu_data__description--text">{{ menu.description }}</p>
+                            </div>
+
+                            <div class="menu_data__description">
+                                <p class="menu_data__description--text">{{ menu.ingredients_description }}</p>
+                            </div>
+
+                            <div class="menu_data__nutrition">
+                            {% for k,v in menu.nutrition_information.items %}
+                                <p class="menu_data__nutrition--text">{{ k }} {{ v }}%</p>
+                            {% endfor %}
+                            </div>
+                            
+                            {% if menu.prices %}
+                                {% for pet_name,data in menu.prices.items %}
+                                <div class="menu_data__price">
+                                    <p class="total_grams_container__text"><img src="{% static 'images/calendar.svg' %}"><strong>{{pet_name}}</strong> necesita {{data.grams}} gr díarios</p> 
+                                    <p class="total_grams_container__text"><img src="{% static 'images/food_can.svg' %}">2 porciones: {% widthratio data.grams 2 1 %} grms c/u</p> 
+                                    <p class="prices_container__text price_month">${% widthratio data.price 1 30 as price_month %}{{ price_month|intcomma }} Mensual</p>         
+                                    <p class="prices_container__text">${{data.price|intcomma}} al día</p>
+                                    
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <button class="add-btn update-cart">{{button_message}}</button>
+                                    </form>
+                                    
+
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 
                 {% endif %}
 

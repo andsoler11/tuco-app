@@ -35,7 +35,10 @@ def deletePet(request, pk):
 
 def editPetMenu(request, pk):
     pet = Puppy.objects.get(id=pk)
+    
     menus = Menus.objects.all()
+    if pet.is_barf_active == 'no':
+        menus = Menus.objects.filter(name='Iniciación')
 
     if request.method == 'POST':
         menu_id = request.POST.get('menu')
