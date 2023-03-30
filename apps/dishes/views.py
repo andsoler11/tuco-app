@@ -133,6 +133,11 @@ def menusHome(request, pk=None):
     if pk is not None:
         puppy_data = Puppy.objects.get(id=pk)
 
+        if puppy_data.is_barf_active == 'no':
+            available_menus = Menus.objects.filter(name='Iniciación')
+
+
+
     # # mind using sessions in the future
     # # food_type = request.session['food_type']
 
@@ -316,7 +321,7 @@ def menuDetail(request, menu_id, pet_id=None):
         button_message = 'Seleccionar menú'
         puppies_grams = { 
             puppy.name: {
-                'grams': float(puppy.grams),
+                'grams': int(puppy.grams),
                 'price': get_price_from_weight(float(puppy.grams), float(puppy.weight)),
                 'id' : puppy.id
             }
@@ -331,7 +336,7 @@ def menuDetail(request, menu_id, pet_id=None):
 
         puppies_grams = { 
             puppy.name: {
-                'grams': float(puppy.grams),
+                'grams': int(puppy.grams),
                 'price': get_price_from_weight(float(puppy.grams), float(puppy.weight)),
                 'id' : puppy.id
             }
