@@ -145,14 +145,24 @@ def determineGrams(activity_level, reproductive_state, body_image, weight, age_t
     points += activity_points(activity_level)
 
     # determine the size of the dog by his weight
-    size_percent = 'large'
-    if weight < 10:
+    if weight <= 5:
+        size_percent = 'mini'
+    elif weight > 5 and weight <= 10:
         size_percent = 'small'
+    elif weight > 10 and weight <= 20:
+        size_percent = 'medium'
+    elif weight > 20 and weight <= 35:
+        size_percent = 'large'
+    else:
+        size_percent = 'extra_large'
 
     # percents array
     percents = {
-        'small': [2.5, 3, 4.5],
-        'large': [2, 2.5, 3]
+        'mini': [4.7, 5.2, 5.5],
+        'small': [5, 5.5, 6.5],
+        'medium': [2.8, 3.3, 3.8],
+        'large': [2.34, 2.67, 3.1],
+        'extra_large': [2, 2.2, 2.5],
     }
 
     # grab the percent needed
@@ -163,11 +173,7 @@ def determineGrams(activity_level, reproductive_state, body_image, weight, age_t
         index_number = 1    
     grams_percent = percents[size_percent][index_number]
 
-
-    if body_image == 'muy_delgado':
-        grams_percent = 6
-
-    grams = round((grams_percent * weight) * 10, 2)
+    grams = round((grams_percent * weight) * 10, 0)
 
     return grams, grams_percent, points
 
