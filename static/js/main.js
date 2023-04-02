@@ -178,7 +178,7 @@ const getName = () => {
 
 $(document).ready(function(){
   //Construye carousel How It Works
-  $('.owl-carousel').owlCarousel({
+  $('.how-it-works .owl-carousel').owlCarousel({
     margin:20,
     nav:false,
     responsive:{
@@ -194,5 +194,15 @@ $(document).ready(function(){
           loop: false
       }
     }
+  });
+
+  $('.meet-our-dogtor .owl-carousel').owlCarousel({
+    margin:20,
+    nav:false,
+    items: 1,
+    loop: true,
+    autoplay: true,
+    autoplayHoverPause: true,
+    autoplaySpeed: 2000
   });
 });

@@ -16,6 +16,7 @@ b, strong {
 }
 
 body{
+    font-size: 18px;
     background: #f8f8f8;
 }
 
@@ -151,7 +152,7 @@ form .name-details .field:last-child {
 
 .input > label {
     color: #c2c7ca;
-    font-size: 18px;
+    font-size: 1rem;
 }
 
 .form-control {
@@ -172,7 +173,7 @@ form .name-details .field:last-child {
     margin-top: 13px;
     height: 45px;
     border: none;
-    font-size: 17px;
+    font-size: 1rem;
     font-weight: 400;
     background: #FFC397;
     color: #202B3E;
@@ -211,7 +212,7 @@ form .name-details .field:last-child {
 }
 
 .main_container--home {
-    font-size: 18px;
+    font-size: 1rem;
     justify-content: flex-start;
     line-height: 1.5;
     padding: 0;
@@ -231,22 +232,28 @@ form .name-details .field:last-child {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-height: calc(100vh - var(--header-height-desktop));
     margin: 0 auto;
     max-width: 992px;
     padding: calc(var(--base-space) * 8);
     text-align: center;
     width: 100%;
 }
+.home-section.full-height {
+    min-height: calc(100vh - var(--header-height-desktop));
+}
 
 .home-section h1 {
-    font-size: 48px;
+    font-size: 2,6rem;
     margin-bottom: calc(var(--base-space) * 3);
 }
 
 .home-section h2 {
-    font-size: 36px;
+    font-size: 1,7rem;
     margin-bottom: calc(var(--base-space) * 4);
+}
+.home-section h3 {
+    font-size: 1,5rem;
+    margin-bottom: calc(var(--base-space) * 3);
 }
 
 .hero {
@@ -255,7 +262,7 @@ form .name-details .field:last-child {
 }
 
 .hero p {
-    font-size: 24px;
+    font-size: 1,3rem;
     width: 60%;
 }
 /*CAROUSEL*/
@@ -269,8 +276,20 @@ form .name-details .field:last-child {
 .owl-carousel .owl-dots button.active{
     background: #202B3E;
 }
+.dots-over .owl-carousel .owl-dots{
+    width: 100%;
+    bottom: 15px;
+    position: absolute;
+}
+.dots-white .owl-carousel .owl-dots button{
+    background: #fff;
+}
+.dots-white .owl-carousel .owl-dots button.active{
+    background: #202B3E;
+}
 /*CAROUSEL*/
 
+/*//////*/
 /*HOME - HOW IT WORKS*/
 .how-it-works.home-wrapper {
     color: #202B3E;
@@ -311,6 +330,55 @@ form .name-details .field:last-child {
     margin-bottom: 3rem;
 }
 /*HOME - HOW IT WORKS*/
+
+/*//////*/
+/*HOME - MEET OUR DOGTOR*/
+.meet-our-dogtor .wrapper-banner{
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 1rem 4rem;
+    border-radius: 8px;
+}
+.meet-our-dogtor .wrapper-banner .text-content{
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0;
+    text-align: left;
+}
+.meet-our-dogtor .wrapper-banner .text-content a{
+    margin-top: 1rem;
+    font-weight: bold;
+    text-decoration: underline;
+}
+.meet-our-dogtor .wrapper-banner .image-content {
+    flex: 1;
+}
+.meet-our-dogtor .wrapper-banner .text-content {
+    flex: 1.5;
+}
+
+.meet-our-dogtor .wrapper-banner.light-blue{
+    background-color: var(--light-blue);
+}
+.meet-our-dogtor .wrapper-banner.olive-green{
+    background-color: var(--olive-green);
+}
+.meet-our-dogtor .wrapper-banner.light-yellow{
+    background-color: var(--light-yellow);
+}
+
+.meet-our-dogtor .wrapper-banner.light-blue .text-content,
+.meet-our-dogtor .wrapper-banner.light-blue .text-content a,
+.meet-our-dogtor .wrapper-banner.olive-green .text-content,
+.meet-our-dogtor .wrapper-banner.olive-green .text-content a{
+    color: var(--beige);
+}
+.meet-our-dogtor .wrapper-banner.light-yellow .text-content,
+.meet-our-dogtor .wrapper-banner.light-yellow .text-content a{
+    color: var(--black-font);
+}
+/*HOME - MEET OUR DOGTOR*/
+
 
 .benefits-row {
     display: flex;
@@ -369,13 +437,27 @@ form .name-details .field:last-child {
     }
 
     .main_container--home {
-        font-size: 18px;
+        font-size: 1rem;
         padding: 0;
     }
 
     .home-section {
-        min-height: calc(100vh - var(--header-height-mobile));
         padding: calc(var(--base-space) * 6);
+    }
+    .home-section.full-height {
+        min-height: calc(100vh - var(--header-height-mobile));
+    }
+
+    /*HOME - MEET OUR DOGTOR*/
+    .meet-our-dogtor .wrapper-banner {
+        padding: 1rem 2rem;
+    }
+    /*HOME - MEET OUR DOGTOR*/
+}
+
+@media screen and (max-width: 768px) {
+    body{
+        font-size: 14px;
     }
 }
 
@@ -406,33 +488,27 @@ form .name-details .field:last-child {
     }
 
     .form form .field label {
-        font-size: 14px;
+        font-size: 1rem;
     }
 
     .form form .field input {
-        font-size: 14px;
+        font-size: 1rem;
     }
 
     .form form .button input {
-        font-size: 14px;
+        font-size: 1rem;
     }
 
     .main_container--home {
-        font-size: 18px;
+        font-size: 1rem;
         padding: 0;
     }
 
     .home-section {
-        min-height: calc(100vh - var(--header-height-mobile));
         padding: calc(var(--base-space) * 8) calc(var(--base-space) * 2);
     }
-
-    .home-section h1 {
-        font-size: 36px;
-    }
-
-    .home-section h2 {
-        font-size: 26px;
+    .home-section.full-height {
+        min-height: calc(100vh - var(--header-height-mobile));
     }
 
     .hero p {
@@ -454,6 +530,12 @@ form .name-details .field:last-child {
     .how-it-works .card {
         padding: 1.5rem;
     }
+
+    /*HOME - MEET OUR DOGTOR*/
+    .meet-our-dogtor .wrapper-banner{
+        flex-direction: column;
+    }
+    /*HOME - MEET OUR DOGTOR*/
 }
 
 .main_form_container {
