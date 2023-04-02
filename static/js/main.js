@@ -174,3 +174,25 @@ const getName = () => {
   let nameContainer = document.getElementById('name_container');
   nameContainer.innerHTML = name;
 }
+
+
+$(document).ready(function(){
+  //Construye carousel How It Works
+  $('.owl-carousel').owlCarousel({
+    margin:20,
+    nav:false,
+    responsive:{
+        0:{
+            items:1.3,
+            loop:true
+        },
+        600:{
+            items:2
+        },
+        990:{
+          items:3,
+          loop: false
+      }
+    }
+  });
+});
