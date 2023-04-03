@@ -15,13 +15,18 @@ b, strong {
     font-weight: 600;
 }
 
+body{
+    font-size: 18px;
+    background: #f8f8f8;
+}
+
 .main_container {
     align-items: center;
-    background-color: #84AEAF;
+    /*background-color: #84AEAF;
     background-image: url(../images/main_container_background.png);
     background-repeat: no-repeat;
     background-size: contain;
-    background-position: center bottom;
+    background-position: center bottom;*/
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -147,7 +152,7 @@ form .name-details .field:last-child {
 
 .input > label {
     color: #c2c7ca;
-    font-size: 18px;
+    font-size: 1rem;
 }
 
 .form-control {
@@ -168,7 +173,7 @@ form .name-details .field:last-child {
     margin-top: 13px;
     height: 45px;
     border: none;
-    font-size: 17px;
+    font-size: 1rem;
     font-weight: 400;
     background: #FFC397;
     color: #202B3E;
@@ -207,7 +212,7 @@ form .name-details .field:last-child {
 }
 
 .main_container--home {
-    font-size: 18px;
+    font-size: 1rem;
     justify-content: flex-start;
     line-height: 1.5;
     padding: 0;
@@ -227,22 +232,28 @@ form .name-details .field:last-child {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-height: calc(100vh - var(--header-height-desktop));
     margin: 0 auto;
     max-width: 992px;
     padding: calc(var(--base-space) * 8);
     text-align: center;
     width: 100%;
 }
+.home-section.full-height {
+    min-height: calc(100vh - var(--header-height-desktop));
+}
 
 .home-section h1 {
-    font-size: 48px;
+    font-size: 2,6rem;
     margin-bottom: calc(var(--base-space) * 3);
 }
 
 .home-section h2 {
-    font-size: 36px;
+    font-size: 1,7rem;
     margin-bottom: calc(var(--base-space) * 4);
+}
+.home-section h3 {
+    font-size: 1,5rem;
+    margin-bottom: calc(var(--base-space) * 3);
 }
 
 .hero {
@@ -251,12 +262,36 @@ form .name-details .field:last-child {
 }
 
 .hero p {
-    font-size: 24px;
+    font-size: 1,3rem;
     width: 60%;
 }
+/*CAROUSEL*/
+.owl-carousel .owl-dots button{
+    width: 12px;
+    height: 12px;
+    margin: 0 5px;
+    background: #FFC397;
+    border-radius: 50%;
+}
+.owl-carousel .owl-dots button.active{
+    background: #202B3E;
+}
+.dots-over .owl-carousel .owl-dots{
+    width: 100%;
+    bottom: 15px;
+    position: absolute;
+}
+.dots-white .owl-carousel .owl-dots button{
+    background: #fff;
+}
+.dots-white .owl-carousel .owl-dots button.active{
+    background: #202B3E;
+}
+/*CAROUSEL*/
 
+/*//////*/
+/*HOME - HOW IT WORKS*/
 .how-it-works.home-wrapper {
-    background-color: #FFF;
     color: #202B3E;
 }
 
@@ -274,6 +309,76 @@ form .name-details .field:last-child {
     margin-bottom: calc(var(--base-space) * 3);
     text-align: left;
 }
+.how-it-works .card{
+    min-height: 400px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 2rem;
+}
+.how-it-works .card .number {
+    font-size: 2.7rem;
+    font-weight: 700;
+    display: block;
+    text-align: left;
+}
+.how-it-works .card .icon-wrapper img{
+    width: auto;
+    height: 75px;
+    margin: 0 auto 2rem;
+}
+.how-it-works .owl-carousel {
+    margin-bottom: 3rem;
+}
+/*HOME - HOW IT WORKS*/
+
+/*//////*/
+/*HOME - MEET OUR DOGTOR*/
+.meet-our-dogtor .wrapper-banner{
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 1rem 4rem;
+    border-radius: 8px;
+}
+.meet-our-dogtor .wrapper-banner .text-content{
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0;
+    text-align: left;
+}
+.meet-our-dogtor .wrapper-banner .text-content a{
+    margin-top: 1rem;
+    font-weight: bold;
+    text-decoration: underline;
+}
+.meet-our-dogtor .wrapper-banner .image-content {
+    flex: 1;
+}
+.meet-our-dogtor .wrapper-banner .text-content {
+    flex: 1.5;
+}
+
+.meet-our-dogtor .wrapper-banner.light-blue{
+    background-color: var(--light-blue);
+}
+.meet-our-dogtor .wrapper-banner.olive-green{
+    background-color: var(--olive-green);
+}
+.meet-our-dogtor .wrapper-banner.light-yellow{
+    background-color: var(--light-yellow);
+}
+
+.meet-our-dogtor .wrapper-banner.light-blue .text-content,
+.meet-our-dogtor .wrapper-banner.light-blue .text-content a,
+.meet-our-dogtor .wrapper-banner.olive-green .text-content,
+.meet-our-dogtor .wrapper-banner.olive-green .text-content a{
+    color: var(--beige);
+}
+.meet-our-dogtor .wrapper-banner.light-yellow .text-content,
+.meet-our-dogtor .wrapper-banner.light-yellow .text-content a{
+    color: var(--black-font);
+}
+/*HOME - MEET OUR DOGTOR*/
+
 
 .benefits-row {
     display: flex;
@@ -286,16 +391,20 @@ form .name-details .field:last-child {
 }
 
 .link-button {
-    align-self: center;
-    background-color: #202B3E;
-    color: #FFC397;
     min-width: 220px;
+    color: #202B3E;
+    font-weight: 700;
+    align-self: center;
+    background-color: #FFC397;
     padding: calc(var(--base-space) * 2);
-    transition: color 0.3s ease-out;
+    transition: all 0.5s ease;
+    border: 1px solid #DBDBDB;
+    border-radius: 8px;
 }
 
 .link-button:hover {
-    color: #FFF;
+    color: #FFC397;
+    background-color: #202B3E;
 }
 
 /*
@@ -328,13 +437,27 @@ form .name-details .field:last-child {
     }
 
     .main_container--home {
-        font-size: 18px;
+        font-size: 1rem;
         padding: 0;
     }
 
     .home-section {
-        min-height: calc(100vh - var(--header-height-mobile));
         padding: calc(var(--base-space) * 6);
+    }
+    .home-section.full-height {
+        min-height: calc(100vh - var(--header-height-mobile));
+    }
+
+    /*HOME - MEET OUR DOGTOR*/
+    .meet-our-dogtor .wrapper-banner {
+        padding: 1rem 2rem;
+    }
+    /*HOME - MEET OUR DOGTOR*/
+}
+
+@media screen and (max-width: 768px) {
+    body{
+        font-size: 14px;
     }
 }
 
@@ -365,33 +488,27 @@ form .name-details .field:last-child {
     }
 
     .form form .field label {
-        font-size: 14px;
+        font-size: 1rem;
     }
 
     .form form .field input {
-        font-size: 14px;
+        font-size: 1rem;
     }
 
     .form form .button input {
-        font-size: 14px;
+        font-size: 1rem;
     }
 
     .main_container--home {
-        font-size: 18px;
+        font-size: 1rem;
         padding: 0;
     }
 
     .home-section {
-        min-height: calc(100vh - var(--header-height-mobile));
         padding: calc(var(--base-space) * 8) calc(var(--base-space) * 2);
     }
-
-    .home-section h1 {
-        font-size: 36px;
-    }
-
-    .home-section h2 {
-        font-size: 26px;
+    .home-section.full-height {
+        min-height: calc(100vh - var(--header-height-mobile));
     }
 
     .hero p {
@@ -409,6 +526,16 @@ form .name-details .field:last-child {
     .link-button {
         align-self: stretch;
     }
+
+    .how-it-works .card {
+        padding: 1.5rem;
+    }
+
+    /*HOME - MEET OUR DOGTOR*/
+    .meet-our-dogtor .wrapper-banner{
+        flex-direction: column;
+    }
+    /*HOME - MEET OUR DOGTOR*/
 }
 
 .main_form_container {

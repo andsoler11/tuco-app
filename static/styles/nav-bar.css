@@ -57,7 +57,7 @@
 }
 
 .homepage_header__nav__item a {
-    color: #F4F3DE;
+    color: var(--beige);
     text-decoration: none;
 }
 
