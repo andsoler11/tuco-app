@@ -1,8 +1,6 @@
 import re
 import json
 
-from pprint import pprint
-
 
 SUPLEMENTOS ={
     'huevo_codorniz_semana': {
