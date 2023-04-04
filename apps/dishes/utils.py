@@ -2,42 +2,39 @@ import re
 import json
 
 
-SUPLEMENTOS ={
+SUPLEMENTOS = {
     'huevo_codorniz_semana': {
-        9: 2, # hasta 9 kilos
-        15: 4, # hasta 15 kilos
-        30: 7, # hasta 30 kilos
-        60: 10, # mas de 30 kilos
+        9: 2,  # hasta 9 kilos
+        15: 4,  # hasta 15 kilos
+        30: 7,  # hasta 30 kilos
+        60: 10,  # mas de 30 kilos
     },
     'omega_3_diario': {
-        0: 1000, # menos de 10 kilos, 1000 gramos (1 capsula) diaria
-        10: 1300, # hasta 10 kilos, 1300 gramos (1 capsula) diarias
+        0: 1000,  # menos de 10 kilos, 1000 gramos (1 capsula) diaria
+        10: 1300,  # hasta 10 kilos, 1300 gramos (1 capsula) diarias
     },
     'kefir_diario': {
-        0: '1 cucharadita', # menos de 10 kilos
-        10: '1 cucharada', # hasta 10 kilos
+        0: '1 cucharadita',  # menos de 10 kilos
+        10: '1 cucharada',  # hasta 10 kilos
     },
     'caldo_de_huesos_diario': {
-        0: '1/2 cucharadita', # menos de 10 kilos
-        10: '1 cucharadita', # hasta 10 kilos
+        0: '1/2 cucharadita',  # menos de 10 kilos
+        10: '1 cucharadita',  # hasta 10 kilos
     },
     'arandanos_diario': {
-        0: 15, # menos de 10 kilos, 15 gramos diarios
-        10: 30, # hasta 10 kilos, 30 gramos diarios
+        0: 15,  # menos de 10 kilos, 15 gramos diarios
+        10: 30,  # hasta 10 kilos, 30 gramos diarios
     }
 }
 
 
-
-
-def get_ingredients_percent(grams, natural_food = 'yes'):
+def get_ingredients_percent(grams, natural_food='yes'):
     percent_ingredients = {}
     percent_ingredients['hueso carnoso'] = round((grams * 40) / 100)
     percent_ingredients['carnes'] = round((grams * 35) / 100)
     percent_ingredients['fruta/verdura'] = round((grams * 10) / 100)
     percent_ingredients['higado'] = round((grams * 5) / 100)
     percent_ingredients['visceras'] = round((grams * 10) / 100)
-    
 
     if natural_food == 'no':
         percent_ingredients = {}
@@ -50,12 +47,9 @@ def get_ingredients_percent(grams, natural_food = 'yes'):
     return percent_ingredients
 
 
-
-
-
 def body_points(body_image):
     if body_image == 'sobrepeso':
-        points = 1
+        points = 0
     elif body_image == 'peso_ideal':
         points = 2
     elif body_image == 'delgado':
@@ -112,7 +106,7 @@ def format_weight(weight_input):
         weight = int(weight_input)
 
     return weight
-        
+
 
 def determineGrams(activity_level, reproductive_state, body_image, weight, age_type, age):
     if age_type == 'meses' and int(age) <= 12:
@@ -142,34 +136,42 @@ def determineGrams(activity_level, reproductive_state, body_image, weight, age_t
     else:
         size_percent = 'extra_large'
 
-    # percents array
+    # # percents array
     percents = {
-        'mini': [4.4, 4.8 ,5.2, 5.5],
-        'small': [4.6, 5, 5.5, 6.5],
-        'medium': [2.5, 2.9, 3.3, 3.8],
-        'large': [2, 2.34,2.67, 3.1],
-        'extra_large': [1.6, 1.9, 2.2, 2.5],
+        'mini': [4.4, 4.6, 5.2, 5.5],
+        'small': [4.6, 4.8, 5.5, 6.5],
+        'medium': [2.5, 2.7, 3.3, 3.8],
+        'large': [2, 2.2, 2.67, 3.1],
+        'extra_large': [1.6, 1.8, 2.2, 2.5],
     }
+
+    # percents array
+    # percents = {
+    #     'mini': [4.4, 5.2, 5.5],
+    #     'small': [4.6, 5.5, 6.5],
+    #     'medium': [2.5, 3.3, 3.8],
+    #     'large': [2, 2.67, 3.1],
+    #     'extra_large': [1.6, 2.2, 2.5],
+    # }
 
     # grab the percent needed
     # index_number = 2
-    # if points >= 0 and points <= 3:
+    # if 0 <= points <= 3:
     #     index_number = 0
-    # elif points >= 4 and points <= 6:
-    #     index_number = 1    
+    # elif 4 <= points <= 6:
+    #     index_number = 1
     index_number = 3
-    if points >= 0 and points <= 1:
+    if 0 <= points <= 2:
         index_number = 0
-    elif points >= 2 and points <= 3:
+    elif points == 3:
         index_number = 1
-    elif points >= 4 and points <= 6:
+    elif 4 <= points <= 6:
         index_number = 2
     grams_percent = percents[size_percent][index_number]
 
     grams = round((grams_percent * weight) * 10, 0)
 
     return grams, grams_percent, points
-
 
 
 def get_percents_data(total_grams, grams_dict):
@@ -180,14 +182,12 @@ def get_percents_data(total_grams, grams_dict):
     return percents_data
 
 
-
 def validate_age_inputs(age_input, age_type_input):
     if age_type_input == 'months' and int(age_input) > 12:
         age_input = round(int(age_input) / 12, 0)
         age_type_input = 'years'
 
     return age_input, age_type_input
-
 
 
 # def get_suplements_data(age_type, age, weight, natural_food):
@@ -219,7 +219,7 @@ def validate_age_inputs(age_input, age_type_input):
 def convert_string_to_array(string):
     array = string.split('\r\n')
     upload_array = {}
-        
+
     for item in array:
         item = item.strip()
         if item == '':
@@ -230,27 +230,23 @@ def convert_string_to_array(string):
             ingredient = re.findall(r'\D+', item)
             ingredient_name = ingredient[0].strip()
 
-
             if len(number) > 1:
                 number = number[0] + '.' + number[1]
             else:
                 number = number[0]
-
 
             upload_array[ingredient_name] = number
 
     return upload_array
 
 
-
 def convert_json_to_string(json_string):
     array = json.loads(json_string)
     output_string = ''
-    for k,v in array.items():
+    for k, v in array.items():
         output_string += f'{k} {v}% \r\n'
 
-    return output_string 
-
+    return output_string
 
 
 def get_price_from_weight(grams, weight):
@@ -266,8 +262,6 @@ def get_price_from_weight(grams, weight):
     price_grams = round((grams / 100) * price)
 
     return price_grams
-
-
 
 # def migrate_breeds_from_local_to_production():
 #     breeds = Breeds.objects.using('local').all()
