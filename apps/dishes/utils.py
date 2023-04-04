@@ -1,20 +1,6 @@
 import re
 import json
 
-MONTHS_PERCENTS = {
-    2: 10,
-    3: 10,
-    4: 9,
-    5: 9,
-    6: 8,
-    7: 8,
-    8: 7,
-    9: 7,
-    10: 6,
-    11: 6,
-    12: 6,
-}
-
 
 SUPLEMENTOS ={
     'huevo_codorniz_semana': {
@@ -158,11 +144,11 @@ def determineGrams(activity_level, reproductive_state, body_image, weight, age_t
 
     # percents array
     percents = {
-        'mini': [4.7, 5.2, 5.5],
-        'small': [5, 5.5, 6.5],
-        'medium': [2.8, 3.3, 3.8],
-        'large': [2.34, 2.67, 3.1],
-        'extra_large': [2, 2.2, 2.5],
+        'mini': [4.4, 5.2, 5.5],
+        'small': [4.6, 5.5, 6.5],
+        'medium': [2.5, 3.3, 3.8],
+        'large': [2, 2.67, 3.1],
+        'extra_large': [1.6, 2.2, 2.5],
     }
 
     # grab the percent needed

@@ -20,6 +20,21 @@ body{
     background: #f8f8f8;
 }
 
+.mt-1{margin-top: 1rem;}
+.mt-2{margin-top: 2rem;}
+.mt-3{margin-top: 3rem;}
+.mt-4{margin-top: 4rem;}
+
+.mt-less-8 {margin-top: -8rem;}
+.mt-less-10 {margin-top: -10rem;}
+
+.bg-blue-dark {
+    background-color: var(--bg-blue-dark);
+}
+.bg-white {
+    background-color: #fff;
+}
+
 .main_container {
     align-items: center;
     /*background-color: #84AEAF;
@@ -212,7 +227,6 @@ form .name-details .field:last-child {
 }
 
 .main_container--home {
-    font-size: 1rem;
     justify-content: flex-start;
     line-height: 1.5;
     padding: 0;
@@ -234,7 +248,7 @@ form .name-details .field:last-child {
     justify-content: center;
     margin: 0 auto;
     max-width: 992px;
-    padding: calc(var(--base-space) * 8);
+    padding: calc(var(--base-space) * 5) calc(var(--base-space) * 8);
     text-align: center;
     width: 100%;
 }
@@ -243,26 +257,27 @@ form .name-details .field:last-child {
 }
 
 .home-section h1 {
-    font-size: 2,6rem;
+    font-size: 2.6rem;
     margin-bottom: calc(var(--base-space) * 3);
 }
 
 .home-section h2 {
-    font-size: 1,7rem;
+    font-size: 1.8rem;
     margin-bottom: calc(var(--base-space) * 4);
 }
 .home-section h3 {
-    font-size: 1,5rem;
+    font-size: 1.5rem;
     margin-bottom: calc(var(--base-space) * 3);
 }
 
 .hero {
-    align-items: center;
     color: #fff;
+    align-items: center;
+    margin-bottom: 2rem;
 }
 
 .hero p {
-    font-size: 1,3rem;
+    font-size: 1.3rem;
     width: 60%;
 }
 /*CAROUSEL*/
@@ -291,11 +306,11 @@ form .name-details .field:last-child {
 
 /*//////*/
 /*HOME - HOW IT WORKS*/
-.how-it-works.home-wrapper {
+#how-it-works.home-wrapper {
     color: #202B3E;
 }
 
-.how-it-works ol {
+#how-it-works ol {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -304,81 +319,211 @@ form .name-details .field:last-child {
     padding-left: calc(var(--base-space) * 3);
 }
 
-.how-it-works li {
+#how-it-works li {
     flex-basis: calc(50% - (var(--base-space) * 4));
     margin-bottom: calc(var(--base-space) * 3);
     text-align: left;
 }
-.how-it-works .card{
+#how-it-works .card{
     min-height: 400px;
     background: #fff;
     border-radius: 8px;
     padding: 2rem;
 }
-.how-it-works .card .number {
+
+#how-it-works .card .number {
     font-size: 2.7rem;
     font-weight: 700;
     display: block;
     text-align: left;
 }
-.how-it-works .card .icon-wrapper img{
+
+#how-it-works .card .icon-wrapper img{
     width: auto;
     height: 75px;
     margin: 0 auto 2rem;
 }
-.how-it-works .owl-carousel {
+
+#how-it-works .owl-carousel {
     margin-bottom: 3rem;
+}
+#how-it-works .owl-carousel .owl-dots {
+    margin-top: 2rem;
 }
 /*HOME - HOW IT WORKS*/
 
 /*//////*/
 /*HOME - MEET OUR DOGTOR*/
-.meet-our-dogtor .wrapper-banner{
+
+#meet-our-dogtor .wrapper-banner{
     display: flex;
     flex-direction: row-reverse;
     padding: 1rem 4rem;
     border-radius: 8px;
 }
-.meet-our-dogtor .wrapper-banner .text-content{
+
+#meet-our-dogtor .wrapper-banner .text-content{
     display: flex;
     flex-direction: column;
     padding: 2rem 0;
     text-align: left;
 }
-.meet-our-dogtor .wrapper-banner .text-content a{
+
+#meet-our-dogtor .wrapper-banner .text-content a{
     margin-top: 1rem;
     font-weight: bold;
     text-decoration: underline;
 }
-.meet-our-dogtor .wrapper-banner .image-content {
+
+#meet-our-dogtor .wrapper-banner .image-content {
     flex: 1;
 }
-.meet-our-dogtor .wrapper-banner .text-content {
+#meet-our-dogtor .wrapper-banner .text-content {
     flex: 1.5;
 }
 
-.meet-our-dogtor .wrapper-banner.light-blue{
+#meet-our-dogtor .wrapper-banner.light-blue{
     background-color: var(--light-blue);
 }
-.meet-our-dogtor .wrapper-banner.olive-green{
+#meet-our-dogtor .wrapper-banner.olive-green{
     background-color: var(--olive-green);
 }
-.meet-our-dogtor .wrapper-banner.light-yellow{
+#meet-our-dogtor .wrapper-banner.light-yellow{
     background-color: var(--light-yellow);
 }
 
-.meet-our-dogtor .wrapper-banner.light-blue .text-content,
-.meet-our-dogtor .wrapper-banner.light-blue .text-content a,
-.meet-our-dogtor .wrapper-banner.olive-green .text-content,
-.meet-our-dogtor .wrapper-banner.olive-green .text-content a{
+#meet-our-dogtor .wrapper-banner.light-blue .text-content,
+#meet-our-dogtor .wrapper-banner.light-blue .text-content a,
+#meet-our-dogtor .wrapper-banner.olive-green .text-content,
+#meet-our-dogtor .wrapper-banner.olive-green .text-content a{
     color: var(--beige);
 }
-.meet-our-dogtor .wrapper-banner.light-yellow .text-content,
-.meet-our-dogtor .wrapper-banner.light-yellow .text-content a{
+#meet-our-dogtor .wrapper-banner.light-yellow .text-content,
+#meet-our-dogtor .wrapper-banner.light-yellow .text-content a{
     color: var(--black-font);
 }
 /*HOME - MEET OUR DOGTOR*/
 
+
+
+/*HOME - WHY CHOOSE US*/
+.bg-blue-dark h1,
+.bg-blue-dark h2,
+.bg-blue-dark h3 {
+    color: #fff;
+}
+
+#why-choose .owl-carousel .card{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+}
+#why-choose .owl-carousel .card img {
+    width: 50px;
+    height: auto;
+}
+#why-choose .owl-carousel .card p {
+    text-align: left;
+    font-size: 1rem;
+}
+#why-choose .owl-carousel .owl-dots {
+    margin-top: 2rem;
+}
+#why-choose .owl-carousel .owl-nav {
+    bottom: 0;
+    left: 50%;
+    width: 300px;
+    height: 40px;
+    position: absolute;
+    pointer-events: none;
+    transform: translate(-50%, 12px);
+}
+#why-choose .owl-carousel .owl-nav button {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    pointer-events: auto;
+    background: var(--curuba);
+    border-radius: 50%;
+    transition: .5s all ease;
+}
+#why-choose .owl-carousel .owl-nav button:hover {
+    background: #fff;
+}
+#why-choose .owl-carousel .owl-nav button span {
+    font-size: 3rem;
+    font-weight: 200;
+    line-height: 2.3rem;
+}
+#why-choose .owl-carousel .owl-nav .owl-prev {
+    left: 0;
+}
+#why-choose .owl-carousel .owl-nav .owl-next {
+    right: 0;
+}
+.bg-blue-dark .owl-carousel .owl-dots button.active {
+    background: #fff;
+}
+/*HOME - WHY CHOOSE US*/
+
+/*HOME - TESTIMONIALS*/
+#testimonials .owl-carousel .card {
+    text-align: left;
+}
+#testimonials .owl-carousel .card img {
+    width: 70%;
+    height: auto;
+    margin-bottom: 2rem;
+}
+#testimonials .owl-dots {
+    margin-top: 2rem;
+}
+/*HOME - TESTIMONIALS*/
+
+/*HOME - QUESTIONS*/
+#frequent-questions .accordion {
+    margin-bottom: 1rem;
+}
+#frequent-questions .accordion-tab {
+    cursor: pointer;
+    padding: 1rem;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 1.1rem;
+    font-weight: 700;
+    transition: 0.4s;
+    background-color: #fff;
+}
+#frequent-questions .accordion-tab.active,
+#frequent-questions .accordion-tab:hover {
+    box-shadow: 0 0 12px rgba(0,0,0,.05);
+}
+#frequent-questions .accordion-tab:after {
+    content: '\002B';
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+#frequent-questions .accordion-tab.active:after {
+    content: "\2212";
+}
+#frequent-questions .panel {
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    text-align: left;
+}
+#frequent-questions .panel p {
+    padding: 1rem;
+}
+/*HOME - QUESTIONS*/
 
 .benefits-row {
     display: flex;
@@ -437,7 +582,7 @@ form .name-details .field:last-child {
     }
 
     .main_container--home {
-        font-size: 1rem;
+
         padding: 0;
     }
 
@@ -449,7 +594,8 @@ form .name-details .field:last-child {
     }
 
     /*HOME - MEET OUR DOGTOR*/
-    .meet-our-dogtor .wrapper-banner {
+
+    #meet-our-dogtor .wrapper-banner {
         padding: 1rem 2rem;
     }
     /*HOME - MEET OUR DOGTOR*/
@@ -500,7 +646,6 @@ form .name-details .field:last-child {
     }
 
     .main_container--home {
-        font-size: 1rem;
         padding: 0;
     }
 
@@ -515,11 +660,11 @@ form .name-details .field:last-child {
         width: auto;
     }
 
-    .how-it-works ol {
+    #how-it-works ol {
         margin-bottom: calc(var(--base-space) * 3);
     }
 
-    .how-it-works li {
+    #how-it-works li {
         flex-basis: auto;
     }
 
@@ -527,12 +672,13 @@ form .name-details .field:last-child {
         align-self: stretch;
     }
 
-    .how-it-works .card {
+
+    #how-it-works .card {
         padding: 1.5rem;
     }
 
     /*HOME - MEET OUR DOGTOR*/
-    .meet-our-dogtor .wrapper-banner{
+    #meet-our-dogtor .wrapper-banner{
         flex-direction: column;
     }
     /*HOME - MEET OUR DOGTOR*/

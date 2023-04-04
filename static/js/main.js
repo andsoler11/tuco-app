@@ -176,9 +176,25 @@ const getName = () => {
 }
 
 
+// Fn Accordion Preguntas Frecuentes Home
+var acc = document.getElementsByClassName("accordion-tab");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  });
+}
+
 $(document).ready(function(){
   //Construye carousel How It Works
-  $('.how-it-works .owl-carousel').owlCarousel({
+  $('#how-it-works .owl-carousel').owlCarousel({
     margin:20,
     nav:false,
     responsive:{
@@ -196,7 +212,8 @@ $(document).ready(function(){
     }
   });
 
-  $('.meet-our-dogtor .owl-carousel').owlCarousel({
+  // Construye carousel Conoce Nuestro Dogtor
+  $('#meet-our-dogtor .owl-carousel').owlCarousel({
     margin:20,
     nav:false,
     items: 1,
@@ -204,5 +221,49 @@ $(document).ready(function(){
     autoplay: true,
     autoplayHoverPause: true,
     autoplaySpeed: 2000
+  });
+
+  // Construye carousel Por Qué Elegirnos
+  $('#why-choose .owl-carousel').owlCarousel({
+    margin:20,
+    nav:true,
+    center: true,
+    loop: true,
+    autoplay: true,
+    autoplayHoverPause: true,
+    autoplaySpeed: 4000,
+    responsive:{
+      0:{
+          items:1
+      },
+      600:{
+        items: 2
+      },
+      990:{
+        items: 3.5
+      }
+    }
+  });
+
+  // Construye carousel Testimonios
+  $('#testimonials .owl-carousel').owlCarousel({
+    margin:20,
+    nav:false,
+    center: false,
+    loop: true,
+    autoplay: true,
+    autoplayHoverPause: true,
+    autoplaySpeed: 2000,
+    responsive:{
+      0:{
+          items:2
+      },
+      600:{
+        items: 3
+      },
+      990:{
+        items: 4
+      }
+    }
   });
 });
