@@ -330,17 +330,20 @@ form .name-details .field:last-child {
     border-radius: 8px;
     padding: 2rem;
 }
+
 #how-it-works .card .number {
     font-size: 2.7rem;
     font-weight: 700;
     display: block;
     text-align: left;
 }
+
 #how-it-works .card .icon-wrapper img{
     width: auto;
     height: 75px;
     margin: 0 auto 2rem;
 }
+
 #how-it-works .owl-carousel {
     margin-bottom: 3rem;
 }
@@ -351,23 +354,27 @@ form .name-details .field:last-child {
 
 /*//////*/
 /*HOME - MEET OUR DOGTOR*/
+
 #meet-our-dogtor .wrapper-banner{
     display: flex;
     flex-direction: row-reverse;
     padding: 1rem 4rem;
     border-radius: 8px;
 }
+
 #meet-our-dogtor .wrapper-banner .text-content{
     display: flex;
     flex-direction: column;
     padding: 2rem 0;
     text-align: left;
 }
+
 #meet-our-dogtor .wrapper-banner .text-content a{
     margin-top: 1rem;
     font-weight: bold;
     text-decoration: underline;
 }
+
 #meet-our-dogtor .wrapper-banner .image-content {
     flex: 1;
 }
@@ -396,6 +403,7 @@ form .name-details .field:last-child {
     color: var(--black-font);
 }
 /*HOME - MEET OUR DOGTOR*/
+
 
 
 /*HOME - WHY CHOOSE US*/
@@ -574,6 +582,7 @@ form .name-details .field:last-child {
     }
 
     .main_container--home {
+
         padding: 0;
     }
 
@@ -585,6 +594,7 @@ form .name-details .field:last-child {
     }
 
     /*HOME - MEET OUR DOGTOR*/
+
     #meet-our-dogtor .wrapper-banner {
         padding: 1rem 2rem;
     }
@@ -661,6 +671,7 @@ form .name-details .field:last-child {
     .link-button {
         align-self: stretch;
     }
+
 
     #how-it-works .card {
         padding: 1.5rem;
