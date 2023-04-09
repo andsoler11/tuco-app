@@ -1,4 +1,4 @@
-{% extends 'main.html' %}
+{% extends "admin/base_site.html" %}
 {% load static %}
 {% load humanize %}
 {% block content %}
@@ -12,7 +12,9 @@
                 <h1 style='color: white;'>{{message}}</h1>
                 <form method="POST">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-primary" style='cursor: pointer;'>Send email</button>
+                    <div class="submit-row">
+                        <input type="submit" value="Send email" />
+                    </div>
                 </form>
 
             </section>
