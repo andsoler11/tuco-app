@@ -138,7 +138,7 @@ def sendEmailButton(request):
         smtp_server.login(user, password)
 
         mensaje['De'] = settings.EMAIL_HOST_USER
-        mensaje['Para'] = 'andres-yoyo@hotmail.com'
+        mensaje['Para'] = settings.EMAIL_RECEIVER
         mensaje['Asunto'] = 'Informe de datos'
         smtp_server.sendmail(mensaje['De'], mensaje['Para'], mensaje.as_string())
         smtp_server.quit()
