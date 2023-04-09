@@ -3,15 +3,15 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.dishesHome, name="dishes"),
+    path('', views.formulate_home, name="dishes"),
     path('menu/<str:pk>', views.menusHome, name="menus"),
     path('menu/', views.menusHome, name="menus"),
     path('menu-pet/<str:pk>', views.menuPet, name="menu-pet"),
     path('edit-pet/<str:pk>', views.editPet, name="edit-pet"),
-    path('menus/create', views.createMenu, name="menus-create"),
-    path('menus/list', views.listMenus, name="menus-list"),
-    path('menus/delete/<str:pk>', views.deleteMenu, name="menus-delete"),
-    path('menus/update/<str:pk>', views.updateMenu, name="menus-update"),
+    # path('menus/create', views.createMenu, name="menus-create"),
+    # path('menus/list', views.listMenus, name="menus-list"),
+    # path('menus/delete/<str:pk>', views.deleteMenu, name="menus-delete"),
+    # path('menus/update/<str:pk>', views.updateMenu, name="menus-update"),
     path('menu-selection/', views.menuSelection, name="menu-selection"),
     path('menu-detail/<str:menu_id>/<str:pet_id>/', views.menuDetail, name='menu-detail'),
     path('menu-detail/<str:menu_id>/', views.menuDetail, name='menu-detail'),

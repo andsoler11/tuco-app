@@ -108,7 +108,7 @@ def format_weight(weight_input):
     return weight
 
 
-def determineGrams(activity_level, reproductive_state, body_image, weight, age_type, age):
+def determine_grams(activity_level, reproductive_state, body_image, weight, age_type, age):
     if age_type == 'meses' and int(age) <= 12:
         grams = round((6 * weight) * 10, 2)
         grams_percent = 6
@@ -172,6 +172,59 @@ def determineGrams(activity_level, reproductive_state, body_image, weight, age_t
     grams = round((grams_percent * weight) * 10, 0)
 
     return grams, grams_percent, points
+
+
+#
+# def calculate_barf_food_amount(castrated, already_eating_barf, activity_level, weight_kg, body_condition_score):
+#     # Calculate resting energy requirements (RER) based on weight and age
+#     weight_lbs = weight_kg * 2.20462  # convert weight from kg to lbs
+#     if weight_lbs <= 4.4:
+#         rer = 70 * weight_lbs ** 0.75
+#     elif 4.4 < weight_lbs <= 99:
+#         rer = 30 * weight_lbs + 70
+#     else:
+#         rer = 70 * weight_lbs + 30
+#
+#     # Adjust RER based on activity level
+#     if activity_level == 'bajo':
+#         rer *= 1.2
+#     elif activity_level == 'medio':
+#         rer *= 1.5
+#     else:
+#         rer *= 2.0
+#
+#     # Adjust RER based on body condition score
+#     if body_condition_score == 'muy_delgado':
+#         rer *= 1.5
+#     elif body_condition_score == 'delgado':
+#         rer *= 1.2
+#     elif body_condition_score == 'peso_ideal':
+#         rer *= 1.0
+#     elif body_condition_score == 'sobrepeso':
+#         rer *= 0.7
+#     else:
+#         rer *= 0.6
+#
+#     # Adjust RER based on castration status
+#     if castrated == 'castrado':
+#         rer *= 0.8
+#
+#     # Adjust RER based on whether already eating BARF
+#     if already_eating_barf == 'yes':
+#         rer *= 1.1
+#
+#     # Calculate amount of food in grams per day based on RER and typical BARF diet proportions
+#     protein_percentage = 0.15
+#     fat_percentage = 0.2
+#     carbohydrate_percentage = 0.05
+#     kcal_per_gram_protein = 3.5
+#     kcal_per_gram_fat = 8.5
+#     kcal_per_gram_carbohydrate = 3.5
+#     grams_per_kcal = 1 / ((protein_percentage * kcal_per_gram_protein) + (fat_percentage * kcal_per_gram_fat) + (carbohydrate_percentage * kcal_per_gram_carbohydrate))
+#     food_amount = rer * grams_per_kcal
+#
+#     return round(food_amount, 1)
+#
 
 
 def get_percents_data(total_grams, grams_dict):
@@ -273,3 +326,34 @@ def get_price_from_weight(grams, weight):
 #             image_url=breed.image_url,
 #         )
 #         new_breed.save()
+
+
+
+
+# def determine_activity_level(age, breed, daily_exercise_hours):
+#     # Define breed-specific average daily exercise levels
+#     breed_exercise_levels = {
+#         'labrador': 'high',
+#         'poodle': 'medium',
+#         'bulldog': 'low'
+#     }
+#
+#     # Determine breed-specific exercise level or assume normal exercise
+#     if breed.lower() in breed_exercise_levels:
+#         breed_activity_level = breed_exercise_levels[breed.lower()]
+#     else:
+#         breed_activity_level = 'normal'
+#
+#     # Determine overall activity level based on age, breed, and daily exercise
+#     if age < 1:
+#         activity_level = 'high'
+#     elif breed_activity_level == 'high' and daily_exercise_hours >= 2:
+#         activity_level = 'high'
+#     elif breed_activity_level == 'medium' and daily_exercise_hours >= 1:
+#         activity_level = 'medium'
+#     elif breed_activity_level == 'low' and daily_exercise_hours >= 0.5:
+#         activity_level = 'low'
+#     else:
+#         activity_level = 'medium'
+#
+#     return activity_level

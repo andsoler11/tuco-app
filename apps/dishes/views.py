@@ -10,6 +10,7 @@ from .utils import *
 import json
 import os
 import re
+
 YOUNG_AGE = 2
 MIDDLE_AGE = 4
 ADULT_AGE = 8
@@ -22,8 +23,7 @@ puppy_ages = {
 }
 
 
-
-def dishesHome(request):
+def formulate_home(request, menu_id=None):
     page = 'multistep-form'
     form = PuppyForm()
     points = 0
@@ -33,31 +33,31 @@ def dishesHome(request):
     user = None
 
     if request.method == 'POST':
-        activity_level_input        = request.POST.get('activity_level')
-        reproductive_state_input    = request.POST.get('reproductive_state')
-        body_image_input            = request.POST.get('body_image')
+        activity_level_input = request.POST.get('activity_level')
+        reproductive_state_input = request.POST.get('reproductive_state')
+        body_image_input = request.POST.get('body_image')
 
-        age, age_type    = validate_age_inputs(request.POST.get('age'), request.POST.get('age_type'))     
-        weight           = format_weight(request.POST.get('weight'))
+        age, age_type = validate_age_inputs(request.POST.get('age'), request.POST.get('age_type'))
+        weight = format_weight(request.POST.get('weight'))
 
         # get the data!
-        grams, grams_percent, points = determineGrams(
-            activity_level=activity_level_input, 
-            reproductive_state=reproductive_state_input, 
-            body_image=body_image_input, 
+        grams, grams_percent, points = determine_grams(
+            activity_level=activity_level_input,
+            reproductive_state=reproductive_state_input,
+            body_image=body_image_input,
             weight=weight,
             age_type=age_type,
             age=age
         )
 
-
         ################ section for user contact ################
         if request.POST.get('name_contact') and request.POST.get('email_contact'):
             email = request.POST.get('email_contact').lower()
             name = request.POST.get('name_contact').lower()
-            
+
             if not '@' in email:
-                return render(request, 'dishes/dishes-home.html', {'page': page, 'form': form, 'error': 'El email no es valido'})
+                return render(request, 'dishes/dishes-home.html',
+                              {'page': page, 'form': form, 'error': 'El email no es valido'})
 
             user = User.objects.get(username=email)
             if user is None:
@@ -77,8 +77,8 @@ def dishesHome(request):
         menus = Menus.objects.all().order_by('created')
 
         puppy = Puppy(
-            owner=user_upload, 
-            name=request.POST.get('name'), 
+            owner=user_upload,
+            name=request.POST.get('name'),
             age=age,
             body_image=body_image_input,
             reproductive_state=reproductive_state_input,
@@ -91,35 +91,37 @@ def dishesHome(request):
             grams_percent=grams_percent,
             points=points,
             is_barf_active=request.POST.get('natural_food'),
+            menu_id=menu_id
         )
-        
+
         puppy.save()
         pk = puppy.id
-
-
 
         ################ section for user contact ################
         if request.POST.get('name_contact') and request.POST.get('email_contact'):
             contact = ContactDetail(
-                    name_contact=name,
-                    email_contact=email,
-                    pet=puppy
-                )
+                name_contact=name,
+                email_contact=email,
+                pet=puppy
+            )
             contact.save()
         ##########################################################
+
+        if menu_id is not None:
+            return redirect('list-pets')
 
         return redirect('menus', pk=pk)
 
     breeds = Breeds.objects.all()
 
     context = {
-        'page': page, 
-        'dish': dish, 
-        'form': form, 
-        'grams': grams, 
-        'grams_percent': grams_percent, 
-        'points': points, 
-        'breeds':breeds
+        'page': page,
+        'dish': dish,
+        'form': form,
+        'grams': grams,
+        'grams_percent': grams_percent,
+        'points': points,
+        'breeds': breeds
     }
 
     return render(request, 'dishes/home.html', context)
@@ -132,11 +134,6 @@ def menusHome(request, pk=None):
     puppy_data = None
     if pk is not None:
         puppy_data = Puppy.objects.get(id=pk)
-
-        if puppy_data.is_barf_active == 'no':
-            available_menus = Menus.objects.filter(name='Iniciación')
-
-
 
     # # mind using sessions in the future
     # # food_type = request.session['food_type']
@@ -166,9 +163,7 @@ def menusHome(request, pk=None):
     #     # round the final grams
     #     grams = round(total_grams)
 
-    
     # percents_data = get_percents_data(grams, percent_ingredients)
-    
 
     # if (weight < 10):
     #     price = 1432
@@ -180,9 +175,9 @@ def menusHome(request, pk=None):
     #     price = 1284
 
     # price_grams = round((grams / 110) * price)
-    
+
     context = {
-        'page': page, 
+        'page': page,
         'pet': puppy_data,
         # 'grams': grams, 
         # 'puppy_data': puppy_data,
@@ -200,18 +195,18 @@ def menusHome(request, pk=None):
     return render(request, 'dishes/menus.html', context)
 
 
-
 def editPet(request, pk):
     puppy = Puppy.objects.get(id=pk)
     form = PuppyForm(instance=puppy)
 
     if request.method == 'POST':
+        menu = puppy.menu.id
         puppy.delete()
-        return dishesHome(request)
+        return formulate_home(request, menu)
 
-    context = {'puppy':puppy, 'page': 'edit-pet', 'form': form}
+    context = {'puppy': puppy, 'page': 'edit-pet', 'form': form}
 
-    return render(request, 'dishes/edit-pet.html', context)
+    return render(request, 'dishes/home.html', context)
 
 
 def createMenu(request):
@@ -231,15 +226,14 @@ def createMenu(request):
         menu.save()
         return redirect('menus-list')
 
-    context = {'form':form, 'page': 'create-menu'}
+    context = {'form': form, 'page': 'create-menu'}
     return render(request, 'menus/create-menu.html', context)
 
 
 def listMenus(request):
     menus = Menus.objects.all()
-    context = {'menus':menus, 'page': 'menus-list'}
+    context = {'menus': menus, 'page': 'menus-list'}
     return render(request, 'menus/menus-list.html', context)
-
 
 
 def deleteMenu(request, pk):
@@ -253,20 +247,18 @@ def deleteMenu(request, pk):
 
 def updateMenu(request, pk):
     menu = Menus.objects.get(id=pk)
-    
+
     if request.method == 'POST':
         menu.delete()
         return createMenu(request)
-
 
     menu.percents = convert_json_to_string(menu.percents)
     menu.nutrition_information = convert_json_to_string(menu.nutrition_information)
 
     form = MenusForm(instance=menu)
-    context = {'menu':menu, 'page': 'update-menu', 'form': form}
+    context = {'menu': menu, 'page': 'update-menu', 'form': form}
 
     return render(request, 'menus/create-menu.html', context)
-    
 
 
 def menuSelection(request):
@@ -276,10 +268,7 @@ def menuSelection(request):
     puppies = Puppy.objects.filter(owner=request.user)
     puppies_grams = {}
     for puppy in puppies:
-        puppies_grams[puppy.name] = { 'grams': puppy.grams, 'weight': puppy.weight, 'id': puppy.id }
-
-
-
+        puppies_grams[puppy.name] = {'grams': puppy.grams, 'weight': puppy.weight, 'id': puppy.id}
 
     for menu in menus:
         menu.prices = {}
@@ -304,7 +293,7 @@ def menuSelection(request):
             weight = float(v.get('weight'))
             menu.prices[k] = {'price': get_price_from_weight(grams, weight), 'grams': grams, 'id': v.get('id')}
 
-    context = {'menus':menus, 'page': 'menu-selection'}
+    context = {'menus': menus, 'page': 'menu-selection'}
     return render(request, 'dishes/menu-selection.html', context)
 
 
@@ -319,11 +308,11 @@ def menuDetail(request, menu_id, pet_id=None):
     if pet_id:
         puppy = Puppy.objects.get(id=pet_id)
         button_message = 'Seleccionar menú'
-        puppies_grams = { 
+        puppies_grams = {
             puppy.name: {
                 'grams': int(puppy.grams),
                 'price': get_price_from_weight(float(puppy.grams), float(puppy.weight)),
-                'id' : puppy.id
+                'id': puppy.id
             }
         }
         menu.prices = puppies_grams
@@ -334,17 +323,15 @@ def menuDetail(request, menu_id, pet_id=None):
         if puppy is None:
             return redirect('dishes')
 
-        puppies_grams = { 
-            puppy.name: {
-                'grams': int(puppy.grams),
-                'price': get_price_from_weight(float(puppy.grams), float(puppy.weight)),
-                'id' : puppy.id
-            }
-        }
-        menu.prices = puppies_grams
+        # puppies_grams = {
+        #     puppy.name: {
+        #         'grams': int(puppy.grams),
+        #         'price': get_price_from_weight(float(puppy.grams), float(puppy.weight)),
+        #         'id': puppy.id
+        #     }
+        # }
+        # menu.prices = puppies_grams
 
-    
-    
     if request.method == 'POST':
         if pet_id:
             puppy.menu_id = menu.id
@@ -354,12 +341,12 @@ def menuDetail(request, menu_id, pet_id=None):
             return redirect('menu-selection')
 
     context = {
-        'menu':menu, 
-        'page': 'menu-detail', 
-        'button_message': button_message, 
+        'menu': menu,
+        'page': 'menu-detail',
+        'button_message': button_message,
         'pet': puppy
     }
-    
+
     return render(request, 'dishes/menu-selection.html', context)
 
 
@@ -374,14 +361,14 @@ def menuPet(request, pk):
     menu.nutrition_information = json.loads(menu.nutrition_information)
 
     menu.prices = {}
-    puppies_grams = { 
+    puppies_grams = {
         puppy.name: {
             'grams': float(puppy.grams),
             'price': get_price_from_weight(float(puppy.grams), float(puppy.weight)),
-            'id' : puppy.id
+            'id': puppy.id
         }
     }
     menu.prices = puppies_grams
 
-    context = {'menu':menu, 'page': 'menu-pet', 'puppy': puppy}
+    context = {'menu': menu, 'page': 'menu-pet', 'puppy': puppy}
     return render(request, 'dishes/menu-pet.html', context)

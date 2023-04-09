@@ -7,6 +7,8 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+from pprint import pprint
+
 import json
 
 # Create your views here.
@@ -41,57 +43,75 @@ def breedDetail(request, pk):
 def sendEmailButton(request):
     msg = 'click to send email'
     if request.method == 'POST':
+        # start the default menu
         default_menu = "default"
+
+        # get all the pets
         pets = Puppy.objects.all()
 
-        supplier_data = {}
+        # start the dicts of the data needed
+        pets_menus = {}
         total_menus = {}
         pets_grams = {}
+
+        # start the iteration for the pets
         for pet in pets:
-            menu = default_menu
-            if pet.menu_id is not None:
-                menu = pet.menu.name
+            # if the pet has no menu, continue
+            if pet.menu_id is None:
+                continue
+            menu = pet.menu.name
+            pets_menus[pet.name] = {'menus': [], 'grams': 0}
+            barf_active = pet.is_barf_active
 
-            if menu not in supplier_data:
-                supplier_data[menu] = 0
+            # get the number of weeks for the selected menu depending on the barf active
+            num_weeks_selected_menu = 4
+            num_weeks_iniciacion_menu = 0
+            if barf_active == "no":
+                num_weeks_selected_menu = 3
+                num_weeks_iniciacion_menu = 1
 
-            if menu not in total_menus:
-                total_menus[menu] = 0
+            # calculate the total grams for the selected menu
+            daily_grams = pet.grams
+            total_grams_selected_menu = daily_grams * 7 * num_weeks_selected_menu
+            if num_weeks_iniciacion_menu > 0:
+                total_grams_iniciacion_menu = daily_grams * 7 * num_weeks_iniciacion_menu
+                menu_iniciacion = Menus.objects.get(name='Iniciación')
 
-            if pet not in pets_grams:
-                pets_grams[pet.name + " 15 bolsas de " + pet.menu.name] = int(pet.grams)
+                if "total semanas " + menu_iniciacion.name not in total_menus:
+                    total_menus["total semanas " + menu_iniciacion.name] = 0
 
-            total_menus[menu] += 1
-            supplier_data[menu] += int(pet.grams)
+                if "total gramos" + menu_iniciacion.name not in pets_grams:
+                    pets_grams["total gramos" + menu_iniciacion.name] = 0
 
+                total_menus["total semanas " + menu_iniciacion.name] += num_weeks_iniciacion_menu
+                pets_grams["total gramos" + menu_iniciacion.name] += float(total_grams_iniciacion_menu)
+
+                if menu_iniciacion.name not in pets_menus[pet.name]:
+                    pets_menus[pet.name]['menus'].append(menu_iniciacion.name)
+
+            # calculate the total grams for the selected menu
+            if "total semanas " + menu not in total_menus:
+                total_menus["total semanas " + menu] = 0
+
+            if "total gramos" + menu not in pets_grams:
+                pets_grams["total gramos" + menu] = 0
+
+            total_menus["total semanas " + menu] += num_weeks_selected_menu
+            pets_grams["total gramos" + menu] += float(total_grams_selected_menu)
+            pets_menus[pet.name]['menus'].append(menu)
+            pets_menus[pet.name]['grams'] = daily_grams
 
         kitchen_data = {}
-        for k, v in supplier_data.items():
+        for k, v in pets_grams.items():
+            k = k.replace("total gramos", "")
             percents = json.loads(Menus.objects.get(name=k).percents)
-            
-            if k == default_menu:
-                percents = json.loads(Menus.objects.get().percents)
-
             for ingredient, percent in percents.items():
                 if ingredient not in kitchen_data:
                     kitchen_data[ingredient] = 0
 
                 kitchen_data[ingredient] += round((v * float(percent)) / 100)
 
-
-
-        supplier_data_table = generate_html_table(supplier_data)
-        total_menus_table = generate_html_table(total_menus, headers=['Nombre', 'Cantidad'])
-        kitchen_data_table = generate_html_table(kitchen_data)
-        pets_data_table = generate_html_table(pets_grams)
-
-        # Crear un mensaje de correo electrónico
-        de = settings.EMAIL_HOST_USER
-        para = settings.EMAIL_RECEIVER
-        asunto = 'Informe de datos'
-        cuerpo = f"Supplier data: {supplier_data}\nTotal menus: {total_menus}\nKitchen data: {kitchen_data}"
-
-        # Crear objeto MIMEMultipart
+        html_output = generate_html_data(pets_menus, total_menus, pets_grams, kitchen_data)
         mensaje = MIMEMultipart()
 
         # Agregar el cuerpo del mensaje
@@ -100,20 +120,14 @@ def sendEmailButton(request):
         <html>
         <head></head>
         <body>
-            <h1 style='text-align: center;'>Supplier Data</h1>
-            {supplier_data_table}
-            <h1 style='text-align: center;'>Total Menus</h1>
-            {total_menus_table}
-            <h1 style='text-align: center;'>Kitchen Data</h1>
-            {kitchen_data_table}
-            <h1 style='text-align: center;'>pets Data</h1>
-            {pets_data_table}
+            <h1 style='text-align: center;'>DATA</h1>
+            {html_output}
         </body>
         </html>
         """
         part = MIMEText(html, 'html')
         mensaje.attach(part)
-        # Configurar el servidor SMTP y autenticar la conexión
+
         servidor_smtp = 'smtp.gmail.com'
         puerto = 587
         user = settings.EMAIL_HOST_USER
@@ -123,14 +137,13 @@ def sendEmailButton(request):
         smtp_server.starttls()
         smtp_server.login(user, password)
 
-        # Enviar el correo electrónico
-        mensaje['De'] = de
-        mensaje['Para'] = para
-        mensaje['Asunto'] = asunto
-        smtp_server.sendmail(de, para, mensaje.as_string())
+        mensaje['De'] = settings.EMAIL_HOST_USER
+        mensaje['Para'] = settings.EMAIL_RECEIVER
+        mensaje['Asunto'] = 'Informe de datos'
+        smtp_server.sendmail(mensaje['De'], mensaje['Para'], mensaje.as_string())
         smtp_server.quit()
 
-        msg = 'email sent'
+        msg = 'Culpa de Ed'
 
     context = {
         'page': 'menu-selection',
@@ -140,25 +153,71 @@ def sendEmailButton(request):
     return render(request, 'email-send.html', context)
 
 
-def generate_html_table(data, headers=['Nombre', 'Gramos']):
-    """
-    Generates an HTML table from a dictionary where the keys are the rows and the values are dictionaries with columns
-    """
-    headers = headers
-    rows = []
-    for key, value in data.items():
-        rows.append([key, value])
-    html = "<table style='border-collapse: collapse; width: 50%; margin: 0 auto;'>"
-    # Add table headers
-    html += "<tr style='background-color: #f2f2f2; text-align: left;'>"
-    for header in headers:
-        html += f"<th style='padding: 8px; border: 1px solid #ddd;'>{header}</th>"
-    html += "</tr>"
-    # Add table rows
-    for row in rows:
-        html += "<tr>"
-        for col in row:
-            html += f"<td style='padding: 8px; border: 1px solid #ddd;'>{col}</td>"
-        html += "</tr>"
-    html += "</table>"
-    return html
+# def generate_html_table(data, headers=['Nombre', 'Gramos']):
+#     """
+#     Generates an HTML table from a dictionary where the keys are the rows and the values are dictionaries with columns
+#     """
+#     headers = headers
+#     rows = []
+#     for key, value in data.items():
+#         rows.append([key, value])
+#     html = "<table style='border-collapse: collapse; width: 50%; margin: 0 auto;'>"
+#     # Add table headers
+#     html += "<tr style='background-color: #f2f2f2; text-align: left;'>"
+#     for header in headers:
+#         html += f"<th style='padding: 8px; border: 1px solid #ddd;'>{header}</th>"
+#     html += "</tr>"
+#     # Add table rows
+#     for row in rows:
+#         html += "<tr>"
+#         for col in row:
+#             html += f"<td style='padding: 8px; border: 1px solid #ddd;'>{col}</td>"
+#         html += "</tr>"
+#     html += "</table>"
+#     return html
+
+def generate_html_data(pets_menus, total_menus, pets_grams, menu_ingredients):
+    # Start with an empty string for the HTML
+    html_data = ""
+
+    # Loop through each pet in the pets_menus dict
+    for pet_name, pet_data in pets_menus.items():
+        # Add the pet name to the HTML
+        html_data += f"<h3 style='text-align: center;'>{pet_name} GRAMOS: {round(float(pet_data['grams']), 0)}</h3>"
+
+        # Add a table for the menus for this pet
+        html_data += "<table style='border-collapse: collapse; width: 50%; margin: 0 auto;'>"
+        html_data += "<tr><th style='padding: 8px; border: 1px solid #ddd;'>Menus</th></tr>"
+        for menu in pet_data['menus']:
+            html_data += f"<tr><td style='padding: 8px; border: 1px solid #ddd;'>{menu}</td></tr>"
+        html_data += "</table>"
+
+    html_data += "<br><br><br>"
+    html_data += f"<h1 style='text-align: center;'>MORE DATA</h1>"
+    # Add a table for the total weeks for each menu
+    html_data += "<table style='border-collapse: collapse; width: 50%; margin: 0 auto;'>"
+    html_data += "<tr><th style='padding: 8px; border: 1px solid #ddd;'>Menu</th><th style='padding: 8px; border: 1px solid #ddd;'>Total Weeks</th></tr>"
+    for menu, weeks in total_menus.items():
+        if menu.startswith("total semanas "):
+            menu_name = menu.split("total semanas ")[1]
+            html_data += f"<tr><td style='padding: 8px; border: 1px solid #ddd;'>{menu_name}</td><td style='padding: 8px; border: 1px solid #ddd;'>  {weeks}</td></tr>"
+    html_data += "</table>"
+    html_data += "<br><br><br>"
+    # Add a table for the total grams per menu
+    html_data += "<table style='border-collapse: collapse; width: 50%; margin: 0 auto;'>"
+    html_data += "<tr><th style='padding: 8px; border: 1px solid #ddd;'>Menu</th><th style='padding: 8px; border: 1px solid #ddd;'>Total Grams</th></tr>"
+    for menu, grams in pets_grams.items():
+        if menu.startswith("total gramos"):
+            menu_name = menu.split("total gramos")[1]
+            html_data += f"<tr><td style='padding: 8px; border: 1px solid #ddd;'>{menu_name}</td><td style='padding: 8px; border: 1px solid #ddd;'>{grams}</td></tr>"
+    html_data += "</table>"
+    html_data += "<br><br><br>"
+    # Add a table for the total grams per ingredient of menu
+    html_data += "<table style='border-collapse: collapse; width: 50%; margin: 0 auto;'>"
+    html_data += "<tr><th style='padding: 8px; border: 1px solid #ddd;'>Ingredient</th><th style='padding: 8px; border: 1px solid #ddd;'>Total Grams</th></tr>"
+    for ingredient, grams in menu_ingredients.items():
+        html_data += f"<tr><td style='padding: 8px; border: 1px solid #ddd;'>{ingredient}</td><td style='padding: 8px; border: 1px solid #ddd;'>{grams}</td></tr>"
+    html_data += "</table>"
+
+    # Return the HTML data
+    return html_data

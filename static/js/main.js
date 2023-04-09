@@ -70,9 +70,55 @@ function showTab(n) {
 }
 
 
+
 function nextPrev(n) {
   // This function will figure out which tab to display
   var x = document.getElementsByClassName("multistep_form_tab");
+
+
+  // Check if all required inputs on current tab have been filled before moving to the next tab
+  var requiredInputs = x[currentTab].querySelectorAll('[required]');
+
+  var allInputsFilled = true;
+  requiredInputs.forEach(input => {
+    if (input.value.trim() === '') {
+      allInputsFilled = false;
+      input.classList.add('error');
+    } else {
+      input.classList.remove('error');
+    }
+  });
+
+  if (!allInputsFilled) {
+    // Show error message
+    var errorMessage = document.getElementById("error-message");
+    errorMessage.innerText = "Por favor, complete todos los campos requeridos antes de continuar.";
+    errorMessage.style.display = "block";
+    return;
+  }
+
+  // Hide error message if previously displayed
+  var errorMessage = document.getElementById("error-message");
+  errorMessage.style.display = "none";
+
+
+  // Validate weight input
+  var weightInput = x[currentTab].querySelector('input[name="weight"]');
+  if (weightInput) {
+    var weightValue = weightInput.value.trim();
+    if (weightValue === '' || weightValue === '0') {
+      // Show error message if it's not already displayed
+      if (errorMessage.style.display === 'none') {
+        errorMessage.innerText = "Por favor, ingrese un peso válido.";
+        errorMessage.style.display = "block";
+      }
+      weightInput.classList.add('error');
+      return;
+    } else {
+      weightInput.classList.remove('error');
+    }
+  }
+
   // Exit the function if any field in the current tab is invalid:
   // if (n == 1 && !validateForm()) return false;
   // Hide the current tab:
@@ -267,3 +313,41 @@ $(document).ready(function(){
     }
   });
 });
+
+
+
+
+
+
+// MODAL DELETE PET
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// Get the form
+var deleteForm = document.getElementById("deleteForm");
+
+// Get the pet ID from the clicked button and set the form action URL
+function showModal(petId) {
+    modal.style.display = "block";
+    deleteForm.action = "delete/" + petId;
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    hideModal();
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        hideModal();
+    }
+}
+
+// Hide the modal
+function hideModal() {
+    modal.style.display = "none";
+}

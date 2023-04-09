@@ -28,7 +28,6 @@ def deletePet(request, pk):
     pet = Puppy.objects.get(id=pk)
 
     if request.method == 'POST':
-        # borramos de la BS y redireccionamos
         pet.delete()
         return redirect('list-pets')
     
@@ -37,9 +36,6 @@ def editPetMenu(request, pk):
     pet = Puppy.objects.get(id=pk)
     
     menus = Menus.objects.all()
-    if pet.is_barf_active == 'no':
-        menus = Menus.objects.filter(name='Iniciación')
-
     if request.method == 'POST':
         menu_id = request.POST.get('menu')
         menu = Menus.objects.get(id=menu_id)
