@@ -45,34 +45,14 @@ def formulate_home(request, menu_id=None):
             age=age
         )
 
-        ################ section for user contact ################
-        if request.POST.get('name_contact') and request.POST.get('email_contact'):
-            email = request.POST.get('email_contact').lower()
-            name = request.POST.get('name_contact').lower()
-
-            if not '@' in email:
-                return render(request, 'dishes/dishes-home.html',
-                              {'page': page, 'form': form, 'error': 'El email no es valido'})
-
-            user = User.objects.get(username=email)
-            if user is None:
-                user = User(
-                    username=email,
-                    email=email,
-                    first_name=name,
-                )
-                user.save()
-
-        if user is not None:
-            user_upload = user
+        if request.user.is_authenticated:
+            owner = request.user
         else:
-            user_upload = request.user
+            owner = None
         ##########################################################
 
-        menus = Menus.objects.all().order_by('created')
-        print(body_image_input)
         puppy = Pet(
-            owner=user_upload,
+            owner=owner,
             name=request.POST.get('name'),
             age=age,
             body_image=body_image_input,
@@ -94,6 +74,13 @@ def formulate_home(request, menu_id=None):
 
         ################ section for user contact ################
         if request.POST.get('name_contact') and request.POST.get('email_contact'):
+            email = request.POST.get('email_contact').lower()
+            name = request.POST.get('name_contact').lower()
+
+            if not '@' in email:
+                return render(request, 'dishes/dishes-home.html',
+                              {'page': page, 'form': form, 'error': 'El email no es valido'})
+
             contact = ContactDetail(
                 name_contact=name,
                 email_contact=email,
