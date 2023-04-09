@@ -1,5 +1,4 @@
 from pathlib import Path
-import django_heroku
 import environ
 import os
 
@@ -40,7 +39,7 @@ DJANGO_APPS = [
 ]
 
 SITE_ID = 1
-THIRD_PARTY_APPS = ["rest_framework", "livereload", "bootstrap5"]
+THIRD_PARTY_APPS = ["rest_framework"]
 LOCAL_APPS = ['apps.dishes', 'apps.users', 'apps.pets', 'controls', 'api.users_api', 'api.pets_api']
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -158,7 +157,6 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-django_heroku.settings(locals())
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
