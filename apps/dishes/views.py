@@ -23,7 +23,7 @@ puppy_ages = {
 }
 
 
-def dishesHome(request):
+def formulate_home(request, menu_id=None):
     page = 'multistep-form'
     form = PuppyForm()
     points = 0
@@ -41,7 +41,7 @@ def dishesHome(request):
         weight = format_weight(request.POST.get('weight'))
 
         # get the data!
-        grams, grams_percent, points = determineGrams(
+        grams, grams_percent, points = determine_grams(
             activity_level=activity_level_input,
             reproductive_state=reproductive_state_input,
             body_image=body_image_input,
@@ -91,6 +91,7 @@ def dishesHome(request):
             grams_percent=grams_percent,
             points=points,
             is_barf_active=request.POST.get('natural_food'),
+            menu_id=menu_id
         )
 
         puppy.save()
@@ -105,6 +106,9 @@ def dishesHome(request):
             )
             contact.save()
         ##########################################################
+
+        if menu_id is not None:
+            return redirect('list-pets')
 
         return redirect('menus', pk=pk)
 
@@ -130,9 +134,6 @@ def menusHome(request, pk=None):
     puppy_data = None
     if pk is not None:
         puppy_data = Puppy.objects.get(id=pk)
-
-        if puppy_data.is_barf_active == 'no':
-            available_menus = Menus.objects.filter(name='Iniciación')
 
     # # mind using sessions in the future
     # # food_type = request.session['food_type']
@@ -199,12 +200,13 @@ def editPet(request, pk):
     form = PuppyForm(instance=puppy)
 
     if request.method == 'POST':
+        menu = puppy.menu.id
         puppy.delete()
-        return dishesHome(request)
+        return formulate_home(request, menu)
 
     context = {'puppy': puppy, 'page': 'edit-pet', 'form': form}
 
-    return render(request, 'dishes/edit-pet.html', context)
+    return render(request, 'dishes/home.html', context)
 
 
 def createMenu(request):
@@ -321,14 +323,14 @@ def menuDetail(request, menu_id, pet_id=None):
         if puppy is None:
             return redirect('dishes')
 
-        puppies_grams = {
-            puppy.name: {
-                'grams': int(puppy.grams),
-                'price': get_price_from_weight(float(puppy.grams), float(puppy.weight)),
-                'id': puppy.id
-            }
-        }
-        menu.prices = puppies_grams
+        # puppies_grams = {
+        #     puppy.name: {
+        #         'grams': int(puppy.grams),
+        #         'price': get_price_from_weight(float(puppy.grams), float(puppy.weight)),
+        #         'id': puppy.id
+        #     }
+        # }
+        # menu.prices = puppies_grams
 
     if request.method == 'POST':
         if pet_id:
