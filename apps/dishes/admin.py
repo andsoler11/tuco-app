@@ -3,7 +3,7 @@ from .utils import convert_string_to_array, convert_json_to_string
 import json
 
 from django.contrib import admin
-from .models import Menus
+from .models import Menus, Breeds
 
 
 class MenusAdminForm(forms.ModelForm):
@@ -23,6 +23,7 @@ class MenusAdminForm(forms.ModelForm):
             self.initial['percents'] = percents_str
 
 
+@admin.register(Menus)
 class MenusAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'get_percents', 'get_nutrition_information')
     form = MenusAdminForm
@@ -49,4 +50,7 @@ class MenusAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
 
-admin.site.register(Menus, MenusAdmin)
+@admin.register(Breeds)
+class BreedAdmin(admin.ModelAdmin):
+    list_display = ('name', 'breed_size', 'life_span')
+    search_fields = ('name',)

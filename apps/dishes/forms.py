@@ -1,12 +1,12 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Puppy, Breeds, Menus
-from .utils import convert_string_to_array, convert_json_to_string
+from .models import Pet, Menus
 import json
 
-class PuppyForm(ModelForm):
+
+class PetForm(ModelForm):
     class Meta:
-        model = Puppy
+        model = Pet
         fields = [
             'name', 
             'owner', 

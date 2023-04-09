@@ -1,9 +1,9 @@
 from rest_framework import serializers
 
-from apps.dishes.models import Puppy
+from apps.dishes.models import Pet
 
 class PetSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Puppy
+        model = Pet
         fields = '__all__'
 

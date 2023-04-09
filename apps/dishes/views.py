@@ -1,15 +1,10 @@
-from pprint import pprint
-from django.contrib.auth.decorators import login_required
-import string
-from unicodedata import name
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
-from .models import Breeds, Puppy, ContactDetail, Menus
-from .forms import PuppyForm, MenusForm
+from .models import Breeds, Pet, ContactDetail, Menus
+from .forms import PetForm, MenusForm
 from .utils import *
 import json
-import os
-import re
+
 
 YOUNG_AGE = 2
 MIDDLE_AGE = 4
@@ -25,7 +20,7 @@ puppy_ages = {
 
 def formulate_home(request, menu_id=None):
     page = 'multistep-form'
-    form = PuppyForm()
+    form = PetForm()
     points = 0
     grams = 0
     grams_percent = 0
@@ -75,8 +70,8 @@ def formulate_home(request, menu_id=None):
         ##########################################################
 
         menus = Menus.objects.all().order_by('created')
-
-        puppy = Puppy(
+        print(body_image_input)
+        puppy = Pet(
             owner=user_upload,
             name=request.POST.get('name'),
             age=age,
@@ -128,12 +123,12 @@ def formulate_home(request, menu_id=None):
 
 
 # @login_required(login_url='login')
-def menusHome(request, pk=None):
+def menus_home(request, pk=None):
     page = 'menus'
     available_menus = Menus.objects.all()
     puppy_data = None
     if pk is not None:
-        puppy_data = Puppy.objects.get(id=pk)
+        puppy_data = Pet.objects.get(id=pk)
 
     # # mind using sessions in the future
     # # food_type = request.session['food_type']
@@ -195,9 +190,9 @@ def menusHome(request, pk=None):
     return render(request, 'dishes/menus.html', context)
 
 
-def editPet(request, pk):
-    puppy = Puppy.objects.get(id=pk)
-    form = PuppyForm(instance=puppy)
+def edit_pet(request, pk):
+    puppy = Pet.objects.get(id=pk)
+    form = PetForm(instance=puppy)
 
     if request.method == 'POST':
         menu = puppy.menu.id
@@ -209,7 +204,7 @@ def editPet(request, pk):
     return render(request, 'dishes/home.html', context)
 
 
-def createMenu(request):
+def create_menu(request):
     form = MenusForm()
 
     if request.method == 'POST':
@@ -230,13 +225,13 @@ def createMenu(request):
     return render(request, 'menus/create-menu.html', context)
 
 
-def listMenus(request):
+def list_menus(request):
     menus = Menus.objects.all()
     context = {'menus': menus, 'page': 'menus-list'}
     return render(request, 'menus/menus-list.html', context)
 
 
-def deleteMenu(request, pk):
+def delete_menu(request, pk):
     menu = Menus.objects.get(id=pk)
 
     if request.method == 'POST':
@@ -245,12 +240,12 @@ def deleteMenu(request, pk):
         return redirect('menus-list')
 
 
-def updateMenu(request, pk):
+def update_menu(request, pk):
     menu = Menus.objects.get(id=pk)
 
     if request.method == 'POST':
         menu.delete()
-        return createMenu(request)
+        return create_menu(request)
 
     menu.percents = convert_json_to_string(menu.percents)
     menu.nutrition_information = convert_json_to_string(menu.nutrition_information)
@@ -261,11 +256,11 @@ def updateMenu(request, pk):
     return render(request, 'menus/create-menu.html', context)
 
 
-def menuSelection(request):
+def menu_selection(request):
     menus = Menus.objects.all()
 
     # get all puppies grams related to user
-    puppies = Puppy.objects.filter(owner=request.user)
+    puppies = Pet.objects.filter(owner=request.user)
     puppies_grams = {}
     for puppy in puppies:
         puppies_grams[puppy.name] = {'grams': puppy.grams, 'weight': puppy.weight, 'id': puppy.id}
@@ -297,7 +292,7 @@ def menuSelection(request):
     return render(request, 'dishes/menu-selection.html', context)
 
 
-def menuDetail(request, menu_id, pet_id=None):
+def menu_detail(request, menu_id, pet_id=None):
     menu = Menus.objects.get(id=menu_id)
     menu.percents = json.loads(menu.percents)
     menu.nutrition_information = json.loads(menu.nutrition_information)
@@ -306,7 +301,7 @@ def menuDetail(request, menu_id, pet_id=None):
     menu.prices = {}
 
     if pet_id:
-        puppy = Puppy.objects.get(id=pet_id)
+        puppy = Pet.objects.get(id=pet_id)
         button_message = 'Seleccionar menú'
         puppies_grams = {
             puppy.name: {
@@ -318,7 +313,7 @@ def menuDetail(request, menu_id, pet_id=None):
         menu.prices = puppies_grams
     else:
         # get last puppy created
-        puppy = Puppy.objects.filter(owner=request.user).last()
+        puppy = Pet.objects.filter(owner=request.user).last()
 
         if puppy is None:
             return redirect('dishes')
@@ -350,8 +345,8 @@ def menuDetail(request, menu_id, pet_id=None):
     return render(request, 'dishes/menu-selection.html', context)
 
 
-def menuPet(request, pk):
-    puppy = Puppy.objects.get(id=pk)
+def menu_pet(request, pk):
+    puppy = Pet.objects.get(id=pk)
 
     if puppy.menu is None:
         return redirect('menu-selection')

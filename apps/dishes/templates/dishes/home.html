@@ -186,7 +186,7 @@
                             </div>
                         </div>
 
-                        <input id="input_weight_image" name='body_image' type="hidden" value="{{puppy.body_image}}">
+                        <input id="input_weight_image" name='body_image' type="hidden" value="{{ puppy.body_image|default:'peso_ideal' }}">
 
                         <div class="field input">
                             <input type="text" id="id_weight" name="weight" value="{{ form.weight.value|floatformat:0 }}" placeholder="Peso (kg)" required>
