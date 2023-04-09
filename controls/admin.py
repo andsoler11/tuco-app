@@ -89,6 +89,10 @@ class EmailAdmin(admin.ModelAdmin):
 
             # start the iteration for the pets
             for pet in pets:
+                # check if test is in the pet name
+                if "test" in pet.name.lower():
+                    continue
+
                 # if the pet has no menu, continue
                 if pet.menu_id is None:
                     continue
