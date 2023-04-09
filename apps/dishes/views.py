@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
-from .models import Breeds, Puppy, ContactDetail, Menus
-from .forms import PuppyForm, MenusForm
+from .models import Breeds, Pet, ContactDetail, Menus
+from .forms import PetForm, MenusForm
 from .utils import *
 import json
 
@@ -20,7 +20,7 @@ puppy_ages = {
 
 def formulate_home(request, menu_id=None):
     page = 'multistep-form'
-    form = PuppyForm()
+    form = PetForm()
     points = 0
     grams = 0
     grams_percent = 0
@@ -70,8 +70,8 @@ def formulate_home(request, menu_id=None):
         ##########################################################
 
         menus = Menus.objects.all().order_by('created')
-
-        puppy = Puppy(
+        print(body_image_input)
+        puppy = Pet(
             owner=user_upload,
             name=request.POST.get('name'),
             age=age,
@@ -128,7 +128,7 @@ def menus_home(request, pk=None):
     available_menus = Menus.objects.all()
     puppy_data = None
     if pk is not None:
-        puppy_data = Puppy.objects.get(id=pk)
+        puppy_data = Pet.objects.get(id=pk)
 
     # # mind using sessions in the future
     # # food_type = request.session['food_type']
@@ -191,8 +191,8 @@ def menus_home(request, pk=None):
 
 
 def edit_pet(request, pk):
-    puppy = Puppy.objects.get(id=pk)
-    form = PuppyForm(instance=puppy)
+    puppy = Pet.objects.get(id=pk)
+    form = PetForm(instance=puppy)
 
     if request.method == 'POST':
         menu = puppy.menu.id
@@ -260,7 +260,7 @@ def menu_selection(request):
     menus = Menus.objects.all()
 
     # get all puppies grams related to user
-    puppies = Puppy.objects.filter(owner=request.user)
+    puppies = Pet.objects.filter(owner=request.user)
     puppies_grams = {}
     for puppy in puppies:
         puppies_grams[puppy.name] = {'grams': puppy.grams, 'weight': puppy.weight, 'id': puppy.id}
@@ -301,7 +301,7 @@ def menu_detail(request, menu_id, pet_id=None):
     menu.prices = {}
 
     if pet_id:
-        puppy = Puppy.objects.get(id=pet_id)
+        puppy = Pet.objects.get(id=pet_id)
         button_message = 'Seleccionar menú'
         puppies_grams = {
             puppy.name: {
@@ -313,7 +313,7 @@ def menu_detail(request, menu_id, pet_id=None):
         menu.prices = puppies_grams
     else:
         # get last puppy created
-        puppy = Puppy.objects.filter(owner=request.user).last()
+        puppy = Pet.objects.filter(owner=request.user).last()
 
         if puppy is None:
             return redirect('dishes')
@@ -346,7 +346,7 @@ def menu_detail(request, menu_id, pet_id=None):
 
 
 def menu_pet(request, pk):
-    puppy = Puppy.objects.get(id=pk)
+    puppy = Pet.objects.get(id=pk)
 
     if puppy.menu is None:
         return redirect('menu-selection')

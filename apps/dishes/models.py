@@ -3,9 +3,9 @@ from django.contrib.auth.models import User
 import uuid
 
 BODY_IMAGES = {
-    ('muy delgado', 'muy delgado'),
+    ('muy_delgado', 'muy_delgado'),
     ('delgado', 'delgado'),
-    ('peso ideal', 'peso ideal'),
+    ('peso_ideal', 'peso_ideal'),
     ('sobrepeso', 'sobrepeso'),
 }
 
@@ -47,8 +47,7 @@ AGE_TYPES = {
 }
 
 
-
-class Puppy(models.Model):
+class Pet(models.Model):
     id                  = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     owner               = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     name                = models.CharField(max_length=255)
@@ -90,17 +89,15 @@ class Breeds(models.Model):
         return str(self.name)
 
 
-
 class ContactDetail(models.Model):
     id                  = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     name_contact        = models.CharField(max_length=255, default='')
     email_contact       = models.CharField(max_length=255, default='')
     created             = models.DateTimeField(auto_now_add=True)
-    pet                 = models.ForeignKey(Puppy, on_delete=models.CASCADE, null=True, blank=True)
+    pet                 = models.ForeignKey(Pet, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return str(self.name_contact)
-
 
 
 class Menus(models.Model):

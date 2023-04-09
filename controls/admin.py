@@ -1,16 +1,14 @@
 from django.contrib import admin
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from .models import Email
 
-from apps.dishes.models import Breeds, Puppy, Menus
+from apps.dishes.models import Breeds, Pet, Menus
 from django.conf import settings
 
 import smtplib
 import json
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
-
 
 
 def generate_html_data(pets_menus, total_menus, pets_grams, menu_ingredients):
@@ -82,7 +80,7 @@ class EmailAdmin(admin.ModelAdmin):
             default_menu = "default"
 
             # get all the pets
-            pets = Puppy.objects.all()
+            pets = Pet.objects.all()
 
             # start the dicts of the data needed
             pets_menus = {}
