@@ -182,7 +182,10 @@ def edit_pet(request, pk):
     form = PetForm(instance=puppy)
 
     if request.method == 'POST':
-        menu = puppy.menu.id
+        menu = None
+        if puppy.menu is not None:
+            menu = puppy.menu.id
+
         puppy.delete()
         return formulate_home(request, menu)
 
