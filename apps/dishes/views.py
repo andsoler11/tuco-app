@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
-from .models import Breeds, Pet, ContactDetail, Menus
+from .models import Breeds, Pet, ContactDetail, Menus, MenuSendData
 from .forms import PetForm, MenusForm
 from .utils import *
 import json
@@ -321,6 +321,14 @@ def menu_detail(request, menu_id, pet_id=None):
         if pet_id:
             puppy.menu_id = menu.id
             puppy.save()
+
+            menu_send_data = MenuSendData(
+                menu=menu,
+                pet=puppy,
+                days_interval=15
+            )
+            menu_send_data.save()
+
             return redirect('list-pets')
         else:
             return redirect('menu-selection')
