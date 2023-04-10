@@ -1,8 +1,10 @@
+from datetime import datetime
+
 from django.contrib import admin
 from django.shortcuts import render
 from .models import Email
 
-from apps.dishes.models import Breeds, Pet, Menus
+from apps.dishes.models import Breeds, Pet, Menus, MenuSendData
 from django.conf import settings
 
 import smtplib
@@ -11,15 +13,16 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 
-def generate_html_data(pets_menus, total_menus, pets_grams, menu_ingredients):
+def generate_html_data(pets_menus, total_menus, pets_grams, menu_ingredients, menus_data):
     # Start with an empty string for the HTML
     html_data = ""
 
     # Loop through each pet in the pets_menus dict
     for pet_name, pet_data in pets_menus.items():
         # Add the pet name to the HTML
-        html_data += f"<h3 style='text-align: center;'>{pet_name} GRAMOS: {round(float(pet_data['grams']), 0)}</h3>"
-
+        html_data += f"<h3 style='text-align: center;'>{pet_name} GRAMOS: {int(pet_data['grams'])}</h3>"
+        # add the data string from the pet with html
+        html_data += f'<p style="text-align: center;">{pet_data["data"]}</p>'
         # Add a table for the menus for this pet
         html_data += "<table style='border-collapse: collapse; width: 50%; margin: 0 auto;'>"
         html_data += "<tr><th style='padding: 8px; border: 1px solid #ddd;'>Menus</th></tr>"
@@ -28,7 +31,17 @@ def generate_html_data(pets_menus, total_menus, pets_grams, menu_ingredients):
         html_data += "</table>"
 
     html_data += "<br><br><br>"
-    html_data += f"<h1 style='text-align: center;'>MORE DATA</h1>"
+    html_data += f"<h1 style='text-align: center;'>DATOS DE LOS MENUS</h1>"
+    for k, v in menus_data.items():
+        html_data += f"<h3 style='text-align: center;'>{k}</h3>"
+        html_data += "<table style='border-collapse: collapse; width: 50%; margin: 0 auto;'>"
+        html_data += "<tr><th style='padding: 8px; border: 1px solid #ddd;'>Ingrediente</th><th style='padding: 8px; border: 1px solid #ddd;'>Gramos</th></tr>"
+        for k1, v1 in v.items():
+            html_data += f"<tr><td style='padding: 8px; border: 1px solid #ddd;'>{k1}</td><td style='padding: 8px; border: 1px solid #ddd;'>{v1} gramos</td></tr>"
+        html_data += "</table>"
+
+    html_data += "<br><br><br>"
+    html_data += f"<h1 style='text-align: center;'>DATOS TOTALES</h1>"
     # Add a table for the total weeks for each menu
     html_data += "<table style='border-collapse: collapse; width: 50%; margin: 0 auto;'>"
     html_data += "<tr><th style='padding: 8px; border: 1px solid #ddd;'>Menu</th><th style='padding: 8px; border: 1px solid #ddd;'>Total Weeks</th></tr>"
@@ -96,8 +109,17 @@ class EmailAdmin(admin.ModelAdmin):
                 # if the pet has no menu, continue
                 if pet.menu_id is None:
                     continue
+
+                menu_send_data = MenuSendData.objects.filter(pet=pet, menu=pet.menu).first()
+                if menu_send_data is None:
+                    continue
+
+                days_interval = menu_send_data.days_interval
+                if not menu_send_data.is_ready_to_send(days_interval):
+                    continue
+
                 menu = pet.menu.name
-                pets_menus[pet.name] = {'menus': [], 'grams': 0}
+                pets_menus[pet.name] = {'menus': [], 'grams': 0, 'data': ''}
                 barf_active = pet.is_barf_active
 
                 # get the number of weeks for the selected menu depending on the barf active
@@ -106,6 +128,11 @@ class EmailAdmin(admin.ModelAdmin):
                 if barf_active == "no":
                     num_weeks_selected_menu = 3
                     num_weeks_iniciacion_menu = 1
+
+                if days_interval == 15:
+                    num_weeks_selected_menu = 2
+                    if barf_active == "no":
+                        num_weeks_selected_menu = 1
 
                 # calculate the total grams for the selected menu
                 daily_grams = pet.grams
@@ -118,10 +145,10 @@ class EmailAdmin(admin.ModelAdmin):
                         total_menus["total semanas " + menu_iniciacion.name] = 0
 
                     if "total gramos" + menu_iniciacion.name not in pets_grams:
-                        pets_grams["total gramos" + menu_iniciacion.name] = 0
+                        pets_grams["total gramos " + menu_iniciacion.name] = 0
 
                     total_menus["total semanas " + menu_iniciacion.name] += num_weeks_iniciacion_menu
-                    pets_grams["total gramos" + menu_iniciacion.name] += float(total_grams_iniciacion_menu)
+                    pets_grams["total gramos " + menu_iniciacion.name] += float(total_grams_iniciacion_menu)
 
                     if menu_iniciacion.name not in pets_menus[pet.name]:
                         pets_menus[pet.name]['menus'].append(menu_iniciacion.name)
@@ -131,31 +158,57 @@ class EmailAdmin(admin.ModelAdmin):
                     total_menus["total semanas " + menu] = 0
 
                 if "total gramos" + menu not in pets_grams:
-                    pets_grams["total gramos" + menu] = 0
+                    pets_grams["total gramos " + menu] = 0
 
                 total_menus["total semanas " + menu] += num_weeks_selected_menu
-                pets_grams["total gramos" + menu] += float(total_grams_selected_menu)
+                pets_grams["total gramos " + menu] += float(total_grams_selected_menu)
                 pets_menus[pet.name]['menus'].append(menu)
                 pets_menus[pet.name]['grams'] = daily_grams
 
+                if barf_active == "yes":
+                    pets_menus[pet.name]['data'] = f'{str(days_interval)} bolsas de {str(int(daily_grams))} gramos ' \
+                                                   f'del menu {menu} '
+                elif barf_active == "no":
+                    # Set the appropriate days_interval based on interval_day
+                    if days_interval == 15:
+                        days_interval = 7
+                    elif days_interval == 30:
+                        days_interval = 21
+                    else:
+                        # Handle unexpected values of interval_day
+                        print(f"Unexpected value of interval_day: {days_interval}")
+                        days_interval = 7  # default to 7 days
+
+                    # Use the new days_interval
+                    pets_menus[pet.name]['data'] = f'{str(days_interval)} bolsas de {str(int(daily_grams))} gramos ' \
+                                                   f'del menu {menu} Y 7 bolsas de {str(int(daily_grams))} gramos ' \
+                                                   f'del menu Iniciación'
+
+                menu_send_data.last_sent_date = datetime.now()
+                menu_send_data.save()
+
             kitchen_data = {}
+            menus_data = {}
             for k, v in pets_grams.items():
-                k = k.replace("total gramos", "")
+                k = k.replace("total gramos ", "")
                 percents = json.loads(Menus.objects.get(name=k).percents)
+                menus_data[k] = {}
                 for ingredient, percent in percents.items():
                     if ingredient not in kitchen_data:
                         kitchen_data[ingredient] = 0
-
+                    if ingredient not in menus_data[k]:
+                        menus_data[k][ingredient] = 0
+                    menus_data[k][ingredient] += round((v * float(percent)) / 100)
                     kitchen_data[ingredient] += round((v * float(percent)) / 100)
 
-            html_output = generate_html_data(pets_menus, total_menus, pets_grams, kitchen_data)
+            html_output = generate_html_data(pets_menus, total_menus, pets_grams, kitchen_data, menus_data)
             mensaje = MIMEMultipart()
 
             html = f"""\
                 <html>
                 <head></head>
                 <body>
-                    <h1 style='text-align: center;'>DATA</h1>
+                    <h1 style='text-align: center;'>DATOS</h1>
                     {html_output}
                 </body>
                 </html>
@@ -175,7 +228,7 @@ class EmailAdmin(admin.ModelAdmin):
             mensaje['De'] = settings.EMAIL_HOST_USER
             mensaje['Para'] = settings.EMAIL_RECEIVER
             mensaje['Asunto'] = 'Informe de datos'
-            smtp_server.sendmail(mensaje['De'], mensaje['Para'], mensaje.as_string())
+            smtp_server.sendmail(mensaje['De'], 'andres.jazz11@gmail.com', mensaje.as_string())
             smtp_server.quit()
 
             msg = 'Culpa de Ed'

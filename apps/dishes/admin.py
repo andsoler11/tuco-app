@@ -3,7 +3,7 @@ from .utils import convert_string_to_array, convert_json_to_string
 import json
 
 from django.contrib import admin
-from .models import Menus, Breeds
+from .models import Menus, Breeds, MenuSendData
 
 
 class MenusAdminForm(forms.ModelForm):
@@ -54,3 +54,8 @@ class MenusAdmin(admin.ModelAdmin):
 class BreedAdmin(admin.ModelAdmin):
     list_display = ('name', 'breed_size', 'life_span')
     search_fields = ('name',)
+
+
+@admin.register(MenuSendData)
+class MenuSendDataAdmin(admin.ModelAdmin):
+    list_display = ('pet', 'menu', 'days_interval', 'last_sent_date')
