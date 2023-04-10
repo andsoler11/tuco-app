@@ -228,7 +228,7 @@ class EmailAdmin(admin.ModelAdmin):
             mensaje['De'] = settings.EMAIL_HOST_USER
             mensaje['Para'] = settings.EMAIL_RECEIVER
             mensaje['Asunto'] = 'Informe de datos'
-            smtp_server.sendmail(mensaje['De'], 'andres.jazz11@gmail.com', mensaje.as_string())
+            smtp_server.sendmail(mensaje['De'], mensaje['Para'], mensaje.as_string())
             smtp_server.quit()
 
             msg = 'Culpa de Ed'
