@@ -49,7 +49,7 @@ def get_ingredients_percent(grams, natural_food='yes'):
 
 def body_points(body_image):
     if body_image == 'sobrepeso':
-        points = 0
+        points = -2
     elif body_image == 'peso_ideal':
         points = 2
     elif body_image == 'delgado':
@@ -62,11 +62,11 @@ def body_points(body_image):
 
 def activity_points(activity_level):
     if activity_level == 'bajo':
-        points = 1
+        points = 0
     elif activity_level == 'medio':
         points = 2
     else:
-        points = 3
+        points = 4
 
     return points
 
@@ -138,11 +138,11 @@ def determine_grams(activity_level, reproductive_state, body_image, weight, age_
 
     # # percents array
     percents = {
-        'mini': [4.4, 4.6, 5.2, 5.5],
-        'small': [4.6, 4.8, 5.5, 6.5],
-        'medium': [2.5, 2.7, 3.3, 3.8],
-        'large': [2, 2.2, 2.67, 3.1],
-        'extra_large': [1.6, 1.8, 2.2, 2.5],
+        'mini': [4.4, 4.6, 5.2, 5.5, 5.7],
+        'small': [4.5, 4.8, 5.5, 6.5, 6.7],
+        'medium': [2.5, 2.7, 3.3, 3.8, 4.0],
+        'large': [2, 2.2, 2.67, 3.1, 3.3],
+        'extra_large': [1.6, 1.8, 2.2, 2.5, 2.7],
     }
 
     # percents array
@@ -160,13 +160,16 @@ def determine_grams(activity_level, reproductive_state, body_image, weight, age_
     #     index_number = 0
     # elif 4 <= points <= 6:
     #     index_number = 1
-    index_number = 3
-    if 0 <= points <= 2:
+    index_number = 4
+    if -1 <= points <= 2:
         index_number = 0
-    elif points == 3:
+    elif 3 <= points <= 4:
         index_number = 1
-    elif 4 <= points <= 6:
+    elif 5 <= points <= 6:
         index_number = 2
+    elif 7 <= points <= 8:
+        index_number = 3
+
     grams_percent = percents[size_percent][index_number]
 
     grams = round((grams_percent * weight) * 10, 0)
