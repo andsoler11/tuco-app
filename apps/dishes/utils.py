@@ -138,11 +138,11 @@ def determine_grams(activity_level, reproductive_state, body_image, weight, age_
 
     # # percents array
     percents = {
-        'mini': [4.4, 4.6, 5.2, 5.5, 5.7],
-        'small': [4.5, 4.8, 5.5, 6.5, 6.7],
-        'medium': [2.5, 2.7, 3.3, 3.8, 4.0],
-        'large': [2, 2.2, 2.67, 3.1, 3.3],
-        'extra_large': [1.6, 1.8, 2.2, 2.5, 2.7],
+        'mini': [4.2, 4.4, 4.6, 5.2, 5.5, 5.7],
+        'small': [4.3, 4.5, 4.8, 5.5, 6.5, 6.7],
+        'medium': [2.3, 2.5, 2.7, 3.3, 3.8, 4.0],
+        'large': [1.8, 2, 2.2, 2.67, 3.1, 3.3],
+        'extra_large': [1.4, 1.6, 1.8, 2.2, 2.5, 2.7],
     }
 
     # percents array
@@ -160,15 +160,17 @@ def determine_grams(activity_level, reproductive_state, body_image, weight, age_
     #     index_number = 0
     # elif 4 <= points <= 6:
     #     index_number = 1
-    index_number = 4
-    if -1 <= points <= 2:
+    index_number = 5
+    if points <= 0:
         index_number = 0
-    elif 3 <= points <= 4:
+    if 1 <= points <= 2:
         index_number = 1
-    elif 5 <= points <= 6:
+    elif 3 <= points <= 4:
         index_number = 2
-    elif 7 <= points <= 8:
+    elif 5 <= points <= 6:
         index_number = 3
+    elif 7 <= points <= 8:
+        index_number = 4
 
     grams_percent = percents[size_percent][index_number]
 
