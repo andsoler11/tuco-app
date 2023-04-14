@@ -180,3 +180,12 @@ input[placeholder="raza"] {
     color: #c2c7ca;
     font-size: 15px;
 }
+
+#error-message {
+  display: none;
+  border-radius: 5px;
+  color: #f00;
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 10px;
+}

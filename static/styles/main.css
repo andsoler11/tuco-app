@@ -237,9 +237,18 @@ form .name-details .field:last-child {
 }
 
 .home-wrapper.hero {
-    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../images/comida-natural-perros-gatos-wild-balance1.png');
-    background-position: center bottom;
+    /*background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../images/banner-home-un-bocado-a-la-vez.jpeg');*/
+    background: url(../images/banner-home-un-bocado-a-la-vez.jpeg) center center no-repeat;
     background-size: cover;
+}
+.home-wrapper.hero .wrapper-text {
+    width: 400px;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+}
+.home-wrapper.hero .wrapper-text .link-button {
+    align-self: end;
 }
 
 .home-section {
@@ -257,8 +266,15 @@ form .name-details .field:last-child {
 }
 
 .home-section h1 {
-    font-size: 2.6rem;
+    font-size: 2.2rem;
+    font-weight: 400;
+    line-height: normal;
     margin-bottom: calc(var(--base-space) * 3);
+    align-self: end;
+}
+
+.home-section h1 b {
+    font-weight: 600;
 }
 
 .home-section h2 {
@@ -270,10 +286,10 @@ form .name-details .field:last-child {
     margin-bottom: calc(var(--base-space) * 3);
 }
 
-.hero {
+.home-section.hero {
     color: #fff;
-    align-items: center;
-    margin-bottom: 2rem;
+    align-items: end;
+    max-width: 700px;
 }
 
 .hero p {
@@ -330,17 +346,20 @@ form .name-details .field:last-child {
     border-radius: 8px;
     padding: 2rem;
 }
+
 #how-it-works .card .number {
     font-size: 2.7rem;
     font-weight: 700;
     display: block;
     text-align: left;
 }
+
 #how-it-works .card .icon-wrapper img{
     width: auto;
     height: 75px;
     margin: 0 auto 2rem;
 }
+
 #how-it-works .owl-carousel {
     margin-bottom: 3rem;
 }
@@ -351,23 +370,27 @@ form .name-details .field:last-child {
 
 /*//////*/
 /*HOME - MEET OUR DOGTOR*/
+
 #meet-our-dogtor .wrapper-banner{
     display: flex;
     flex-direction: row-reverse;
     padding: 1rem 4rem;
     border-radius: 8px;
 }
+
 #meet-our-dogtor .wrapper-banner .text-content{
     display: flex;
     flex-direction: column;
     padding: 2rem 0;
     text-align: left;
 }
+
 #meet-our-dogtor .wrapper-banner .text-content a{
     margin-top: 1rem;
     font-weight: bold;
     text-decoration: underline;
 }
+
 #meet-our-dogtor .wrapper-banner .image-content {
     flex: 1;
 }
@@ -396,6 +419,7 @@ form .name-details .field:last-child {
     color: var(--black-font);
 }
 /*HOME - MEET OUR DOGTOR*/
+
 
 
 /*HOME - WHY CHOOSE US*/
@@ -532,6 +556,7 @@ form .name-details .field:last-child {
     color: #202B3E;
     font-weight: 700;
     align-self: center;
+    text-align: center;
     background-color: #FFC397;
     padding: calc(var(--base-space) * 2);
     transition: all 0.5s ease;
@@ -574,6 +599,7 @@ form .name-details .field:last-child {
     }
 
     .main_container--home {
+
         padding: 0;
     }
 
@@ -585,6 +611,7 @@ form .name-details .field:last-child {
     }
 
     /*HOME - MEET OUR DOGTOR*/
+
     #meet-our-dogtor .wrapper-banner {
         padding: 1rem 2rem;
     }
@@ -650,6 +677,25 @@ form .name-details .field:last-child {
         width: auto;
     }
 
+    .home-wrapper.hero .home-section.full-height{
+        min-height: calc(60vh - var(--header-height-mobile));
+    }
+
+    .home-section.hero h1 {
+        width: 80%;
+        font-size: 1.5rem;
+    }
+    .home-wrapper.hero {
+        background: url(../images/banner-home-un-bocado-a-la-vez-mobile.jpeg) center center no-repeat;
+        background-size: cover;
+    }
+    .home-wrapper.hero .wrapper-text {
+        width: 100%;
+    }
+    .home-wrapper.hero .wrapper-text .link-button {
+        align-self: stretch;
+    }
+
     #how-it-works ol {
         margin-bottom: calc(var(--base-space) * 3);
     }
@@ -661,6 +707,7 @@ form .name-details .field:last-child {
     .link-button {
         align-self: stretch;
     }
+
 
     #how-it-works .card {
         padding: 1.5rem;
@@ -732,4 +779,140 @@ form .name-details .field:last-child {
     font-size: 14px;
     color: #c2c7ca;
     width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 200px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: start;
+    margin-top: 20px;
+}
+
+#deleteForm input {
+    background-color: red;
+    color: #202B3E;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 5rem;
+}
+
+.button-container button {
+    background-color: #FFC397;
+    color: #202B3E;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 5rem;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Add animation */
+.modal-content {
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+/* Responsive styles */
+
+/* Tablet and mobile */
+@media screen and (max-width: 768px) {
+    .modal-content {
+        width: 90%;
+        padding: 10px;
+    }
+
+    .button-container {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #deleteForm input,
+    .button-container button {
+        width: 100%;
+        max-width: none;
+        margin-bottom: 10px;
+    }
+}
+
+/* Mobile */
+@media screen and (max-width: 480px) {
+    .modal-content {
+        width: 100%;
+        padding: 10px;
+    }    
 }

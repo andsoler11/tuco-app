@@ -22,67 +22,6 @@
                 </div>
                 {% endfor %}
 
-                {% comment %} <div class="diet_data_container">
-                    <h2 class="diet_title">Menú para {{ puppy_data.name }}</h2>
-
-                    <p>Lorem Sumplementos funcionales para mejorar su salud. adipiscing elit, Sin carbohidratos, cereales o aditivos. consectetur adipiscing elit, sed do eiusmod.</p>
-
-                    <div class="diet_data_container__grams_container">
-                        <ul class="diet_data_container__grams_container_ul">
-                            {% for k,v in percent_ingredients.items %}
-                                <li>{{k}}: <span>{{v}}% </span></li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-
-                    <div class="total_grams_container">
-                        <p class="total_grams_container__text"><img src="{% static 'images/calendar.svg' %}">Tuco necesita {{grams}} gr díarios</p>
-                        <p class="total_grams_container__text"><img src="{% static 'images/food_can.svg' %}">2 porciones: {% widthratio grams 2 1 %} grms c/u</p>
-                    </div>
-
-                    <div class="prices_container">
-                        <p class="prices_container__text price_month">${% widthratio price_grams 1 30 as price_month %}{{ price_month|intcomma }} Mensual</p>
-                        <p class="prices_container__text">${{price_grams|intcomma}} al día</p>
-                    </div>
-
-                    <div class="field input">
-                        <button class="add-btn update-cart">Agregar al carrito</button>
-                    </div>
-                </div> {% endcomment %}
-
-                
-                
-
-
-                {% comment %} <h1>Nombre Mascota: {{puppy_data.name}}</h1>
-                <h3>Alergias: {{allergies}}</h1>
-                <h3>Necesidades Especiales: {{special_needs}}</h1>
-
-                {% if week_percents is not null %}
-
-                    <h1>Precio gramos totales: {{price_grams}} COP</h1>
-                    <h1>gramos totales: {{grams}}</h1>
-
-                    {% for k,v in week_percents.items %}
-                        <h3>{{k}}:</h3>
-                        {% for food_name, data in v.items %}
-                            <p>{{food_name}}: {{data}} gramos</p>
-                        {% endfor %}
-                    {% endfor %}
-
-                {% else %}
-
-                    <h1>gramos: {{grams}}</h1>
-
-                    {% for k,v in percent_ingredients.items %}
-                        <p>{{k}}: {{v}} gramos</p>
-                    {% endfor %}
-
-                    <h1>Precio diario: {{price_grams}} COP</h1>
-
-                    <h1>Precio mes: {% widthratio price_grams 1 30 %} COP</h1>
-                {% endif %} {% endcomment %}
-
          </section>
         </div>
     </div>  

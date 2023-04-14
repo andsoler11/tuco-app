@@ -1,10 +1,12 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Puppy, Breeds, Menus
+from .models import Pet, Menus
+import json
 
-class PuppyForm(ModelForm):
+
+class PetForm(ModelForm):
     class Meta:
-        model = Puppy
+        model = Pet
         fields = [
             'name', 
             'owner', 
@@ -59,3 +61,23 @@ class MenusForm(ModelForm):
         self.fields['percents'].widget.attrs.update({
             'class': 'form-control',
         })
+
+
+class MenusAdminForm(forms.ModelForm):
+    class Meta:
+        model = Menus
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance:
+            # Convert percents field from JSON to human-readable format
+            if self.instance.percents:
+                percents_dict = json.loads(self.instance.percents)
+                percents_str = '\n'.join([f'{k}: {v}%' for k, v in percents_dict.items()])
+                self.fields['percents'].initial = percents_str
+            # Convert nutrition_information field from JSON to human-readable format
+            if self.instance.nutrition_information:
+                nutrition_dict = json.loads(self.instance.nutrition_information)
+                nutrition_str = '\n'.join([f'{k}: {v}' for k, v in nutrition_dict.items()])
+                self.fields['nutrition_information'].initial = nutrition_str
