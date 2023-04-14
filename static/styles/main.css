@@ -237,9 +237,18 @@ form .name-details .field:last-child {
 }
 
 .home-wrapper.hero {
-    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../images/comida-natural-perros-gatos-wild-balance1.png');
-    background-position: center bottom;
+    /*background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../images/banner-home-un-bocado-a-la-vez.jpeg');*/
+    background: url(../images/banner-home-un-bocado-a-la-vez.jpeg) center center no-repeat;
     background-size: cover;
+}
+.home-wrapper.hero .wrapper-text {
+    width: 400px;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+}
+.home-wrapper.hero .wrapper-text .link-button {
+    align-self: end;
 }
 
 .home-section {
@@ -257,8 +266,15 @@ form .name-details .field:last-child {
 }
 
 .home-section h1 {
-    font-size: 2.6rem;
+    font-size: 2.2rem;
+    font-weight: 400;
+    line-height: normal;
     margin-bottom: calc(var(--base-space) * 3);
+    align-self: end;
+}
+
+.home-section h1 b {
+    font-weight: 600;
 }
 
 .home-section h2 {
@@ -270,10 +286,10 @@ form .name-details .field:last-child {
     margin-bottom: calc(var(--base-space) * 3);
 }
 
-.hero {
+.home-section.hero {
     color: #fff;
-    align-items: center;
-    margin-bottom: 2rem;
+    align-items: end;
+    max-width: 700px;
 }
 
 .hero p {
@@ -540,6 +556,7 @@ form .name-details .field:last-child {
     color: #202B3E;
     font-weight: 700;
     align-self: center;
+    text-align: center;
     background-color: #FFC397;
     padding: calc(var(--base-space) * 2);
     transition: all 0.5s ease;
@@ -658,6 +675,25 @@ form .name-details .field:last-child {
 
     .hero p {
         width: auto;
+    }
+
+    .home-wrapper.hero .home-section.full-height{
+        min-height: calc(60vh - var(--header-height-mobile));
+    }
+
+    .home-section.hero h1 {
+        width: 80%;
+        font-size: 1.5rem;
+    }
+    .home-wrapper.hero {
+        background: url(../images/banner-home-un-bocado-a-la-vez-mobile.jpeg) center center no-repeat;
+        background-size: cover;
+    }
+    .home-wrapper.hero .wrapper-text {
+        width: 100%;
+    }
+    .home-wrapper.hero .wrapper-text .link-button {
+        align-self: stretch;
     }
 
     #how-it-works ol {
@@ -878,5 +914,5 @@ form .name-details .field:last-child {
     .modal-content {
         width: 100%;
         padding: 10px;
-    }
+    }    
 }
