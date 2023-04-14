@@ -36,13 +36,23 @@ def formulate_home(request, menu_id=None):
         weight = format_weight(request.POST.get('weight'))
 
         # get the data!
-        grams, grams_percent, points = determine_grams(
+        # grams, grams_percent, points = determine_grams(
+        #     activity_level=activity_level_input,
+        #     reproductive_state=reproductive_state_input,
+        #     body_image=body_image_input,
+        #     weight=weight,
+        #     age_type=age_type,
+        #     age=age
+        # )
+
+        grams_percent = 0
+        points = 0
+        grams = calculate_barf_food_amount(
+            castrated=reproductive_state_input,
+            already_eating_barf=request.POST.get('natural_food'),
             activity_level=activity_level_input,
-            reproductive_state=reproductive_state_input,
-            body_image=body_image_input,
-            weight=weight,
-            age_type=age_type,
-            age=age
+            weight_kg=weight,
+            body_condition_score=body_image_input
         )
 
         if request.user.is_authenticated:
