@@ -7,7 +7,11 @@
     font-weight: 400;
 }
 
-h1, h2, h3, h4 {
+h1 {
+    font-weight: 700;
+}
+
+h2, h3, h4 {
     font-weight: 500;
 }
 
@@ -51,12 +55,11 @@ body{
 }
 
 .form_wrapper {
-    background: #202B3E;
+    background: #fff;
     width: 400px;
     min-height: auto;
     border-radius: 10px;
-    box-shadow: 0 0 128px 0 rgba(0, 0, 0, 0.3),
-        0 32px 64px -48px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.15);
 }
 
 /* Sign up Form CSS code */
@@ -91,16 +94,28 @@ body{
 }
 
 .form header {
-    color: #f8d7da;
-    font-size: 24px;
+    color: var(--black-font);
     font-weight: 600;
     margin-bottom: calc(var(--base-space) * 2);
-    text-align: center;
+    text-align: left;
+}
+
+.form header .title-form{
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.form header p {
+    font-size: 1rem;
 }
 
 .form_wrapper hr {
     border: 0;
     border-bottom: 1px solid #FFC397;
+}
+
+.form_wrapper form {
+    margin-top: 1rem;
 }
 
 .form form .error-txt {
@@ -160,8 +175,9 @@ form .name-details .field:last-child {
     width: 100%;
     font-size: 16px;
     padding: 0 10px;
-    border: 1px solid #FFC397;
-    background-color: #202B3E;
+    border: 0;
+    background-color: var(--light-gray);
+    border-radius: 8px;
     color: #fff;
 }
 
@@ -185,15 +201,24 @@ form .name-details .field:last-child {
 
 .form form .button input,
 #nextBtn {
-    margin-top: 13px;
-    height: 45px;
-    border: none;
-    font-size: 1rem;
-    font-weight: 400;
-    background: #FFC397;
+    width: 100%;
+    min-width: 220px;
     color: #202B3E;
-    /* border-radius: 5px; */
+    font-size: 1rem;
+    font-weight: 700;
+    align-self: center;
+    text-align: center;
+    background-color: #FFC397;
+    padding: calc(var(--base-space) * 2);
+    transition: all 0.5s ease;
+    border: 1px solid #DBDBDB;
+    border-radius: 8px;
     cursor: pointer;
+}
+.form form .button input:hover,
+#nextBtn:hover {
+    color: #FFC397;
+    background-color: #202B3E;
 }
 
 .form .link {
@@ -205,11 +230,14 @@ form .name-details .field:last-child {
 }
 
 .form .link a {
-    color: #FFC397;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--black-font);
+    text-decoration: underline;
 }
 
 .form .link a:hover {
-    text-decoration: underline;
+    font-weight: 700;
 }
 
 .form_header_image {
@@ -230,6 +258,11 @@ form .name-details .field:last-child {
     justify-content: flex-start;
     line-height: 1.5;
     padding: 0;
+}
+
+.main_container--form {
+    background: url(../images/main_container_background_2.png) center bottom no-repeat;
+    background-size: cover;
 }
 
 .home-wrapper {
@@ -554,6 +587,7 @@ form .name-details .field:last-child {
 .link-button {
     min-width: 220px;
     color: #202B3E;
+    font-size: 1rem;
     font-weight: 700;
     align-self: center;
     text-align: center;

@@ -53,7 +53,7 @@
 
 {% else %}
 
-<main class="main_container">
+<main class="main_container main_container--form">
     {% if messages|length > 0 %}
     <div style="display: flex; justify-content: center;">
         <div class="alert alert--{{message.tags}}">
@@ -67,10 +67,9 @@
     <div class="form_wrapper">
         <section class="form login">
             <header>
-                <h1>Inicia sesión</h1>
+                <h1 class="title-form">Inicia sesión</h1>
+                <p>¿Ya eres parte de la manada Forever Dog? Ingresa con tu correo y contraseña</p>
             </header>
-
-            <hr />
 
             <form action="{% url 'login' %}" method="POST">
                 {% csrf_token %}
@@ -85,11 +84,12 @@
                 </div>
 
                 <div class="field button">
-                    <input type="submit" value="Continuar">
+                    <input type="submit" value="Iniciar sesión">
                 </div>
 
             </form>
-            <div class="link">No tienes cuenta? <a href="{% url 'register' %}">Registrate</a></div>
+            <div class="link"><a href="{% url 'register' %}">Olvidé mi contraseña</a></div>
+            <div class="link"><a href="{% url 'register' %}">Crear cuenta</a></div>
         </section>
     </div>
 </main>
