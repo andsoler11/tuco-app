@@ -202,14 +202,14 @@ function changeImgCarousel(elementId) {
 }
 
 function toggleMenu() {
-  const menu = document.querySelector(".homepage_header__menu");
+  const menu = document.querySelector(".header__menu");
   const hamburger = document.querySelector(".hamburger");
-  if (menu.classList.contains('homepage_header__menu--open')) {
-    menu.classList.remove('homepage_header__menu--open');
+  if (menu.classList.contains('header__menu--open')) {
+    menu.classList.remove('header__menu--open');
     hamburger.classList.remove('hamburger--menu-open');
     document.body.classList.remove('body--menu-open');
   } else {
-    menu.classList.add('homepage_header__menu--open');
+    menu.classList.add('header__menu--open');
     hamburger.classList.add('hamburger--menu-open');
     document.body.classList.add('body--menu-open');
   }

@@ -2,7 +2,7 @@
 
 <!-- Header Section -->
 <header class="homepage_header">
-    <div class="homepage_header__logo">
+    <div class="header__logo">
         <button class="hamburger" onclick="toggleMenu();"><span></span>Menu</button>
         <a href="/">
             <img class="logo logo-desktop" src="{% static 'images/main_logo.svg' %}" alt="logo">
@@ -14,22 +14,45 @@
         </div>
     </div>
 
-    <div class="homepage_header__menu">
-        <ul class="homepage_header__nav">
-            <li class="homepage_header__nav__item"><a href="{% url 'homepage' %}">Inicio</a></li>
-            <li class="homepage_header__nav__item"><a href="{% url 'list-pets' %}">Mascotas</a></li>
-            <li class="homepage_header__nav__item"><a href="{% url 'dishes' %}">Formular</a></li>
+    <div class="header__menu">
+        <ul class="header__nav">
+            <li class="header__nav__item"><a href="{% url 'homepage' %}" class="active">Inicio</a></li>
+            <li class="header__nav__item"><a href="{% url 'dishes' %}">Descubre su dieta</a></li>
+            <li class="header__nav__item"><a href="{% url 'menus' %}">Nuestros menús</a></li>
+            <li class="header__nav__item submenu"><a href="">Conócenos</a>
+                <ul>
+                    <li class="header__nav__submenu__item"><a href="">Beneficios</a></li>
+                    <li class="header__nav__submenu__item"><a href="">Lo que dice la manada</a></li>
+                    <li class="header__nav__submenu__item"><a href="">No te quedes con la duda</a></li>
+                </ul>
+            </li>
+
+            <!--<li class="header__nav__item"><a href="{% url 'list-pets' %}">Mascotas</a></li>-->
+            <!--<li class="header__nav__item"><a href="{% url 'dishes' %}">Formular</a></li>-->
             {% if request.user.is_authenticated %}
-                <li class="homepage_header__nav__item"><a href="{% url 'menus' %}">Menus</a></li>
-                <li class="homepage_header__nav__item"><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
+                <!--<li class="header__nav__item"><a href="{% url 'menus' %}">Menus</a></li>
+                <li class="header__nav__item"><a href="{% url 'logout' %}">Cerrar Sesión</a></li>-->
             {% else %}
-                <li class="homepage_header__nav__item"><a href="{% url 'login' %}">Ingresar</a></li>
             {% endif %}
         </ul>
-        <ul class="homepage_header__social">
-            <li class="homepage_header__nav__item"><a href="{% url 'login' %}"><img src="{% static 'images/tiktok_logo.svg' %}" class="navbar_logo" /></a></li>
-            <li class="homepage_header__nav__item"><a href="{% url 'register' %}"><img src="{% static 'images/facebook_logo.svg' %}" class="navbar_logo" /></a></li>
-            <li class="homepage_header__nav__item"><a href="{% url 'register' %}"><img src="{% static 'images/instagram_logo.svg' %}" class="navbar_logo" /></a></li>
+        
+        <div class="top-shelf-icons-desktop hide-mobile">
+            {% if request.user.is_authenticated %}
+            {% else %}
+                <a href="{% url 'login' %}">
+                    <img src="{% static 'images/user-icon.svg' %}" alt="user">
+                </a>
+                <a href="">
+                    <img src="{% static 'images/cart-icon.svg' %}" alt="cart">
+                </a>
+                
+            {% endif %}
+        </div>
+
+        <ul class="header__social show-mobile">
+            <li class="header__nav__item"><a href="{% url 'login' %}"><img src="{% static 'images/tiktok_logo.svg' %}" class="navbar_logo" /></a></li>
+            <li class="header__nav__item"><a href="{% url 'register' %}"><img src="{% static 'images/facebook_logo.svg' %}" class="navbar_logo" /></a></li>
+            <li class="header__nav__item"><a href="{% url 'register' %}"><img src="{% static 'images/instagram_logo.svg' %}" class="navbar_logo" /></a></li>
         </ul>
     </div>
 </header>
