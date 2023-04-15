@@ -19,9 +19,14 @@ b, strong {
     font-weight: 600;
 }
 
+.show-mobile {
+    display: none!important;
+}
+
 body{
     font-size: 18px;
     background: #f8f8f8;
+    padding-top: var(--header-height-desktop);
 }
 
 .mt-1{margin-top: 1rem;}
@@ -192,7 +197,7 @@ form .name-details .field:last-child {
 
 
 .form form .input input:focus {
-    box-shadow: 0 0 0 1px #FFC397, 0 0 0 1px #FFC397;
+    box-shadow: 0 0 0 1px var(--black-font);
 }
 
 .form form .image input {
@@ -607,6 +612,13 @@ form .name-details .field:last-child {
  * Breakpoints from: https://getbootstrap.com/docs/5.0/layout/breakpoints/
  */
 @media screen and (max-width: 992px) {
+    .show-mobile {
+        display: flex!important;
+    }
+    .hide-mobile {
+        display: none!important;
+    }
+
     .main_container {
         background-size: 138% auto;
         min-height: calc(100vh - var(--header-height-mobile));
