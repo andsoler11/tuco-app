@@ -127,9 +127,9 @@ def determine_grams(activity_level, reproductive_state, body_image, weight, age_
     # determine the size of the dog by his weight
     if weight <= 5:
         size_percent = 'mini'
-    elif weight > 5 and weight <= 10:
+    elif weight > 5 and weight <= 9:
         size_percent = 'small'
-    elif weight > 10 and weight <= 20:
+    elif weight > 9 and weight <= 20:
         size_percent = 'medium'
     elif weight > 20 and weight <= 35:
         size_percent = 'large'
@@ -139,7 +139,7 @@ def determine_grams(activity_level, reproductive_state, body_image, weight, age_
     # # percents array
     percents = {
         'mini': [4.2, 4.4, 4.6, 5.2, 5.5, 5.7],
-        'small': [4.3, 4.5, 4.8, 5.5, 6.5, 6.7],
+        'small': [4, 4.5, 4.8, 5.5, 5.8, 6],
         'medium': [2.3, 2.5, 2.7, 3.3, 3.8, 4.0],
         'large': [1.8, 2, 2.2, 2.67, 3.1, 3.3],
         'extra_large': [1.4, 1.6, 1.8, 2.2, 2.5, 2.7],
@@ -180,55 +180,55 @@ def determine_grams(activity_level, reproductive_state, body_image, weight, age_
 
 
 
-def calculate_barf_food_amount(castrated, already_eating_barf, activity_level, weight_kg, body_condition_score):
-    # Calculate resting energy requirements (RER) based on weight and age
-    weight_lbs = weight_kg * 2.20462  # convert weight from kg to lbs
-    if weight_lbs <= 4.4:
-        rer = 70 * weight_lbs ** 0.75
-    elif 4.4 < weight_lbs <= 99:
-        rer = 30 * weight_lbs + 70
-    else:
-        rer = 70 * weight_lbs + 30
+# def calculate_barf_food_amount(castrated, already_eating_barf, activity_level, weight_kg, body_condition_score):
+#     # Calculate resting energy requirements (RER) based on weight and age
+#     weight_lbs = weight_kg * 2.20462  # convert weight from kg to lbs
+#     if weight_lbs <= 4.4:
+#         rer = 70 * weight_lbs ** 0.75
+#     elif 4.4 < weight_lbs <= 99:
+#         rer = 30 * weight_lbs + 70
+#     else:
+#         rer = 70 * weight_lbs + 30
 
-    # Adjust RER based on activity level
-    if activity_level == 'bajo':
-        rer *= 1.2
-    elif activity_level == 'medio':
-        rer *= 1.5
-    else:
-        rer *= 2.0
+#     # Adjust RER based on activity level
+#     if activity_level == 'bajo':
+#         rer *= 1.2
+#     elif activity_level == 'medio':
+#         rer *= 1.5
+#     else:
+#         rer *= 2.0
 
-    # Adjust RER based on body condition score
-    if body_condition_score == 'muy_delgado':
-        rer *= 1.5
-    elif body_condition_score == 'delgado':
-        rer *= 1.2
-    elif body_condition_score == 'peso_ideal':
-        rer *= 1.0
-    elif body_condition_score == 'sobrepeso':
-        rer *= 0.7
-    else:
-        rer *= 0.6
+#     # Adjust RER based on body condition score
+#     if body_condition_score == 'muy_delgado':
+#         rer *= 1.5
+#     elif body_condition_score == 'delgado':
+#         rer *= 1.2
+#     elif body_condition_score == 'peso_ideal':
+#         rer *= 1.0
+#     elif body_condition_score == 'sobrepeso':
+#         rer *= 0.7
+#     else:
+#         rer *= 0.6
 
-    # Adjust RER based on castration status
-    if castrated == 'castrado':
-        rer *= 0.8
+#     # Adjust RER based on castration status
+#     if castrated == 'castrado':
+#         rer *= 0.8
 
-    # Adjust RER based on whether already eating BARF
-    if already_eating_barf == 'yes':
-        rer *= 1.1
+#     # Adjust RER based on whether already eating BARF
+#     if already_eating_barf == 'yes':
+#         rer *= 1.1
 
-    # Calculate amount of food in grams per day based on RER and typical BARF diet proportions
-    protein_percentage = 0.15
-    fat_percentage = 0.2
-    carbohydrate_percentage = 0.05
-    kcal_per_gram_protein = 3.5
-    kcal_per_gram_fat = 8.5
-    kcal_per_gram_carbohydrate = 3.5
-    grams_per_kcal = 1 / ((protein_percentage * kcal_per_gram_protein) + (fat_percentage * kcal_per_gram_fat) + (carbohydrate_percentage * kcal_per_gram_carbohydrate))
-    food_amount = rer * grams_per_kcal
+#     # Calculate amount of food in grams per day based on RER and typical BARF diet proportions
+#     protein_percentage = 0.15
+#     fat_percentage = 0.2
+#     carbohydrate_percentage = 0.05
+#     kcal_per_gram_protein = 3.5
+#     kcal_per_gram_fat = 8.5
+#     kcal_per_gram_carbohydrate = 3.5
+#     grams_per_kcal = 1 / ((protein_percentage * kcal_per_gram_protein) + (fat_percentage * kcal_per_gram_fat) + (carbohydrate_percentage * kcal_per_gram_carbohydrate))
+#     food_amount = rer * grams_per_kcal
 
-    return round(food_amount, 1)
+#     return round(food_amount, 1)
 
 
 
