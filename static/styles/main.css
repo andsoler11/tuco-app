@@ -23,6 +23,10 @@ b, strong {
     display: none!important;
 }
 
+html, body {
+    font-size: 18px;
+}
+
 body{
     font-size: 18px;
     background: #f8f8f8;
@@ -302,9 +306,8 @@ form .name-details .field:last-child {
 .home-section.full-height {
     min-height: calc(100vh - var(--header-height-desktop));
 }
-
 .home-section h1 {
-    font-size: 2.2rem;
+    font-size: 2rem;
     font-weight: 400;
     line-height: normal;
     margin-bottom: calc(var(--base-space) * 3);
@@ -317,11 +320,16 @@ form .name-details .field:last-child {
 
 .home-section h2 {
     font-size: 1.8rem;
-    margin-bottom: calc(var(--base-space) * 4);
 }
 .home-section h3 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     margin-bottom: calc(var(--base-space) * 3);
+}
+.home-section .header-section {
+    margin-bottom: calc(var(--base-space) * 4);
+}
+.home-section .header-section p {
+    font-size: 0.888rem;
 }
 
 .home-section.hero {
@@ -395,7 +403,7 @@ form .name-details .field:last-child {
 #how-it-works .card .icon-wrapper img{
     width: auto;
     height: 75px;
-    margin: 0 auto 2rem;
+    margin: 0 auto 1rem;
 }
 
 #how-it-works .owl-carousel {
@@ -466,7 +474,9 @@ form .name-details .field:last-child {
 .bg-blue-dark h3 {
     color: #fff;
 }
-
+#why-choose.home-section {
+    padding: calc(var(--base-space) * 20) calc(var(--base-space) * 8) calc(var(--base-space) * 10);
+}
 #why-choose .owl-carousel .card{
     display: flex;
     flex-direction: row;
@@ -474,7 +484,8 @@ form .name-details .field:last-child {
     gap: 12px;
     background: #fff;
     border-radius: 8px;
-    padding: 1rem;
+    padding: 1rem .5rem;
+    min-height: 90px;
 }
 #why-choose .owl-carousel .card img {
     width: 50px;
@@ -509,9 +520,9 @@ form .name-details .field:last-child {
     background: #fff;
 }
 #why-choose .owl-carousel .owl-nav button span {
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: 200;
-    line-height: 2.3rem;
+    line-height: 2rem;
 }
 #why-choose .owl-carousel .owl-nav .owl-prev {
     left: 0;
@@ -549,7 +560,7 @@ form .name-details .field:last-child {
     border: none;
     text-align: left;
     outline: none;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 700;
     transition: 0.4s;
     background-color: #fff;
@@ -612,6 +623,12 @@ form .name-details .field:last-child {
  * Breakpoints from: https://getbootstrap.com/docs/5.0/layout/breakpoints/
  */
 @media screen and (max-width: 992px) {
+    html, body {
+        font-size: 16px;
+    }
+    body{
+        padding-top: var(--header-height-mobile);
+    }
     .show-mobile {
         display: flex!important;
     }
@@ -665,8 +682,17 @@ form .name-details .field:last-child {
 }
 
 @media screen and (max-width: 768px) {
-    body{
-        font-size: 14px;
+    .home-section h2 {
+        font-size: 1.6rem;
+    }
+    .home-section h3 {
+        margin-bottom: calc(var(--base-space) * 2);
+    }
+    #meet-our-dogtor .wrapper-banner .text-content {
+        padding: 1rem 1rem 2rem 0;
+    }
+    #why-choose.home-section {
+        padding: calc(var(--base-space) * 6) calc(var(--base-space) * 6) calc(var(--base-space) * 6);
     }
 }
 

@@ -245,13 +245,13 @@ $(document).ready(function(){
     nav:false,
     responsive:{
         0:{
-            items:1.3,
-            loop:true
+          items:1.3,
+          loop:true
         },
-        600:{
-            items:2
+        580:{
+          items:2
         },
-        990:{
+        768:{
           items:3,
           loop: false
       }
