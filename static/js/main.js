@@ -312,10 +312,85 @@ $(document).ready(function(){
       }
     }
   });
+
+  // Agrega clase focused a elemento padre de input para animar label
+  $('.form input').focus(function(){
+    $(this).parents('.field').addClass('focused');
+  });
+  // Valida input blur y elimina clase focused si el campo está vacío
+  $('.form input').blur(function(){
+    var inputValue = $(this).val();
+    if ( inputValue == "" ) {
+      $(this).parents('.field').removeClass('focused');  
+    }
+  });
+
+
+  // MENSAJES DE VALIDACIÓN
+  var messageRequired = "Este campo es requerido";
+  var messageSelectRequired = "Selecciona una opción";
+  var messageEmail = "No es un correo válido, ejemplo: ejemplo@mail.com";
+  var messageEqualTo = "La contraseña no coincide";
+  var messageNumber = "Ingresa un valor en números";
+
+  // Login usuarios
+  $("#login-form").validate({
+    rules: {
+      email: {
+        required: true,
+        email: true
+      },
+      password: {
+        required: true,
+      },
+    },
+    messages: {
+      password: {
+        required: messageRequired,
+      },
+      email: {
+        required: messageRequired,
+        email: messageEmail,
+      }
+    }
+  });
 });
 
 
 
+
+
+
+// Validación formulario login
+/*
+function validateLoginForm() {
+  /*$.validator.methods.checkEmail = function (value, element) {
+    return this.optional(element) || /[a-z0-9]+@[a-z]+\.[a-z]+/.test(value);
+  };
+
+  $('#login-form').validate({
+    rules: {
+      email: {
+        required: true,
+        email: true
+      },
+      password: {
+        required: true,
+      },
+    },
+    messages: {
+      password: {
+        required: messageRequired,
+      },
+      email: {
+        required: messageRequired,
+        email: messageEmail,
+      }
+    }
+  });
+}
+validateLoginForm();
+*/
 
 
 
@@ -336,9 +411,9 @@ function showModal(petId) {
 }
 
 // When the user clicks on <span> (x), close the modal
-span.onclick = function() {
+/*span.onclick = function() {
     hideModal();
-}
+}*/
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {

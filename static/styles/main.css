@@ -166,13 +166,30 @@ form .name-details .field:last-child {
     margin-bottom: 20px;
 }
 
-.form form .field label {
-    margin-bottom: 10px;
-    color: #c2c7ca;
+.form form .field .form-label {
+    position: absolute;
+    left: 20px;
+    top: 15px;
+    color: #9C9C9C;
+    z-index: 2;
+    transition: transform 300ms ease-out, font-size 300ms ease-out;
+    pointer-events: none;
+}
+.field.focused .form-label {
+    transform: translateY(-80%);
+    font-size: .65em;
 }
 
 .form form .field input {
     outline: none;
+}
+
+.form form .field label.error {
+    color: #D95F57;
+    font-size: .66rem;
+    font-weight: 500;
+    margin-top: 5px;
+    padding: 0 2px;
 }
 
 .form form .input input,
@@ -183,11 +200,12 @@ form .name-details .field:last-child {
     height: 50px;
     width: 100%;
     font-size: 16px;
-    padding: 0 10px;
-    border: 0;
+    color: #222222;
+    font-weight: 500;
+    padding: 10px 20px 0;
     background-color: var(--light-gray);
     border-radius: 8px;
-    color: #fff;
+    border: 0;
 }
 
 .input > label {
@@ -199,9 +217,11 @@ form .name-details .field:last-child {
     margin: 8px 0px;
 }
 
-
 .form form .input input:focus {
-    box-shadow: 0 0 0 1px var(--black-font);
+    border: 1px solid var(--black-font);
+}
+.form form .input input.error {
+    border: 1px solid #D95F57;
 }
 
 .form form .image input {
@@ -220,15 +240,27 @@ form .name-details .field:last-child {
     background-color: #FFC397;
     padding: calc(var(--base-space) * 2);
     transition: all 0.5s ease;
-    border: 1px solid #DBDBDB;
+    border: none;
     border-radius: 8px;
     cursor: pointer;
 }
 .form form .button input:hover,
 #nextBtn:hover {
-    color: #FFC397;
-    background-color: #202B3E;
+    background-color: #FFCDA8;
 }
+
+.form form .button input:focus,
+#nextBtn:focus {
+    background-color:#FCAC71;
+}
+.form form .button input:disabled,
+.form form .button input[disabled],
+#nextBtn:disabled,
+#nextBtn[disabled]{
+    color: #989898;
+    background-color: #C8C8C8;
+}
+
 
 .form .link {
     text-align: center;
@@ -610,13 +642,19 @@ form .name-details .field:last-child {
     background-color: #FFC397;
     padding: calc(var(--base-space) * 2);
     transition: all 0.5s ease;
-    border: 1px solid #DBDBDB;
     border-radius: 8px;
 }
 
 .link-button:hover {
-    color: #FFC397;
-    background-color: #202B3E;
+    background-color: #FFCDA8;
+}
+.link-button:focus {
+    background-color:#FCAC71;
+}
+.link-button:disabled,
+.link-button[disabled]{
+    color: #989898;
+    background-color: #C8C8C8;
 }
 
 /*
@@ -655,10 +693,6 @@ form .name-details .field:last-child {
 
     .form {
         height: 100%;
-    }
-
-    .form form .field {
-        margin-bottom: 15px;
     }
 
     .main_container--home {
@@ -702,8 +736,20 @@ form .name-details .field:last-child {
         padding: calc(var(--base-space) * 3) 0;
     }
 
+    .main_container--form {
+        background: #fff;
+        min-height: auto;
+        padding: calc(var(--base-space) * 10) 0;
+    }
+
     .form_wrapper {
+        background: none;
+        box-shadow: none;
         width: calc(100vw - (var(--base-space) * 4));
+    }
+
+    .form_wrapper .form {
+        padding: 0;
     }
 
     .wrapper {
@@ -718,16 +764,17 @@ form .name-details .field:last-child {
         justify-content: center;
     }
 
-    .form form .field {
-        margin-bottom: 10px;
-    }
-
-    .form form .field label {
-        font-size: 1rem;
-    }
-
     .form form .field input {
         font-size: 1rem;
+    }
+
+    .field.focused .form-label {
+        transform: translateY(-65%);
+        font-size: .8em;
+    }
+
+    .form form .field label.error {
+        font-size: .8rem;
     }
 
     .form form .button input {
