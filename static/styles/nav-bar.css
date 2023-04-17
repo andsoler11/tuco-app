@@ -151,13 +151,15 @@
 .top-shelf-icons-desktop {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 15px;
 }
+.top-shelf-icons a,
 .top-shelf-icons-desktop a {
     width: 40px;
     height: 40px;
     position: relative;
 }
+.top-shelf-icons a img,
 .top-shelf-icons-desktop a img {
     top: 50%;
     left: 50%;
@@ -165,6 +167,7 @@
     transform: translate(-50%, -50%);
     z-index: 2;
 }
+.top-shelf-icons a:after,
 .top-shelf-icons-desktop a:after {
     content: "";
     top: 50%;
@@ -178,6 +181,7 @@
     border-radius: 50%;
     z-index: 1;
 }
+.top-shelf-icons a:hover:after,
 .top-shelf-icons-desktop a:hover:after {
     width: 100%;
     height: 100%;
@@ -327,24 +331,49 @@
 
     .header__nav__item {
         align-self: stretch;
-        margin: calc(var(--base-space) * 2) 0;
-        text-align: center;
+        margin: calc(var(--base-space) * 1) 0;
+        text-align: left;
+        padding: 0;
     }
 
     .header__nav__item a {
-        color: #c2c7ca;
-        display: block;
+        display: inline-block;
         font-weight: 500;
         text-decoration: none;
         padding: calc(var(--base-space) * 2) 0;
     }
 
-    .header__nav__item a:hover {
-        color: #c2c7ca;
+    .header__nav__item a.active {
+        color: var(--curuba);        
+    }
+
+    .header__nav__item > a:after {
+        bottom: 5px;
+    }
+
+    .header__nav__item.submenu {
+        padding: 0;
+    }
+
+    .header__nav__item.submenu:after {
+        display: none;
     }
     
-    .header__nav__item a:active {
-        color: #c2c7ca;
+    .header__nav__item.submenu ul {
+        top: 0;
+        min-width: auto;
+        background: none;
+        display: block;
+        padding: 0 2rem;
+        position: relative;
+    }
+
+    .header__nav__item.submenu ul li {
+        margin: 10px 0;
+    }
+
+    .header__nav__item.submenu ul li a {
+        color: var(--beige);
     }
    
     .header__nav__item_user {
@@ -354,14 +383,7 @@
     .top-shelf-icons {
         display: inline-flex;
         justify-self: end;
-    }
-
-    .top-shelf-icons img {
-        width: 30px;
-    }
-
-    .top-shelf-icons img:first-of-type {
-        margin-right: var(--base-space);
+        gap: 15px;
     }
 }
 
@@ -369,9 +391,14 @@
     .header__logo .logo-mobile {
         max-width: var(--logo-mobile-max-width);
     }
-
-    .header__nav__item {
-        margin: 0;
-        text-align: right;
+    .top-shelf-icons {
+        gap: 0;
+    }
+    .top-shelf-icons a {
+        width: 32px;
+        height: 32px;
+    }
+    .top-shelf-icons a img {
+        transform: translate(-50%, -50%) scale(.8);
     }
 }

@@ -9,8 +9,15 @@
             <img class="logo logo-mobile" src="{% static 'images/logo-mobile.svg' %}" alt="logo">
         </a>
         <div class="top-shelf-icons">
-            <img src="{% static 'images/user-icon.svg' %}" alt="user">
-            <img src="{% static 'images/cart-icon.svg' %}" alt="cart">
+            {% if request.user.is_authenticated %}
+            {% else %}
+                <a href="{% url 'login' %}">
+                    <img src="{% static 'images/user-icon.svg' %}" alt="user">
+                </a>
+                <a href="">
+                    <img src="{% static 'images/cart-icon.svg' %}" alt="cart">
+                </a>
+            {% endif %}
         </div>
     </div>
 
@@ -45,7 +52,6 @@
                 <a href="">
                     <img src="{% static 'images/cart-icon.svg' %}" alt="cart">
                 </a>
-                
             {% endif %}
         </div>
 
