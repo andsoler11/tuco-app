@@ -3,291 +3,328 @@
 
 {% block content %}
 
-<main class="main_container">
-    <div class="main_form_container">
-        <div class="wrapper">
-            <section class="form login">
-                <form method="POST" novalidate>
-                    {% csrf_token %}
-                    <div id="error-message">
+<main class="main_container main_container--form">
+    <div class="form_wrapper">
+        <section class="form">
+            <form id="diet-form" method="POST" novalidate>
+                {% csrf_token %}
+                <div class="multistep_form_tab">
+                    <div class="form_back_section">
+                        <span class="step-indicator">1 de 5</span>
                     </div>
 
-                    <div class="multistep_form_tab">
-                        <div class="form_back_section">
-                            <span class="step-indicator">1 de 5</span>
-                        </div>
+                    <div class="form_header">
+                        <h3>Como tu Forever Dog, no hay 2</h3>
+                        <p><b>Ayúdanos a conocer sus características únicas</b> y así, crearemos un menú personalizado para sus necesidades.</p>
+                    </div>
 
-
-
-                        <div class="form_header">
-                            <h3>Datos generales de tu mascota</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
-                        </div>
-
-                        <div class="form_name_input">
-                            <div class="field input">
-                                <input type="text" name="name" placeholder="Nombre" value="{{ puppy.name }}" id="input_name" onchange="getName();" required>
-                            </div>
-                        </div>
-
-                        <div class="form_age_sex_input">
-                            <div class="field input">
-                                <input type="number" name="age" placeholder="Edad" value="{{ puppy.age }}" required>
-                            </div>
-
-                            <div class="field input input_age_type">
-                                <select id="sex" name="age_type" option="años" required>
-                                    <option value="meses" {% if puppy.age_type == 'meses' %}selected{% endif %}>Meses</option>
-                                    <option value="años" {% if puppy.age_type == 'años' %}selected{% endif %}>Años</option>
-                                </select>
-                            </div>
-                        </div>
-
+                    <div class="form_name_input">
                         <div class="field input">
-                            <select id="sex" name="reproductive_state" placeholder="Estado" option="castrado" required>
-                                <option value="castrado" {% if puppy.reproductive_state == 'castrado' %}selected{% endif %}>Castrado</option>
-                                <option value="entero" {% if puppy.reproductive_state == 'entero' %}selected{% endif %}>Entero</option>
+                            <label for="input_name" class="form-label">Nombre de tu mascota</label>
+                            <input type="text" name="name" value="{{ puppy.name }}" id="input_name" onchange="getName();" required>
+                        </div>
+                    </div>
+
+                    <div class="form_age_sex_input two-fields">
+                        <div class="field input">
+                            <label for="age" class="form-label">Edad</label>
+                            <input id="age" type="number" name="age" value="{{ puppy.age }}" required>
+                        </div>
+
+                        <div class="field input input_age_type">
+                            <select id="age-type" name="age_type" option="años" required>
+                                <option value="" selected disabled>Meses / Años</option>
+                                <option value="meses" {% if puppy.age_type == 'meses' %}selected{% endif %}>Meses</option>
+                                <option value="años" {% if puppy.age_type == 'años' %}selected{% endif %}>Años</option>
                             </select>
                         </div>
-
-                        <div class="form_breed_input">
-                            <div class="field input">
-                                <input list="breed" name="breed" placeholder="Raza" {% if puppy %}value="{{ puppy.breed }}" {% endif %} required>
-                                <datalist id="breed">
-                                    <option value="">select</option>
-                                    {% for breed in breeds %}
-                                    <option value="{{ breed.name }}">{{ breed.name }}</option>
-                                    {% endfor %}
-                                </datalist>
-                            </div>
-                        </div>
-
-
-                        <div class="field button">
-                            <button type="button" id="nextBtn" onclick="nextPrev(1)">Continuar</button>
-                        </div>
-
-                        <div class="link"><a href="{% url 'login' %}">Cancelar</a></div>
-                    </div>
-                    
-                    <div class="multistep_form_tab">
-                        <div class="form_back_section">
-                        <span class="step-indicator">2 de 5</span>
-                            <div class="back_icon_container">
-                                <i class="fa fa-angle-left"></i>
-                                <button type="button" onclick="nextPrev(-1)" class="multistep_form_back_button"><p>Volver</p></button>
-                            </div>
-                        </div>
-
-                        <div class="form_header">
-                            <h3>¿Consume alimentación natural?</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
-                        </div>
-
-                        <div class="radio_inputs_container">
-                            <p>
-                                <input type="radio" name="natural_food" value="yes" {% if not puppy.is_barf_active or puppy.is_barf_active == 'yes' %}checked{% endif %}>Si</input>
-                            </p>
-                            <p>
-                                <input type="radio" name="natural_food" value="no" {% if puppy.is_barf_active == 'no' %}checked{% endif %}>No</input>
-                            </p>
-                        </div>
-
-                        <div class="field button">
-                            <button type="button" id="nextBtn" onclick="nextPrev(1)">Continuar</button>
-                        </div>
-
-                        <div class="link"><a href="{% url 'login' %}">Cancelar</a></div>
                     </div>
 
-                    <div class="multistep_form_tab">
-                        <div class="form_back_section">
-                            <span class="step-indicator">3 de 5</span>
-                            <div class="back_icon_container">
-                                <i class="fa fa-angle-left"></i>
-                                <button type="button" onclick="nextPrev(-1)" class="multistep_form_back_button"><p>Volver</p></button>
-                            </div>
-                        </div> 
-
-                        <div class="form_header">
-                            <h3>Actividad</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
-                        </div>
-                    
-                        <div class="radio_inputs_container__activity">
-                            <p>
-                                <input type="radio" name="activity_level" value="bajo" class="activity_input" onClick="changeImg(this.value);" {% if puppy.activity_level == "bajo" or not puppy.activity_level %}checked{% endif %}>Sedentario</input>
-                            </p>
-                            <p>
-                                <input type="radio" name="activity_level" value="medio" class="activity_input" onClick="changeImg(this.value);" {% if puppy.activity_level == "medio" %}checked{% endif %}>Activo</input>
-                            </p>
-                            <p>
-                                <input type="radio" name="activity_level" value="alto" class="activity_input" onClick="changeImg(this.value);" {% if puppy.activity_level == "alto" %}checked{% endif %}>Muy activo</input>
-                            </p>
-                        </div>
-
-                        <div class="activity_image_container">
-                            {% if puppy.activity_level == "bajo" or not puppy.activity_level %}
-                            <img src="{% static 'images/sedentario.svg' %}" id="activity_image_container">
-                            {% elif puppy.activity_level == "medio" %}
-                            <img src="{% static 'images/activo.svg' %}" id="activity_image_container">
-                            {% else %}
-                            <img src="{% static 'images/muy_activo.svg' %}" id="activity_image_container">
-                            {% endif %}
-                        </div>
-
-                        <div class="field button">
-                            <button type="button" id="nextBtn" onclick="nextPrev(1)">Continuar</button>
-                        </div>
-
-                        <div class="link"><a href="{% url 'login' %}">Cancelar</a></div>
+                    <div class="field input">
+                        <select id="pet-state" name="reproductive_state" option="castrado" required>
+                            <option value="" selected disabled>Estado reproductivo</option>
+                            <option value="castrado" {% if puppy.reproductive_state == 'castrado' %}selected{% endif %}>Estirilizado, todo bajo control</option>
+                            <option value="entero" {% if puppy.reproductive_state == 'entero' %}selected{% endif %}>Entero, en su mejor momento</option>
+                        </select>
                     </div>
 
-                    <div class="multistep_form_tab">
-                        <div class="form_back_section">
-                            <span class="step-indicator">4 de 5</span>
-                            <div class="back_icon_container">
-                                <i class="fa fa-angle-left"></i>
-                                <button type="button" onclick="nextPrev(-1)" class="multistep_form_back_button"><p>Volver</p></button>
-                            </div>
-                        </div> 
-
-                        <div class="form_header">
-                            <h3>Peso</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
-                        </div>
-
-                        <div class="carousel_container">
-
-                            <div class="arrow_container left_arrow_container">
-                                <i class="fa fa-angle-left" id="left" onClick="changeImgCarousel(this.id);"></i>
-                            </div>
-
-                            <div class="carousel">
-                                <div class="carousel-item {% if puppy.body_image == 'muy_delgado' %}active{% endif %}">
-                                    <img id='muy_delgado' src="{% static 'images/muy_delgado.svg' %}" class="body_image">
-                                </div>
-
-                                <div class="carousel-item {% if puppy.body_image == 'delgado' %}active{% endif %}">
-                                    <img id='delgado' src="{% static 'images/delgado.svg' %}" class="body_image">
-                                </div>
-
-                                <div class="carousel-item {% if puppy.body_image == 'peso_ideal' or not puppy.body_image %}active{% endif %}">
-                                    <img id='peso_ideal' src="{% static 'images/ideal.svg' %}" class="body_image">
-                                </div>
-
-                                <div class="carousel-item {% if puppy.body_image == 'sobrepeso' %}active{% endif %}">
-                                    <img id='sobrepeso' src="{% static 'images/sobrepeso.svg' %}" class="body_image">
-                                </div>
-                            </div>
-
-                            <div class="arrow_container right_arrow_container">
-                                <i class="fa fa-angle-right"  id="next" onClick="changeImgCarousel(this.id);"></i>
-                            </div>
-                        </div>
-
-                        <input id="input_weight_image" name='body_image' type="hidden" value="{{ puppy.body_image|default:'peso_ideal' }}">
-
+                    <div class="form_breed_sex_input two-fields">
                         <div class="field input">
-                            <input type="text" id="id_weight" name="weight" value="{{ form.weight.value|floatformat:0 }}" placeholder="Peso (kg)" required>
-                        </div>
-
-                        <div class="field button">
-                            <button type="button" id="nextBtn" onclick="nextPrev(1)">Continuar</button>
-                        </div>
-
-                        <div class="link"><a href="{% url 'login' %}">Cancelar</a></div>
-                    </div>
-
-                    <div class="multistep_form_tab">
-                        <div class="form_back_section">
-                            <span class="step-indicator">5 de 5</span>
-                            <div class="back_icon_container">
-                                <i class="fa fa-angle-left"></i>
-                                <button type="button" onclick="nextPrev(-1)" class="multistep_form_back_button"><p>Volver</p></button>
-                            </div>
-                        </div> 
-
-                        <div class="form_header">
-                            <h3>Alergias y necesidades</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
-                        </div>
-
-
-
-                        <div class="form_breed_input">
-                          <div class="field input">
-                            <select id="id_allergies" name="allergies">
-                              {% for allergy in form.allergies.field.choices %}
-                              <option value="{{allergy.0}}" {% if allergy.0 == form.allergies.value %}selected{% endif %}>{{allergy.1}}</option>
-                              {% endfor %}
+                            <select id="breed" name="breed" required>
+                                <option value="" selected disabled>Raza</option>
+                                {% for breed in breeds %}
+                                <option value="{{ breed.name }}">{{ breed.name }}</option>
+                                {% endfor %}
                             </select>
-                          </div>
+                            <!--<input list="breed" name="breed" {% if puppy %}value="{{ puppy.breed }}" {% endif %} required>
+                            <datalist id="breed">
+                                <option value="">select</option>
+                                {% for breed in breeds %}
+                                <option value="{{ breed.name }}">{{ breed.name }}</option>
+                                {% endfor %}
+                            </datalist>-->
                         </div>
-
-                        <div class="form_breed_input">
-                            <div class="field input">
-                                <select name="{{form.special_needs.name}}" id="{{form.special_needs.id_for_label}}">
-                                    {% for option in form.special_needs.field.choices %}
-                                        <option value="{{ option.0 }}" {% if form.special_needs.value == option.0 %}selected{% endif %}>{{ option.1 }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+                        <div class="field input">
+                            <select id="sex" name="sex" required>
+                                <option value="" selected disabled>Sexo</option>
+                                <option value="hembra" {% if puppy.sex == 'hembra' %}selected{% endif %}>Hembra</option>
+                                <option value="macho" {% if puppy.sex == 'macho' %}selected{% endif %}>Macho</option>
+                            </select>
                         </div>
-
-                        {% if request.user.is_authenticated %}
-                        <div class="field button">
-                            <input type="submit" value="Completar" class="btn" />
-                        </div>
-                        {% else %}
-                        <div class="field button">
-                            <button type="button" id="nextBtn" onclick="nextPrev(1)">Continuar</button>
-                        </div>
-                        {% endif %}
-
-                        <div class="link"><a href="{% url 'login' %}">Cancelar</a></div>
                     </div>
 
-                    {% if not request.user.is_authenticated %}
-                    <div class="multistep_form_tab contact_detail_tab">
-                        <div class="form_back_section">
+                    <div class="error-general-message"></div>
+
+                    <div class="field button">
+                        <button type="button" id="nextBtn" onclick="nextPrev(1)">Continuar</button>
+                    </div>
+
+                    <div class="link"><a href="{% url 'homepage' %}">Cancelar</a></div>
+                </div>
+                <!--STEP 1-->
+                <!--STEP 2-->
+                <div class="multistep_form_tab">
+                    <div class="form_back_section">
+                    <span class="step-indicator">2 de 5</span>
                         <div class="back_icon_container">
                             <i class="fa fa-angle-left"></i>
                             <button type="button" onclick="nextPrev(-1)" class="multistep_form_back_button"><p>Volver</p></button>
                         </div>
-                        </div> 
+                    </div>
 
-                        <div class="form_header_image">
-                        <img src="{% static 'images/contact_detail_image2.svg' %}">
+                    <div class="form_header">
+                        <h3>Dieta natural, corazón contento</h3>
+                        <p><b>¿La alimentación actual de <span class="name_container"></span> es natural?</b> Esto nos ayudará a saber si debe iniciar con un menú de transición (<i>de ser así, nosotros te ayudaremos</i>).</p>
+                    </div>
+
+                    <div class="radio_inputs_container">
+                        <p>
+                            <input type="radio" name="natural_food" value="yes" {% if not puppy.is_barf_active or puppy.is_barf_active == 'yes' %}checked{% endif %}>Sí, su dieta es natural</input>
+                        </p>
+                        <p>
+                            <input type="radio" name="natural_food" value="no" {% if puppy.is_barf_active == 'no' %}checked{% endif %}>No, consume concentrado</input>
+                        </p>
+                    </div>
+
+                    <div class="field button">
+                        <button type="button" id="nextBtn2" onclick="nextPrev(1)">Continuar</button>
+                    </div>
+
+                    <div class="link"><a href="{% url 'homepage' %}">Cancelar</a></div>
+                </div>
+                <!--STEP 2-->
+                <!--STEP 3-->
+                <div class="multistep_form_tab">
+                    <div class="form_back_section">
+                        <span class="step-indicator">3 de 5</span>
+                        <div class="back_icon_container">
+                            <i class="fa fa-angle-left"></i>
+                            <button type="button" onclick="nextPrev(-1)" class="multistep_form_back_button"><p>Volver</p></button>
+                        </div>
+                    </div> 
+
+                    <div class="form_header">
+                        <h3>Descubramos un poco más</h3>
+                        <p>Queremos conocer la energía diaria que gasta <span class="name_container"></span> y el estado de su fábrica de cachorros. Así, <b>calcularemos los gramos exactos que necesita consumir al día.</b></p>
+                    </div>
+                
+                    <div class="radio_inputs_container__activity">
+                        <p>
+                            <input type="radio" name="activity_level" value="bajo" class="activity_input" onClick="changeImg(this.value);" {% if puppy.activity_level == "bajo" or not puppy.activity_level %}checked{% endif %}>Hogareño</input>
+                        </p>
+                        <p>
+                            <input type="radio" name="activity_level" value="medio" class="activity_input" onClick="changeImg(this.value);" {% if puppy.activity_level == "medio" %}checked{% endif %}>Paseador</input>
+                        </p>
+                        <p>
+                            <input type="radio" name="activity_level" value="alto" class="activity_input" onClick="changeImg(this.value);" {% if puppy.activity_level == "alto" %}checked{% endif %}>Atleta</input>
+                        </p>
+                    </div>
+
+                    <div class="activity_image_container">
+                        {% if puppy.activity_level == "bajo" or not puppy.activity_level %}
+                        <img src="{% static 'images/sedentario.svg' %}" id="activity_image_container">
+                        {% elif puppy.activity_level == "medio" %}
+                        <img src="{% static 'images/activo.svg' %}" id="activity_image_container">
+                        {% else %}
+                        <img src="{% static 'images/muy_activo.svg' %}" id="activity_image_container">
+                        {% endif %}
+                    </div>
+
+                    <div class="field button">
+                        <button type="button" id="nextBtn" onclick="nextPrev(1)">Continuar</button>
+                    </div>
+
+                    <div class="link"><a href="{% url 'homepage' %}">Cancelar</a></div>
+                </div>
+                <!--STEP 3-->
+                <!--STEP 4-->
+                <div class="multistep_form_tab">
+                    <div class="form_back_section">
+                        <span class="step-indicator">4 de 5</span>
+                        <div class="back_icon_container">
+                            <i class="fa fa-angle-left"></i>
+                            <button type="button" onclick="nextPrev(-1)" class="multistep_form_back_button"><p>Volver</p></button>
+                        </div>
+                    </div> 
+
+                    <div class="form_header">
+                        <h3>Ni muy muy, ni muy tan tan</h3>
+                        <p>¡Queremos a <span class="name_container"></span> en su peso ideal! Para poder lograrlo, necesitamos saber cómo está su estado físico actual.</p>
+                    </div>
+
+                    <div class="carousel_container">
+
+                        <div class="arrow_container left_arrow_container">
+                            <span id="left" onClick="changeImgCarousel(this.id);"></span>
                         </div>
 
-                        <div class="form_header">
-                            <h3>¡Ya tenemos la dieta perfecta para <span id="name_container"></span>!</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
-                        </div>
+                        <div class="carousel">
+                            <div class="carousel-item {% if puppy.body_image == 'muy_delgado' %}active{% endif %}">
+                                <img id='muy_delgado' src="{% static 'images/muy_delgado.svg' %}" class="body_image">
+                            </div>
 
-                        <div class="form_name_input">
-                            <div class="field input">
-                                <input type="text" name="name_contact" placeholder="Nombre dueño" value="">
+                            <div class="carousel-item {% if puppy.body_image == 'delgado' %}active{% endif %}">
+                                <img id='delgado' src="{% static 'images/delgado.svg' %}" class="body_image">
+                            </div>
+
+                            <div class="carousel-item {% if puppy.body_image == 'peso_ideal' or not puppy.body_image %}active{% endif %}">
+                                <img id='peso_ideal' src="{% static 'images/ideal.svg' %}" class="body_image">
+                            </div>
+
+                            <div class="carousel-item {% if puppy.body_image == 'sobrepeso' %}active{% endif %}">
+                                <img id='sobrepeso' src="{% static 'images/sobrepeso.svg' %}" class="body_image">
                             </div>
                         </div>
 
-                        <div class="form_name_input">
-                            <div class="field input">
-                                <input type="text" name="email_contact" placeholder="Correo electrónico" value="">
-                            </div>
+                        <div class="arrow_container right_arrow_container">
+                            <span id="next" onClick="changeImgCarousel(this.id);"></span>
                         </div>
+                    </div>
 
-                        <div class="field button">
-                            <input type="submit" value="Conocer dieta" class="btn" />
+                    <input id="input_weight_image" name='body_image' type="hidden" value="{{ puppy.body_image|default:'peso_ideal' }}">
+
+                    <span class="small">Pongamos la báscula a trabajar y descubramos su peso exacto.</span>
+                    <div class="field input">
+                        <label for="weight" class="form-label">Peso (en Kilos)</label>
+                        <input type="number" id="id_weight" name="weight" required><!--value="{{ form.weight.value|floatformat:0 }}"-->
+                    </div>
+
+                    <div class="error-general-message"></div>
+
+                    <div class="field button">
+                        <button type="button" id="nextBtn" onclick="nextPrev(1)">Continuar</button>
+                    </div>
+
+                    <div class="link"><a href="{% url 'homepage' %}">Cancelar</a></div>
+                </div>
+                <!--STEP 4-->
+                <!--STEP 5-->
+                <div class="multistep_form_tab">
+                    <div class="form_back_section">
+                        <span class="step-indicator">5 de 5</span>
+                        <div class="back_icon_container">
+                            <i class="fa fa-angle-left"></i>
+                            <button type="button" onclick="nextPrev(-1)" class="multistep_form_back_button"><p>Volver</p></button>
                         </div>
+                    </div> 
 
-                        <div class="link"><a href="{% url 'login' %}">Cancelar</a></div>
+                    <div class="form_header">
+                        <h3>Necesidad única, menú único</h3>
+                        <p>Si <span class="name_container"></span> tiene alergia a alguna proteína, <b>te recomendaremos el menú más adecuado</b>. Si tiene una patología diagnosticada, <b>crearemos un menú que responda a sus necesidades únicas</b>.</p>
+                    </div>
+
+                    <div class="form_breed_input">
+                        <div class="field input">
+                        <select id="id_allergies" name="allergies" required>
+                            <option value="" selected disabled>Alergias</option>
+                            {% for allergy in form.allergies.field.choices %}
+                            <option value="{{allergy.0}}">{{allergy.1}}</option>
+                            <!--{% if allergy.0 == form.allergies.value %}selected{% endif %}-->
+                            {% endfor %}
+                        </select>
+                        </div>
+                    </div>
+
+                    <div class="form_breed_input">
+                        <div class="field input">
+                            <select name="{{form.special_needs.name}}" id="{{form.special_needs.id_for_label}}" required>
+                                <option value="" selected disabled>Patologías</option>
+                                {% for option in form.special_needs.field.choices %}
+                                    <option value="{{ option.0 }}">{{ option.1 }}</option>
+                                    <!--{% if form.special_needs.value == option.0 %}selected{% endif %}-->
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="error-general-message"></div>
+
+                    {% if request.user.is_authenticated %}
+                    <div class="field button">
+                        <input type="submit" value="Finalizar" class="btn" />
+                    </div>
+                    {% else %}
+                    <div class="field button">
+                        <button type="button" id="nextBtn" onclick="nextPrev(1)">Continuar</button>
                     </div>
                     {% endif %}
-                </form>
-            </section>
-        </div>
+
+                    <div class="link"><a href="{% url 'homepage' %}">Cancelar</a></div>
+                </div>
+                <!--STEP 5-->
+                <!--FORM NO AUTH USER-->
+                {% if not request.user.is_authenticated %}
+                <div class="multistep_form_tab contact_detail_tab">
+                    <div class="form_back_section">
+                    <div class="back_icon_container">
+                        <i class="fa fa-angle-left"></i>
+                        <button type="button" onclick="nextPrev(-1)" class="multistep_form_back_button"><p>Volver</p></button>
+                    </div>
+                    </div> 
+
+                    <div class="form_header_image">
+                        <img src="{% static 'images/contact_detail_image2.svg' %}">
+                    </div>
+
+                    <div class="form_header">
+                        <h3>¡Ya tenemos la dieta perfecta para <span class="name_container"></span>!</h3>
+                        <p>Solo nos resta conocerte y así, podremos contarte sobre la alimentación que cambiará la vida de tu Forever Dog, un bocado a la vez.</p>
+                    </div>
+
+                    <div class="form_name_input">
+                        <div class="field input">
+                            <label for="name_contact" class="form-label">Tu nombre</label>
+                            <input type="text" name="name_contact" value="" required>
+                        </div>
+                    </div>
+
+                    <div class="form_email_input">
+                        <div class="field input">
+                            <label for="email_contact" class="form-label">Tu correo electrónico</label>
+                            <input type="email" name="email_contact" value="" required>
+                        </div>
+                    </div>
+
+                    <div class="field input">
+                        <select id="city_contact" name="city_contact" required>
+                            <option value="" selected disabled>Ciudad</option>
+                            <option value="Ciudad 1">Ciudad 1</option>
+                            <option value="Ciudad 2">Ciudad 2</option>
+                            <option value="Ciudad 3">Ciudad 3</option>
+                        </select>
+                    </div>
+
+                    <div class="error-general-message"></div>
+
+                    <div class="field button">
+                        <input type="submit" value="Conocer dieta" class="btn" />
+                    </div>
+
+                    <div class="link"><a href="{% url 'homepage' %}">Cancelar</a></div>
+                </div>
+                {% endif %}
+            </form>
+        </section>
     </div>  
 </main>
 
