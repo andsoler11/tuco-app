@@ -66,10 +66,10 @@
 
     <div class="form_wrapper">
         <section class="form login">
-            <header>
+            <div class="form_header">
                 <h1 class="title-form">Inicia sesión</h1>
                 <p>¿Ya eres parte de la manada Forever Dog? Ingresa con tu correo y contraseña</p>
-            </header>
+            </div>
 
             <form id="login-form" action="{% url 'login' %}" method="POST">
                 {% csrf_token %}

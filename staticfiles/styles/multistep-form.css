@@ -79,13 +79,13 @@
 }
 
 
-.form_age_sex_input {
+.two-fields {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.form_age_sex_input .input {
+.two-fields .input {
     width: 47%;
 }
 

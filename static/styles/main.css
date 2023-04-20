@@ -65,25 +65,14 @@ body{
 
 .form_wrapper {
     background: #fff;
-    width: 400px;
+    width: 470px;
     min-height: auto;
     border-radius: 10px;
     box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.15);
 }
 
-/* Sign up Form CSS code */
 
-.wrapper {
-    background: #202B3E;
-    width: 30vw;
-    max-width: 400px;
-    height: 100%;
-    min-height: 400px;
-    border-radius: 10px;
-    min-width: 400px;
-
-}
-
+/* Create Pet Diest Form*/
 .alert {
     color: #ea3e4f;
     padding: 8px 10px;
@@ -102,29 +91,25 @@ body{
     justify-content: space-between;
 }
 
-.form header {
+.form .form_header {
     color: var(--black-font);
     font-weight: 600;
-    margin-bottom: calc(var(--base-space) * 2);
+    margin-bottom: calc(var(--base-space) * 4);
     text-align: left;
 }
 
-.form header .title-form{
+.form .form_header .title-form{
     font-size: 1.5rem;
     margin-bottom: 1rem;
 }
 
-.form header p {
+.form .form_header p {
     font-size: 1rem;
 }
 
 .form_wrapper hr {
     border: 0;
     border-bottom: 1px solid #FFC397;
-}
-
-.form_wrapper form {
-    margin-top: 1rem;
 }
 
 .form form .error-txt {
@@ -184,28 +169,111 @@ form .name-details .field:last-child {
     outline: none;
 }
 
-.form form .field label.error {
+.form form .field label.error,
+.error-general-message {
     color: #D95F57;
     font-size: .66rem;
     font-weight: 500;
     margin-top: 5px;
     padding: 0 2px;
 }
+.error-general-message {
+    display: none;
+    margin: 0 0 20px;
+}
 
 .form form .input input,
 #id_allergies,
 #id_special_needs,
 .form form .input select,
+.form form .input .nice-select,
 .form-control {
     height: 50px;
     width: 100%;
     font-size: 16px;
     color: #222222;
     font-weight: 500;
-    padding: 10px 20px 0;
     background-color: var(--light-gray);
+    outline: none;
     border-radius: 8px;
     border: 0;
+}
+
+.form form .input input,
+#id_allergies,
+#id_special_needs,
+.form-control {
+    padding: 10px 20px 0;
+}
+
+.form form .input select {
+    padding: 0 20px;
+}
+
+.form form .input .nice-select {
+    padding: 5px 20px 0;
+}
+
+.form form .input .nice-select:after {
+    width: 9px;
+    height: 9px;
+    margin-top: -5px;
+    border-bottom: 1px solid var(--light-blue);
+    border-right: 1px solid var(--light-blue);
+    right: 20px;
+}
+
+.form .field .nice-select .list {
+    min-width: 100%;
+    max-height: 400px;
+    overflow-y: scroll;
+    background: var(--light-blue);
+}
+.form .field .nice-select .list .option{
+    font-size: .8rem;
+}
+.form .field .nice-select .list .option:not(.disabled){
+    color: #fff;
+    font-size: .8rem;
+    border-bottom: 0.5px solid #F4F3DE;
+    position: relative;
+}
+.form .field .nice-select .list .option.selected:not(.disabled):after {
+    width: 5px;
+    height: 10px;
+    content: '';
+    top: 50%;
+    right: 15px;
+    position: absolute;
+    border-bottom: 2px solid #fff;
+    border-right: 2px solid #fff;
+    display: block;
+    margin-top: -8px;
+    pointer-events: none;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.nice-select .option:hover,
+.nice-select .option.focus,
+.nice-select .option.selected.focus {
+    background: #647ba6;
+}
+.nice-select .option.disabled,
+.nice-select .list:hover .option.disabled {
+    background: var(--bg-blue-dark)!important;
+}
+.nice-select .option.disabled {
+    color: #759cdd;
+}
+
+input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
 }
 
 .input > label {
@@ -217,10 +285,15 @@ form .name-details .field:last-child {
     margin: 8px 0px;
 }
 
-.form form .input input:focus {
+.form form .input input:focus,
+.form form .input select:focus,
+.form form .input select:focus-visible {
     border: 1px solid var(--black-font);
 }
-.form form .input input.error {
+.form form .field input.error,
+.form form .field select.error,
+.form form .field.error input,
+.form form .field.error .nice-select {
     border: 1px solid #D95F57;
 }
 
@@ -229,7 +302,7 @@ form .name-details .field:last-child {
 }
 
 .form form .button input,
-#nextBtn {
+.field.button button {
     width: 100%;
     min-width: 220px;
     color: #202B3E;
@@ -245,18 +318,18 @@ form .name-details .field:last-child {
     cursor: pointer;
 }
 .form form .button input:hover,
-#nextBtn:hover {
+.field.button button:hover {
     background-color: #FFCDA8;
 }
 
 .form form .button input:focus,
-#nextBtn:focus {
+.field.button button:focus {
     background-color:#FCAC71;
 }
 .form form .button input:disabled,
 .form form .button input[disabled],
-#nextBtn:disabled,
-#nextBtn[disabled]{
+.field.button button:disabled,
+.field.button button[disabled]{
     color: #989898;
     background-color: #C8C8C8;
 }
@@ -759,11 +832,6 @@ form .name-details .field:last-child {
         min-width: unset;
     }
 
-    .main_form_container {
-        display: flex;
-        justify-content: center;
-    }
-
     .form form .field input {
         font-size: 1rem;
     }
@@ -773,7 +841,8 @@ form .name-details .field:last-child {
         font-size: .8em;
     }
 
-    .form form .field label.error {
+    .form form .field label.error,
+    .error-general-message {
         font-size: .8rem;
     }
 
@@ -837,11 +906,6 @@ form .name-details .field:last-child {
         flex-direction: column;
     }
     /*HOME - MEET OUR DOGTOR*/
-}
-
-.main_form_container {
-    overflow-y: auto;
-    max-height: 40rem;
 }
 
 .form.login {

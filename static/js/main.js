@@ -75,7 +75,6 @@ function nextPrev(n) {
   // This function will figure out which tab to display
   var x = document.getElementsByClassName("multistep_form_tab");
 
-
   // Check if all required inputs on current tab have been filled before moving to the next tab
   var requiredInputs = x[currentTab].querySelectorAll('[required]');
 
@@ -83,23 +82,26 @@ function nextPrev(n) {
   requiredInputs.forEach(input => {
     if (input.value.trim() === '') {
       allInputsFilled = false;
-      input.classList.add('error');
+      input.parentElement.classList.add('error');
     } else {
-      input.classList.remove('error');
+      input.parentElement.classList.remove('error');
     }
   });
 
   if (!allInputsFilled) {
     // Show error message
-    var errorMessage = document.getElementById("error-message");
-    errorMessage.innerText = "Por favor, complete todos los campos requeridos antes de continuar.";
-    errorMessage.style.display = "block";
+    var errorMessage = document.getElementsByClassName("error-general-message");
+    $(errorMessage).text("Por favor, complete todos los campos requeridos antes de continuar.");
+    $(errorMessage).css("display", "block")
+    //errorMessage[0].innerText = "Por favor, complete todos los campos requeridos antes de continuar.";
+    //errorMessage[0].style.display = "block";
     return;
   }
 
   // Hide error message if previously displayed
-  var errorMessage = document.getElementById("error-message");
-  errorMessage.style.display = "none";
+  var errorMessage = document.getElementsByClassName("error-general-message");
+  //errorMessage.style.display = "none";
+  $(errorMessage).css("display", "none")
 
 
   // Validate weight input
@@ -217,8 +219,9 @@ function toggleMenu() {
 
 const getName = () => {
   let name = document.getElementById('input_name').value;
-  let nameContainer = document.getElementById('name_container');
-  nameContainer.innerHTML = name;
+  $(".name_container").replaceWith(name);
+  //let nameContainer = document.getElementsByClassName('name_container');
+  //nameContainer.innerHTML = name;
 }
 
 
@@ -237,6 +240,7 @@ for (i = 0; i < acc.length; i++) {
     } 
   });
 }
+
 
 $(document).ready(function(){
   //Construye carousel How It Works
@@ -313,11 +317,11 @@ $(document).ready(function(){
     }
   });
 
-  // Agrega clase focused a elemento padre de input para animar label
+  // Agrega clase focused a elemento padre de input para animar label de formularios
   $('.form input').focus(function(){
     $(this).parents('.field').addClass('focused');
   });
-  // Valida input blur y elimina clase focused si el campo está vacío
+  // Valida input blur y elimina clase focused si el campo del formulario está vacío
   $('.form input').blur(function(){
     var inputValue = $(this).val();
     if ( inputValue == "" ) {
@@ -354,43 +358,48 @@ $(document).ready(function(){
       }
     }
   });
-});
 
-
-
-
-
-
-// Validación formulario login
-/*
-function validateLoginForm() {
-  /*$.validator.methods.checkEmail = function (value, element) {
-    return this.optional(element) || /[a-z0-9]+@[a-z]+\.[a-z]+/.test(value);
-  };
-
-  $('#login-form').validate({
+  $("#diet-form").validate({
     rules: {
-      email: {
+      name: {
         required: true,
-        email: true
       },
-      password: {
+      age: {
         required: true,
+      },
+      weight: {
+        required: true,
+      },
+      name_contact: {
+        required: true,
+      },
+      email_contact: {
+        required: true,
+        email: true,
       },
     },
     messages: {
-      password: {
+      name: {
         required: messageRequired,
       },
-      email: {
+      age: {
         required: messageRequired,
-        email: messageEmail,
+      },
+      weight: {
+        required: messageRequired,
+      },
+      name_contact: {
+        required: messageRequired,
+      },
+      email_contact: {
+        required: messageRequired,
+        email: messageEmail
       }
     }
   });
-}
-validateLoginForm();
-*/
+
+  $(".form .field select").niceSelect();
+});
 
 
 
