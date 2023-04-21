@@ -338,8 +338,6 @@ input[type="number"]::-webkit-inner-spin-button {
 .form .link {
     text-align: center;
     margin: 10px 0;
-    font-size: 14px;
-    color: #c2c7ca;
     font-weight: 300;
 }
 
