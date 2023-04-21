@@ -359,6 +359,50 @@ $(document).ready(function(){
     }
   });
 
+  // Registro usuarios
+  $("#register-form").validate({
+    rules: {
+      name: {
+        required: true,
+      },
+      email: {
+        required: true,
+        email: true,
+      },
+      phone: {
+        required: true,
+        number: true,
+      },
+      password1: {
+        required: true,
+      },
+      password2: {
+        required: true,
+        equalTo: "#password1"
+      },
+    },
+    messages: {
+      name: {
+        required: messageRequired,
+      },
+      email: {
+        required: messageRequired,
+        email: messageEmail,
+      },
+      phone: {
+        required: messageRequired,
+        number: messageNumber,
+      },
+      password1: {
+        required: messageRequired,
+      },
+      password2: {
+        required: messageRequired,
+        equalTo: messageEqualTo
+      }
+    }
+  });
+
   $("#diet-form").validate({
     rules: {
       name: {
