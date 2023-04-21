@@ -287,6 +287,7 @@ def menu_detail(request, menu_id, pet_id=None):
     menu.percents = json.loads(menu.percents)
     menu.nutrition_information = json.loads(menu.nutrition_information)
     button_message = 'Agregar al carrito'
+    puppy = None
 
     menu.prices = {}
 
@@ -303,10 +304,11 @@ def menu_detail(request, menu_id, pet_id=None):
         menu.prices = puppies_grams
     else:
         # get last puppy created
-        puppy = Pet.objects.filter(owner=request.user).last()
+        if request.user.is_authenticated:
+            puppy = Pet.objects.filter(owner=request.user).last()
 
-        if puppy is None:
-            return redirect('dishes')
+            if puppy is None:
+                return redirect('dishes')
 
         # puppies_grams = {
         #     puppy.name: {
