@@ -4,26 +4,188 @@
 {% block content %}
 
 <main class="main_container">
-    <div class="main_form_container main_form_container__diet">
-        <div class="wrapper diet_wrapper">
-            <section class="form login  diet_container">
-                <div class="diet_header_image">
-                    <img src="{% static 'images/diet_header_image.png' %}" alt="">
-                </div>
-
-                {% for menu in available_menus %}
-                <div class="diet_data_container">
-                    <h2 class="menu_title">{{ menu.name }}</h2>
-                    {% if pet %}
-                        <a href="{% url 'menu-detail' menu.id pet.id %}">Ver menu</a>
-                    {% else %}
-                        <a href="{% url 'menu-detail' menu.id %}">Ver menu</a>
-                    {% endif %}
-                </div>
-                {% endfor %}
-
-         </section>
+    <section class="page-section section-xl">
+        <div class="page-header">
+            <h1 class="page-title">Nuestros menús</h1>
+            <p>Deja que tu Forever Dog decida qué quiere hoy.<br>Con nuestras opciones, <b>¡seguro encontrará su favorita!</b></p>
         </div>
-    </div>  
+        <div class="diet-card-list mt-2">
+            <div class="diet-card">
+                <h2>Res, Verduras & Frutas</h2>
+                <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Res, Verduras & Frutas">
+                <a href="#">Ver detalles</a>
+            </div>
+
+            <div class="diet-card">
+                <h2>Pollo, Frutas & verduras</h2>
+                <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Pollo, Frutas & verduras">
+                <a href="#">Ver detalles</a>
+            </div>
+
+            <div class="diet-card">
+                <h2>Gastro</h2>
+                <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Gastro">
+                <a href="#">Ver detalles</a>
+            </div>
+
+            <div class="diet-card">
+                <h2>Res, Verduras & Frutas</h2>
+                <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Res, Verduras & Frutas">
+                <a href="#">Ver detalles</a>
+            </div>
+
+            <div class="diet-card">
+                <h2>Pollo, Frutas & verduras</h2>
+                <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Pollo, Frutas & verduras">
+                <a href="#">Ver detalles</a>
+            </div>
+
+            <div class="diet-card">
+                <h2>Gastro</h2>
+                <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Gastro">
+                <a href="#">Ver detalles</a>
+            </div>
+
+            <!--
+            {% for menu in available_menus %}
+            <div class="diet_data_container">
+                <h2 class="menu_title">{{ menu.name }}</h2>
+                {% if pet %}
+                    <a href="{% url 'menu-detail' menu.id pet.id %}">Ver menu</a>
+                {% else %}
+                    <a href="{% url 'menu-detail' menu.id %}">Ver menu</a>
+                {% endif %}
+            </div>
+            {% endfor %}
+            -->
+        </div>
+    </section>
+
+    <section class="page-section" id="unique-need">
+        <div class="wrapper-banner">
+            <div class="image-content">
+                <img src="/static/images/diet-unique-need.png">
+            </div>
+            <div class="text-content">
+                <h3>Necesidad única, menú único</h3>
+                <p>¿Tu Forever Dog tiene alguna patología o alergia? <b>Contáctanos y crearemos un menú adaptado a sus necesidades</b>.</p>
+              <a href="/#">Personaliza su dieta</a>
+            </div>
+          </div>
+    </section>
+
+    <section class="page-section full-height" id="how-it-works">
+        <div class="header-section">
+          <h2>Pedir en Forever Dog es tan fácil como decir: <b>¡guau!</b></h2>
+        </div>
+        <div class="owl-carousel">
+          <div class="card">
+            <span class="number">1</span>
+            <div class="icon-wrapper">
+              <img src="/static/images/howitworks-step-1.svg">
+            </div>
+            <p>
+              <b>Cuéntanos sobre tu Forever Dog.</b>  No te tomará más 2 minutos. Con esta información crearemos su <i>dieta personalizada</i>.
+            </p>
+          </div>
+          <div class="card">
+            <span class="number">2</span>
+            <div class="icon-wrapper">
+              <img src="/static/images/howitworks-step-2.svg">
+            </div>
+            <p>
+              <b>Crearemos una dieta específica para sus necesidades, estilo y etapa de vida.</b> Usamos ingredientes naturales y de calidad.
+            </p>
+          </div>
+          <div class="card">
+            <span class="number">3</span>
+            <div class="icon-wrapper">
+              <img src="/static/images/howitworks-step-3.svg">
+            </div>
+            <p>
+              <b>Mejor para ellos, más fácil para ti:</b> envío gratis, dieta porcionada, lista para descongelar y servir.
+            </p>
+          </div>
+        </div>
+        <a href="/dishes" class="link-button">Descubre su dieta</a>
+    </section>
+
+    <div class="benefits-container bg-blue-dark">
+        <section class="page-section" id="why-choose">
+            <div class="header-section">
+            <h2>¿Por qué elegir Forever Dog?</h2>
+            </div>
+            <div class="owl-carousel">
+            <div class="card">
+                <img src="/static/images/whyChoose-icon-card-1.svg">
+                <p>Emoción al comer. Platos limpios</p>
+            </div>
+            <div class="card">
+                <img src="/static/images/whyChoose-icon-card-2.svg">
+                <p>Disminuye el sarro y mal aliento.</p>
+            </div>
+            <div class="card">
+                <img src="/static/images/whyChoose-icon-card-3.svg">
+                <p>Pelo más brillante.</p>
+            </div>
+            <div class="card">
+                <img src="/static/images/whyChoose-icon-card-4.svg">
+                <p>Piel más sana.</p>
+            </div>
+            </div>
+            <a href="/dishes" class="link-button mt-4">Empieza ahora</a>
+        </section>
+    </div>
+
+    <section class="page-section full-height" id="frequent-questions">
+        <div class="header-section">
+          <h2>No te quedes con la duda</h2>
+          <p>Las respuestas que buscas sobre la alimentación de tu perro están aquí</p>
+        </div>
+        <div id="wrapper-accordion">
+          <div class="accordion">
+            <button class="accordion-tab">¿Quién formula las dietas?</button>
+            <div class="panel">
+              <p>Contamos con dos nutricionistas veterinarias certificadas que supervisan la creación de cada fórmula y receta, son expertas en nutrición natural y la prevención de enfermedades a través de la alimentación. Mejor dicho, no podrías contar con mejores aliadas para formular la dieta de tu Forever Dog.</p>
+            </div>
+          </div>
+          <div class="accordion">
+            <button class="accordion-tab">¿Los perros pueden comer carne cruda?</button>
+            <div class="panel">
+              <p>Sí, el 98% del ADN del perro es igual al del lobo. Los perros son carnívoros facultativos, esto quiere decir que desde sus dientes hasta su sistema digestivo está preparado para razgar, morder y descomponer  los alimentos crudos como lo hacían sus antepesados. Al consumir los alimentos crudos, pueden absorber mucho mejor los nutrientes, ya que al cocinarlos se desnaturalizan las proteínas y gran parte de los aminoácidos se destruyen.</p>
+            </div>
+          </div>
+          <div class="accordion">
+            <button class="accordion-tab">¿Voy a notar cambios en mi perro?</button>
+            <div class="panel">
+              <p>Es completamente normal que tu Forever Dog experimente algún cambio durante la transición. No te asustes si bebe menos agua, sus heces son más blandas o si está un poco estreñido. Puedes aprender más sobre estos cambios aquí.</p>
+            </div>
+          </div>
+          <div class="accordion">
+            <button class="accordion-tab">¿Puedo hacerle cambios a la dieta de mi Forever Dog?</button>
+            <div class="panel">
+              <p>Al crear tu perfil en Forever Dog, tienes el control total de su dieta, puedes ajustar su peso, sus necesidades especiales y su menús.</p>
+            </div>
+          </div>
+          <div class="accordion">
+            <button class="accordion-tab">¿Cómo almacenar la dieta de mi Forever Dog?</button>
+            <div class="panel">
+              <p>Para conservar nuestros menús debes mantenerlos congelados. Sube al refrigerador 2 horas antes únicamente la porción que vas a darle. Si olvidas subirlas al refrigerador, puedes usar el microondas en la función de descongelar.</p>
+            </div>
+          </div>
+          <div class="accordion">
+            <button class="accordion-tab">¿Cómo funcionan los planes de suscripción?</button>
+            <div class="panel">
+              <p>Nuestras dietas son personalizadas y crudas para cada necesidad nutricional de tu Forever Dog. El envío siempre es gratuito. Los menús se entregan porcionados y congelados en tu puerta según la frecuencia de entrega que elijas: semanal, quincenal o mensual.</p>
+            </div>
+          </div>
+          <div class="accordion">
+            <button class="accordion-tab">¿Cuánto tiempo puede manterse fresca la comida de Forever Dog?</button>
+            <div class="panel">
+              <p>Nuestros menús son naturales y frescos, por lo que deben mantenerse refrigerados o congelados. Una vez descongelada una porción, debe consurmirse o en caso de no hacerlo, guardarse en el refrigerador por un tiempo máximo de 18 horas. Nuestras dietas pueden durar congeladas sin perder nutrientes hasta 30 días.</p>
+            </div>
+          </div>
+        </div>
+    </section>
 </main>
 {% endblock %}
