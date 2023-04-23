@@ -396,7 +396,7 @@ input[type="number"]::-webkit-inner-spin-button {
     align-self: end;
 }
 
-.home-section {
+.page-section {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -406,10 +406,16 @@ input[type="number"]::-webkit-inner-spin-button {
     text-align: center;
     width: 100%;
 }
-.home-section.full-height {
+.page-section.section-xl {
+    max-width: 1120px;
+}
+.page-section.no-padding {
+    padding: 0;
+}
+.page-section.full-height {
     min-height: calc(100vh - var(--header-height-desktop));
 }
-.home-section h1 {
+.page-section h1 {
     font-size: 2rem;
     font-weight: 400;
     line-height: normal;
@@ -417,25 +423,25 @@ input[type="number"]::-webkit-inner-spin-button {
     align-self: end;
 }
 
-.home-section h1 b {
+.page-section h1 b {
     font-weight: 600;
 }
 
-.home-section h2 {
+.page-section h2 {
     font-size: 1.8rem;
 }
-.home-section h3 {
+.page-section h3 {
     font-size: 1.3rem;
     margin-bottom: calc(var(--base-space) * 3);
 }
-.home-section .header-section {
+.page-section .header-section {
     margin-bottom: calc(var(--base-space) * 4);
 }
-.home-section .header-section p {
+.page-section .header-section p {
     font-size: 0.888rem;
 }
 
-.home-section.hero {
+.page-section.hero {
     color: #fff;
     align-items: end;
     max-width: 700px;
@@ -520,21 +526,21 @@ input[type="number"]::-webkit-inner-spin-button {
 /*//////*/
 /*HOME - MEET OUR DOGTOR*/
 
-#meet-our-dogtor .wrapper-banner{
+#meet-our-dogtor .wrapper-banner {
     display: flex;
     flex-direction: row-reverse;
     padding: 1rem 4rem;
     border-radius: 8px;
 }
 
-#meet-our-dogtor .wrapper-banner .text-content{
+#meet-our-dogtor .wrapper-banner .text-content {
     display: flex;
     flex-direction: column;
     padding: 2rem 0;
     text-align: left;
 }
 
-#meet-our-dogtor .wrapper-banner .text-content a{
+#meet-our-dogtor .wrapper-banner .text-content a {
     margin-top: 1rem;
     font-weight: bold;
     text-decoration: underline;
@@ -564,7 +570,7 @@ input[type="number"]::-webkit-inner-spin-button {
     color: var(--beige);
 }
 #meet-our-dogtor .wrapper-banner.light-yellow .text-content,
-#meet-our-dogtor .wrapper-banner.light-yellow .text-content a{
+#meet-our-dogtor .wrapper-banner.light-yellow .text-content a {
     color: var(--black-font);
 }
 /*HOME - MEET OUR DOGTOR*/
@@ -577,7 +583,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .bg-blue-dark h3 {
     color: #fff;
 }
-#why-choose.home-section {
+.main_container--home #why-choose.page-section {
     padding: calc(var(--base-space) * 20) calc(var(--base-space) * 8) calc(var(--base-space) * 10);
 }
 #why-choose .owl-carousel .card{
@@ -771,10 +777,10 @@ input[type="number"]::-webkit-inner-spin-button {
         padding: 0;
     }
 
-    .home-section {
+    .page-section {
         padding: calc(var(--base-space) * 6);
     }
-    .home-section.full-height {
+    .page-section.full-height {
         min-height: calc(100vh - var(--header-height-mobile));
     }
 
@@ -787,16 +793,16 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 @media screen and (max-width: 768px) {
-    .home-section h2 {
+    .page-section h2 {
         font-size: 1.6rem;
     }
-    .home-section h3 {
+    .page-section h3 {
         margin-bottom: calc(var(--base-space) * 2);
     }
     #meet-our-dogtor .wrapper-banner .text-content {
         padding: 1rem 1rem 2rem 0;
     }
-    #why-choose.home-section {
+    .main_container--home #why-choose.page-section {
         padding: calc(var(--base-space) * 6) calc(var(--base-space) * 6) calc(var(--base-space) * 6);
     }
 }
@@ -852,10 +858,10 @@ input[type="number"]::-webkit-inner-spin-button {
         padding: 0;
     }
 
-    .home-section {
-        padding: calc(var(--base-space) * 8) calc(var(--base-space) * 2);
+    .page-section {
+        padding: calc(var(--base-space) * 6) calc(var(--base-space) * 2);
     }
-    .home-section.full-height {
+    .page-section.full-height {
         min-height: calc(100vh - var(--header-height-mobile));
     }
 
@@ -863,11 +869,11 @@ input[type="number"]::-webkit-inner-spin-button {
         width: auto;
     }
 
-    .home-wrapper.hero .home-section.full-height{
+    .home-wrapper.hero .page-section.full-height{
         min-height: calc(60vh - var(--header-height-mobile));
     }
 
-    .home-section.hero h1 {
+    .page-section.hero h1 {
         width: 80%;
         font-size: 1.5rem;
     }
