@@ -10,6 +10,7 @@
             <p>Deja que tu Forever Dog decida qué quiere hoy.<br>Con nuestras opciones, <b>¡seguro encontrará su favorita!</b></p>
         </div>
         <div class="diet-card-list mt-2">
+          <!--
             <div class="diet-card">
                 <h2>Res, Verduras & Frutas</h2>
                 <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Res, Verduras & Frutas">
@@ -45,11 +46,12 @@
                 <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Gastro">
                 <a href="#">Ver detalles</a>
             </div>
-
-            <!--
+            -->
+            
             {% for menu in available_menus %}
-            <div class="diet_data_container">
-                <h2 class="menu_title">{{ menu.name }}</h2>
+            <div class="diet-card">
+                <h2>{{ menu.name }}</h2>
+                <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Gastro">
                 {% if pet %}
                     <a href="{% url 'menu-detail' menu.id pet.id %}">Ver menu</a>
                 {% else %}
@@ -57,7 +59,7 @@
                 {% endif %}
             </div>
             {% endfor %}
-            -->
+            
         </div>
     </section>
 
