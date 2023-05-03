@@ -403,6 +403,7 @@ $(document).ready(function(){
     }
   });
 
+  // Formulario de formulación
   $("#diet-form").validate({
     rules: {
       name: {
@@ -442,8 +443,40 @@ $(document).ready(function(){
     }
   });
 
+  // Personaliza select field
   $(".form .field select").niceSelect();
+
+  //Ajusta altura de textos en cards de menú
+  if($('.diet-card-list').length){
+    heightTitleCards();
+  }
+
+  // Selecciona menú para realizar compra
+  $('.diet-card.select-option .check').click(function(){
+    $('.diet-card.select-option').removeClass('checked');
+    $(this).parent().addClass('checked');
+
+    // Habilita btn de compra
+    $('.wrapper-button.button-buy-now a.link-button').removeAttr('disabled');
+  });
 });
+
+
+// FN Ajusta altura de textos en cards de menú
+function heightTitleCards(){
+  var cardsMenu = $('.diet-card-list .diet-card');
+  var arrayTitles = [];
+
+  // Recorre listado para calcular añtura de titulo mayor
+  $.each(cardsMenu, function(i, val){
+    var titleCard = $(val).find('h2').height();
+    arrayTitles.push(titleCard);
+  });
+  var maxHTitle = Math.max(...arrayTitles);
+
+  // Asigna css a titulos para estandarizar altura
+  $(cardsMenu).find('h2').css('min-height', maxHTitle+'px');
+}
 
 
 

@@ -13,7 +13,8 @@
     min-width: 300px;
     background: #fff;
     border-radius: 8px;
-    padding: 2rem;
+    padding: 2rem 1.5rem;
+    position: relative;
 }
 .diet-card-list .diet-card h2 {
     font-size: 1.38rem;
@@ -33,6 +34,56 @@
 }
 .diet-card-list .diet-card a:hover {
     color: var(--curuba);
+}
+.diet-card-list .diet-card.select-option.checked{
+    border: 1px solid var(--black-font);
+}
+.diet-card-list .diet-card.select-option .check {
+    top: .8rem;
+    left: .8rem;
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    border: 1px solid var(--black-font);
+    border-radius: 50%;
+    cursor: pointer;
+}
+.diet-card-list .diet-card.select-option.checked .check:after {
+    content: '';
+    width: 15px;
+    height: 15px;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    background: var(--curuba);
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+.diet-card-list .select-option .diet-description {
+    text-align: left;
+    display: block;
+    margin-bottom: 1rem;
+}
+.diet-card-list .select-option .diet-description p {
+    font-size: .85rem;
+    margin-bottom: 10px;
+}
+.diet-card-list .select-option .diet-description .price-month {
+    font-size: 1.38rem;
+    font-weight: 500;
+}
+.diet-card-list .select-option .diet-description .price-day {
+    font-size: .7rem;
+    margin-top: .4rem;
+}
+.diet-card-list .diet-card.select-option a {
+    text-align: left;
+    display: block;
+}
+.page-section .wrapper-button.button-buy-now {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
 }
 
 /*UNIQUE NEED BANNER*/
