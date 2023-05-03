@@ -41,6 +41,10 @@ body{
 .mt-less-8 {margin-top: -8rem;}
 .mt-less-10 {margin-top: -10rem;}
 
+.pt-0 {padding-top: 0 !important;}
+.pb-0 {padding-top: 0 !important;}
+.none-padding {padding:0 !important;}
+
 .bg-blue-dark {
     background-color: var(--bg-blue-dark);
 }
@@ -316,6 +320,15 @@ input[type="number"]::-webkit-inner-spin-button {
     border: none;
     border-radius: 8px;
     cursor: pointer;
+}
+.field.button button.update-cart{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+}
+.field.button button.update-cart img {
+    margin-right: 10px;
 }
 .form form .button input:hover,
 .field.button button:hover {

@@ -317,6 +317,25 @@ $(document).ready(function(){
     }
   });
 
+  //Construye carousel How It Works
+  $('#make-transition .owl-carousel').owlCarousel({
+    margin:20,
+    nav:false,
+    responsive:{
+        0:{
+          items:1.3,
+          loop:true
+        },
+        580:{
+          items:2
+        },
+        768:{
+          items:3,
+          loop: false
+      }
+    }
+  });
+
   // Agrega clase focused a elemento padre de input para animar label de formularios
   $('.form input').focus(function(){
     $(this).parents('.field').addClass('focused');

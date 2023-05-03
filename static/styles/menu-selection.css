@@ -1,41 +1,63 @@
-
 .diet_data_container {
-    border: 1px solid rgba(158, 158, 158, 0.475);
-    margin: 0.5rem;
-    padding: 0.5rem;
-    border-radius: 10px;
-    box-shadow: 0 0 128px 0 rgba(154, 153, 153, 0.3),
-        0 32px 64px -48px rgba(164, 164, 164, 0.7);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
-    width: 95%;
+    background: #fff;
 }
 
+.wrapper-banner {
+    display: block;
+    width: 100%;
+}
+
+.wrapper-text {
+    padding: 2rem;
+    text-align: left;
+    font-size: .9rem;
+}
+
+.wrapper-banner img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
 
 .menu_title {
-    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
 }
-
 
 .menu_data__description {
-    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
-
 
 .menu_data__nutrition {
-    text-align: left;
     width: 100%;
-    margin-top: 1rem;
+    margin-bottom: 2rem;
 }
 
+.menu_data__icons, .menu_data__price {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 30px;
+}
+.menu_data__icons {
+    padding-bottom: 3rem;
+    border-bottom: 1px solid;
+    margin: 1rem 0 2rem;
+}
+.menu_data__icons .col{
+    display: flex;
+    align-items: center;
+}
+.menu_data__icons .col img {
+    margin-right: 10px;
+}
 .menu_data__price {
     width: 100%;
 }
-
-.menu_data__price > p > img {
-    margin-right: 0.5rem;
+.menu_data__price .price_day {
+    font-size: .8rem;
 }
 
 .menu_data__price > button {
@@ -63,7 +85,83 @@
     border-radius: 5px;
 }
 
-.menu_data__price strong {
-    font-size: 19px;
+
+/*//////*/
+/*HOW MAKE THE TRANSITION*/
+#make-transition{
+    color: #202B3E;
+}
+
+#make-transition ol {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: calc(var(--base-space) * 7);
+    padding-left: calc(var(--base-space) * 3);
+}
+
+#make-transition li {
+    flex-basis: calc(50% - (var(--base-space) * 4));
+    margin-bottom: calc(var(--base-space) * 3);
+    text-align: left;
+}
+#make-transition .card{
+    min-height: 320px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 1.5rem 1rem;
+}
+
+#make-transition .card .number {
+    width: 40px;
+    height: 40px;
+    color: #fff;
+    font-size: 1rem;
     font-weight: 700;
+    line-height: 2.3rem;
+    text-align: center;
+    display: block;
+    background:var(--black-font);
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+}
+
+#make-transition .card {
+    min-height: 280px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 1.5rem 1rem;
+}
+
+#make-transition .card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+#make-transition .card p {
+    text-align: left;
+    font-size: .9rem;
+}
+
+#make-transition .owl-carousel {
+    margin-bottom: 3rem;
+}
+#make-transition .owl-carousel .owl-dots {
+    margin-top: 2rem;
+}
+/*HOME - HOW IT WORKS*/
+
+
+@media screen and (max-width: 576px) {
+    .menu_data__icons, .menu_data__price {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    #make-transition .card h3 {
+        font-size: 1.3rem;
+    }
+    #make-transition .card p {
+        font-size: 1rem;
+    }
 }
