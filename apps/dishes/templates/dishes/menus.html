@@ -5,64 +5,52 @@
 
 <main class="main_container">
     <section class="page-section section-xl">
+      {% if pet %}
         <div class="page-header">
-            <h1 class="page-title">Nuestros menús</h1>
-            <p>Deja que tu Forever Dog decida qué quiere hoy.<br>Con nuestras opciones, <b>¡seguro encontrará su favorita!</b></p>
+          <h1 class="page-title">Nuestros menús</h1>
+          <p>Deja que tu Forever Dog decida qué quiere hoy.<br>Con nuestras opciones, <b>¡seguro encontrará su favorita!</b></p>
         </div>
+
         <div class="diet-card-list mt-2">
-          <!--
-            <div class="diet-card">
-                <h2>Res, Verduras & Frutas</h2>
-                <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Res, Verduras & Frutas">
-                <a href="#">Ver detalles</a>
+          {% for menu in available_menus %}
+            <div class="diet-card select-option">
+              <div class="check"></div>
+              <h2>{{ menu.name }}</h2>
+              <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Gastro">
+              <div class="diet-description">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
+                <div class="price-month">$300.000 mensual</div>
+                <div class="price-day">$11.000 al día</div>
+              </div>
+              <a href="{% url 'menu-detail' menu.id pet.id %}">Ver detalles</a>
             </div>
+          {% endfor %}
+        </div>
 
-            <div class="diet-card">
-                <h2>Pollo, Frutas & verduras</h2>
-                <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Pollo, Frutas & verduras">
-                <a href="#">Ver detalles</a>
-            </div>
+        <div class="wrapper-button button-buy-now">
+          <a href="/comprar" class="link-button" disabled>Comprar ahora</a>
+        </div>
+        
+      {% else %}
 
-            <div class="diet-card">
-                <h2>Gastro</h2>
-                <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Gastro">
-                <a href="#">Ver detalles</a>
-            </div>
+        <div class="page-header">
+          <h1 class="page-title">Nuestros menús</h1>
+          <p>Deja que tu Forever Dog decida qué quiere hoy.<br>Con nuestras opciones, <b>¡seguro encontrará su favorita!</b></p>
+        </div>
 
+        <div class="diet-card-list mt-2">
+          {% for menu in available_menus %}
             <div class="diet-card">
-                <h2>Res, Verduras & Frutas</h2>
-                <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Res, Verduras & Frutas">
-                <a href="#">Ver detalles</a>
-            </div>
-
-            <div class="diet-card">
-                <h2>Pollo, Frutas & verduras</h2>
-                <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Pollo, Frutas & verduras">
-                <a href="#">Ver detalles</a>
-            </div>
-
-            <div class="diet-card">
-                <h2>Gastro</h2>
-                <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Gastro">
-                <a href="#">Ver detalles</a>
-            </div>
-            -->
-            
-            {% for menu in available_menus %}
-            <div class="diet-card">
-                <h2>{{ menu.name }}</h2>
-                <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Gastro">
-                {% if pet %}
-                    <a href="{% url 'menu-detail' menu.id pet.id %}">Ver menu</a>
-                {% else %}
-                    <a href="{% url 'menu-detail' menu.id %}">Ver menu</a>
-                {% endif %}
+              <h2>{{ menu.name }}</h2>
+              <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Gastro">
+              <a href="{% url 'menu-detail' menu.id %}">Ver menú</a>
             </div>
             {% endfor %}
-            
         </div>
+      {% endif %}
     </section>
 
+    {% if not pet %}
     <section class="page-section" id="unique-need">
         <div class="wrapper-banner">
             <div class="image-content">
@@ -189,5 +177,6 @@
           </div>
         </div>
     </section>
+    {% endif %}
 </main>
 {% endblock %}
