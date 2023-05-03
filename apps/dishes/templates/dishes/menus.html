@@ -12,17 +12,19 @@
         </div>
 
         <div class="diet-card-list mt-2">
-          <div class="diet-card select-option">
-            <div class="check"></div>
-            <h2>{{ menu.name }}</h2>
-            <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Gastro">
-            <div class="diet-description">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
-              <div class="price-month">$300.000 mensual</div>
-              <div class="price-day">$11.000 al día</div>
+          {% for menu in available_menus %}
+            <div class="diet-card select-option">
+              <div class="check"></div>
+              <h2>{{ menu.name }}</h2>
+              <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Gastro">
+              <div class="diet-description">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
+                <div class="price-month">$300.000 mensual</div>
+                <div class="price-day">$11.000 al día</div>
+              </div>
+              <a href="{% url 'menu-detail' menu.id pet.id %}">Ver detalles</a>
             </div>
-            <a href="{% url 'menu-detail' menu.id pet.id %}">Ver detalles</a>
-          </div>
+          {% endfor %}
         </div>
 
         <div class="wrapper-button button-buy-now">
@@ -30,7 +32,7 @@
         </div>
         
       {% else %}
-      
+
         <div class="page-header">
           <h1 class="page-title">Nuestros menús</h1>
           <p>Deja que tu Forever Dog decida qué quiere hoy.<br>Con nuestras opciones, <b>¡seguro encontrará su favorita!</b></p>
