@@ -241,8 +241,10 @@ for (i = 0; i < acc.length; i++) {
   });
 }
 
-
 $(document).ready(function(){
+  // Add active class to menu link
+  activeMenu();
+
   //Construye carousel How It Works
   $('#how-it-works .owl-carousel').owlCarousel({
     margin:20,
@@ -480,6 +482,19 @@ $(document).ready(function(){
   });
 });
 
+
+// FN Add active class to menu link
+function activeMenu(){
+  var pathname = window.location.pathname;
+
+  var linksMenu = $('.header__nav__item a');
+  $.each(linksMenu, function(i, val){
+    var attrHref = $(val).attr('href');
+    if(attrHref === pathname){
+      $(this).addClass('active');
+    }
+  });
+}
 
 // FN Ajusta altura de textos en cards de menú
 function heightTitleCards(){
