@@ -23,14 +23,14 @@
 
     <div class="header__menu">
         <ul class="header__nav">
-            <li class="header__nav__item"><a href="{% url 'homepage' %}" class="active">Inicio</a></li>
+            <li class="header__nav__item"><a href="{% url 'homepage' %}">Inicio</a></li>
             <li class="header__nav__item"><a href="{% url 'dishes' %}">Descubre su dieta</a></li>
             <li class="header__nav__item"><a href="{% url 'menus' %}">Nuestros menús</a></li>
             <li class="header__nav__item submenu"><a href="">Conócenos</a>
                 <ul>
-                    <li class="header__nav__submenu__item"><a href="">Beneficios</a></li>
-                    <li class="header__nav__submenu__item"><a href="">Lo que dice la manada</a></li>
-                    <li class="header__nav__submenu__item"><a href="">No te quedes con la duda</a></li>
+                    <li class="header__nav__submenu__item"><a href="{% url 'homepage' %}#why-choose">Beneficios</a></li>
+                    <li class="header__nav__submenu__item"><a href="{% url 'homepage' %}#testimonials">Lo que dice la manada</a></li>
+                    <li class="header__nav__submenu__item"><a href="{% url 'homepage' %}#frequent-questions">No te quedes con la duda</a></li>
                 </ul>
             </li>
 

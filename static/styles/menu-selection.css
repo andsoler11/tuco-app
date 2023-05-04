@@ -85,6 +85,11 @@
     border-radius: 5px;
 }
 
+.wrapper-text .wrapper-button {
+    display: flex;
+    justify-content: center;
+}
+
 
 /*//////*/
 /*HOW MAKE THE TRANSITION*/
