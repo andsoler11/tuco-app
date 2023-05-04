@@ -293,7 +293,7 @@ def menu_detail(request, menu_id, pet_id=None):
 
     if pet_id:
         puppy = Pet.objects.get(id=pet_id)
-        button_message = 'Seleccionar menú'
+        button_message = 'Agregar al carrito'
         puppies_grams = {
             puppy.name: {
                 'grams': int(puppy.grams),
