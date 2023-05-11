@@ -766,7 +766,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .main_container--profile .dashboard-wrapper .options-list{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-gap: 20px 20px;
+    grid-gap: 10px 20px;
 }
 .main_container--profile .dashboard-wrapper .options-list li {
     cursor: pointer;
@@ -774,7 +774,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .main_container--profile .dashboard-wrapper .options-list li a{
     color: #fff;
     font-weight: 700;
-    padding: 1.2rem 2rem 1.2rem 1.2rem;
+    padding: 1rem 2rem 1rem 1.2rem;
     background: var(--light-blue);
     border-radius: 8px;
     position: relative;
@@ -993,7 +993,7 @@ input[type="number"]::-webkit-inner-spin-button {
     /* PROFILE */
     .main_container--profile .dashboard-wrapper .options-list{
         grid-template-columns: repeat(1, 1fr);
-        grid-gap: 20px;
+        grid-gap: 10px;
     }
     /* PROFILE */
 }
