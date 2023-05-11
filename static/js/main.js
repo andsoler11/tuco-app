@@ -380,6 +380,7 @@ $(document).ready(function(){
     }
   });
 
+
   // Registro usuarios
   $("#register-form").validate({
     rules: {
@@ -414,6 +415,45 @@ $(document).ready(function(){
         required: messageRequired,
         number: messageNumber,
       },
+      password1: {
+        required: messageRequired,
+      },
+      password2: {
+        required: messageRequired,
+        equalTo: messageEqualTo
+      }
+    }
+  });
+
+
+  // Recuperar contraseña
+  $("#password-form").validate({
+    rules: {
+      email: {
+        required: true,
+        email: true,
+      },
+    },
+    messages: {
+      email: {
+        required: messageRequired,
+        email: messageEmail,
+      }
+    }
+  });
+
+  // Nueva contraseña
+  $("#newpassword-form").validate({
+    rules: {
+      password1: {
+        required: true,
+      },
+      password2: {
+        required: true,
+        equalTo: "#password1"
+      },
+    },
+    messages: {
       password1: {
         required: messageRequired,
       },

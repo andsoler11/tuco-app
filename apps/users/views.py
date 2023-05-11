@@ -68,6 +68,18 @@ def registerUser(request):
     return render(request, 'users/login_register.html', context)
 
 
+def recoverPassword(request):
+    """Render recover password page"""
+    page = 'recoverPassword'
+    context = {'page': 'recoverPassword'}
+    return render(request, 'users/login_register.html', context)
+
+def newPassword(request):
+    """Render new password page"""
+    page = 'newPassword'
+    context = {'page': 'newPassword'}
+    return render(request, 'users/login_register.html', context)
+
 
 def logoutUser(request):
     logout(request)
