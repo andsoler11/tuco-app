@@ -73,3 +73,9 @@ def logoutUser(request):
     logout(request)
     messages.info(request, 'User was logout')
     return redirect('login')
+
+
+def profile(request):
+    """Render user dashboard"""
+    context = {'page': 'profile'}
+    return render(request, 'users/dashboard.html', context)
