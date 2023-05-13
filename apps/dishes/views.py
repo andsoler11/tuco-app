@@ -94,7 +94,7 @@ def formulate_home(request, menu_id=None):
 
         return redirect('menus', pk=pk)
 
-    breeds = Breeds.objects.all()
+    breeds = Breeds.objects.all().order_by('name')
 
     context = {
         'page': page,

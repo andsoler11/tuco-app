@@ -350,6 +350,9 @@ $(document).ready(function(){
     }
   });
 
+  // Valida valor de input y agrega clase focused si el campo del formulario NO está vacío
+  checkValInputsForms();
+
 
   // MENSAJES DE VALIDACIÓN
   var messageRequired = "Este campo es requerido";
@@ -379,6 +382,7 @@ $(document).ready(function(){
       }
     }
   });
+
 
   // Registro usuarios
   $("#register-form").validate({
@@ -414,6 +418,45 @@ $(document).ready(function(){
         required: messageRequired,
         number: messageNumber,
       },
+      password1: {
+        required: messageRequired,
+      },
+      password2: {
+        required: messageRequired,
+        equalTo: messageEqualTo
+      }
+    }
+  });
+
+
+  // Recuperar contraseña
+  $("#password-form").validate({
+    rules: {
+      email: {
+        required: true,
+        email: true,
+      },
+    },
+    messages: {
+      email: {
+        required: messageRequired,
+        email: messageEmail,
+      }
+    }
+  });
+
+  // Nueva contraseña
+  $("#newpassword-form").validate({
+    rules: {
+      password1: {
+        required: true,
+      },
+      password2: {
+        required: true,
+        equalTo: "#password1"
+      },
+    },
+    messages: {
       password1: {
         required: messageRequired,
       },
@@ -464,6 +507,36 @@ $(document).ready(function(){
     }
   });
 
+  // Editar Mis datos
+  $("#account-form").validate({
+    rules: {
+      name: {
+        required: true,
+      },
+      email: {
+        required: true,
+        email: true,
+      },
+      phone: {
+        required: true,
+        number: true,
+      },
+    },
+    messages: {
+      name: {
+        required: messageRequired,
+      },
+      email: {
+        required: messageRequired,
+        email: messageEmail,
+      },
+      phone: {
+        required: messageRequired,
+        number: messageNumber,
+      }
+    }
+  });
+
   // Personaliza select field
   $(".form .field select").niceSelect();
 
@@ -479,6 +552,48 @@ $(document).ready(function(){
 
     // Habilita btn de compra
     $('.wrapper-button.button-buy-now a.link-button').removeAttr('disabled');
+  });
+
+
+  // Habilita edición de formulario Mis Datos
+  var arrayDataAccount = {};
+  $('#editMyAccount').click(function(){
+    var thisForm = $('.main_container--form form').attr('id');
+    var inputs = $('#'+thisForm).find('input, select').not('[type="hidden"], [type="submit"], [type="button"], [noChange]');
+
+    $(inputs).removeAttr('disabled');
+
+    $(this).parent().addClass('hidden');
+    $('.wrapper-submit-button').removeClass('hidden');
+
+    $.each(inputs, function(i, val){
+      var idVal = $(val).attr('id');
+      arrayDataAccount[idVal] = $(val).val();
+    });
+  });
+
+  // Cancela edición de formulario Mis Datos
+  $('#cancel-edit-form').click(function(){
+    var thisForm = $('.main_container--form form').attr('id');
+    var inputs = $('#'+thisForm).find('input, select').not('[type="hidden"], [type="submit"], [type="button"], [noChange]');
+
+    $(inputs).attr('disabled', 'disabled');
+    $(inputs).removeClass('error');
+    $(inputs).parent().addClass('focused');
+    $('label.error').remove();
+
+    $(this).parents('.wrapper-submit-button').addClass('hidden');
+    $('.wrapper-edit-button').removeClass('hidden');
+
+    $.each(arrayDataAccount, function(keyArray, valueArray){
+      $.each(inputs, function(i, val){
+        var valInput = $(val).attr('id');
+        if(keyArray === valInput){
+          $(val).val(valueArray);
+        }
+      });
+    });
+    arrayDataAccount = {};
   });
 });
 
@@ -510,6 +625,20 @@ function heightTitleCards(){
 
   // Asigna css a titulos para estandarizar altura
   $(cardsMenu).find('h2').css('min-height', maxHTitle+'px');
+}
+
+// FN Valida valor de input y agrega clase focused si el campo del formulario NO está vacío
+function checkValInputsForms(){
+  var thisForm = $('.main_container--form form').attr('id');
+  var inputs = $('#'+thisForm).find('input, select').not('[type="hidden"], [type="submit"]');
+
+  $.each(inputs, function(i, val){
+    var valThisInput = $(val).val();
+
+    if(valThisInput != ""){
+      $(val).parent().addClass('focused');
+    }
+  });
 }
 
 

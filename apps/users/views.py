@@ -68,8 +68,31 @@ def registerUser(request):
     return render(request, 'users/login_register.html', context)
 
 
+def recoverPassword(request):
+    """Render recover password page"""
+    page = 'recoverPassword'
+    context = {'page': 'recoverPassword'}
+    return render(request, 'users/login_register.html', context)
+
+def newPassword(request):
+    """Render new password page"""
+    page = 'newPassword'
+    context = {'page': 'newPassword'}
+    return render(request, 'users/login_register.html', context)
+
 
 def logoutUser(request):
     logout(request)
     messages.info(request, 'User was logout')
     return redirect('login')
+
+
+def profile(request):
+    """Render user dashboard"""
+    context = {'page': 'profile'}
+    return render(request, 'users/dashboard.html', context)
+
+def account(request):
+    """Render My Data page"""
+    context = {'page': 'account'}
+    return render(request, 'users/account.html', context)

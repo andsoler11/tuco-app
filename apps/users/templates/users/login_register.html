@@ -55,9 +55,9 @@
         </section>
     </div>
 </main>
+{% endif %}
 
-{% else %}
-
+{% if page == 'login' %}
 <main class="main_container main_container--form">
     {% if messages|length > 0 %}
     <div style="display: flex; justify-content: center;">
@@ -93,11 +93,71 @@
                 </div>
 
             </form>
-            <div class="link"><a href="{% url 'register' %}">Olvidé mi contraseña</a></div>
+            <div class="link"><a href="{% url 'recover-password' %}">Olvidé mi contraseña</a></div>
             <div class="link"><a href="{% url 'register' %}">Crear cuenta</a></div>
         </section>
     </div>
 </main>
-
 {% endif %}
+
+{% if page == 'recoverPassword' %}
+<main class="main_container main_container--form">
+    <div class="form_wrapper">
+        <section class="form login">
+            <div class="form_header">
+                <h1 class="title-form">Recupera tu contraseña</h1>
+                <p>Ingresa el correo con el que creaste tu cuenta en Forever Dog</p>
+            </div>
+
+            <form id="password-form" action="" method="POST">
+                {% csrf_token %}
+                <div class="field input">
+                    <label for="email" class="form-label">Correo</label>
+                    <input type="email" id="email" name="email"  value="" required>
+                </div>
+                
+                <div class="field button">
+                    <input type="submit" value="Recuperar contraseña">
+                </div>
+
+            </form>
+            <div class="link">Hemos enviado un link de recuperación al correo registrado. <a href="#">Reenviar</a></div>
+            <div class="link"><a href="{% url 'login' %}">Volver</a></div>
+        </section>
+    </div>
+</main>
+{% endif %}
+
+{% if page == 'newPassword' %}
+<main class="main_container main_container--form">
+    <div class="form_wrapper">
+        <section class="form login">
+            <div class="form_header">
+                <h1 class="title-form">Nueva contraseña</h1>
+                <p>Ingresa la contraseña con la que ingresarás de ahora en adelante.</p>
+            </div>
+
+            <form id="newpassword-form" action="" method="POST">
+                {% csrf_token %}
+                <div class="field input">
+                    <label for="password1" class="form-label">Nueva Contraseña</label>
+                    <input type="password" id="password1" name="password1" required>
+                    {% comment %} <i class="fas fa-eye"></i> {% endcomment %}
+                </div>
+                <div class="field input">
+                    <label for="password2" class="form-label">Confirmar nueva Contraseña</label>
+                    <input type="password" id="password2" name="password2" required>
+                    {% comment %} <i class="fas fa-eye"></i> {% endcomment %}
+                </div>
+
+                <div class="field button">
+                    <input type="submit" value="Reestablecer contraseña">
+                </div>
+            </form>
+            <div class="link"><a href="{% url 'login' %}">Cancelar</a></div>
+        </section>
+    </div>
+</main>
+{% endif %}
+
 {% endblock %}
