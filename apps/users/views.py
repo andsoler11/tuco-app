@@ -91,3 +91,8 @@ def profile(request):
     """Render user dashboard"""
     context = {'page': 'profile'}
     return render(request, 'users/dashboard.html', context)
+
+def account(request):
+    """Render My Data page"""
+    context = {'page': 'account'}
+    return render(request, 'users/account.html', context)
