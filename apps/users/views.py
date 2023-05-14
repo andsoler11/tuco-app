@@ -24,12 +24,11 @@ def userLogin(request):
         return redirect('dishes')
 
     if request.method == 'POST':
-        email_secured = privacy.secure_email(request.POST['email'].lower())
-        username = email_secured['mask']
+        username = request.POST['email'].lower()
         password = request.POST['password']
 
         try:    
-            user = User.objects.get(username = username)
+            user = User.objects.get(username=username)
         except:
             messages.error(request, 'Username doest not exist')
     

@@ -8,10 +8,9 @@ from django.conf import settings
 import base64
 
 class Privacy:
-    def __init__(self, key=None):
+    def __init__(self, key=None, iv=None):
         self.key = self.__handle_key(key)
-        self.ivlen = algorithms.AES.block_size // 8
-        self.iv = os.urandom(self.ivlen)
+        self.iv = self.__handle_iv(iv)
         self.backend = default_backend()
 
     def __handle_key(self, key):
@@ -26,7 +25,14 @@ class Privacy:
         if key_size not in (16, 24, 32):
             raise ValueError("Invalid key size ({}) for AES".format(key_size))
         return key_bytes
-
+    
+    def __handle_iv(self, iv):
+        if iv is None:
+            ivlen = algorithms.AES.block_size // 8
+            return os.urandom(ivlen)
+        else:
+            return base64.b64decode(iv)
+                                    
     def encrypt(self, plaintext):
         cipher = Cipher(algorithms.AES(self.key), modes.CBC(self.iv), backend=self.backend)
         encryptor = cipher.encryptor()
@@ -35,16 +41,20 @@ class Privacy:
         plaintext_bytes = plaintext.encode()
         padded_plaintext = padder.update(plaintext_bytes) + padder.finalize()
         ciphertext = encryptor.update(padded_plaintext) + encryptor.finalize()
-        return ciphertext
+        return base64.b64encode(ciphertext).decode('utf-8') + '|||' + base64.b64encode(self.iv).decode('utf-8')
 
     def decrypt(self, ciphertext):
+        ciphertext, iv = ciphertext.split('|||')
+        self.iv = base64.b64decode(iv)
+        ciphertext = base64.b64decode(ciphertext)
+
         cipher = Cipher(algorithms.AES(self.key), modes.CBC(self.iv), backend=self.backend)
         decryptor = cipher.decryptor()
         unpadder = padding.PKCS7(algorithms.AES.block_size).unpadder()
 
         decrypted_padded_data = decryptor.update(ciphertext) + decryptor.finalize()
         plaintext = unpadder.update(decrypted_padded_data) + unpadder.finalize()
-        return plaintext.decode()
+        return plaintext.decode('utf-8')
     
     @staticmethod
     def mask_ip(ip):
