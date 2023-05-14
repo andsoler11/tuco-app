@@ -539,6 +539,7 @@ $(document).ready(function(){
 
   // Personaliza select field
   $(".form .field select").niceSelect();
+  //$(".form_breed_sex_input .breed-input .list").prepend(`<input type="text" class="nice-select-search" placeholder="Escribe la raza de tu mascota">`);
 
   //Ajusta altura de textos en cards de menú
   if($('.diet-card-list').length){
