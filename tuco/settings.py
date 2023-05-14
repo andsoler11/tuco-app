@@ -170,6 +170,11 @@ PRIVACY_KEY = os.environ.get('PRIVACY_KEY')
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
+
+AUTHENTICATION_BACKENDS = [
+    'apps.users.authentication.EmailBackend',
+]
+
 # LOGGING = {
 #     'version': 1,
 #     'disable_existing_loggers': False,
