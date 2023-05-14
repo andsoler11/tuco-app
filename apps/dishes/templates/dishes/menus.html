@@ -13,17 +13,19 @@
 
         <div class="diet-card-list mt-2">
           {% for menu in available_menus %}
-            <div class="diet-card select-option">
-              <div class="check"></div>
-              <h2>{{ menu.name }}</h2>
-              <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Gastro">
-              <div class="diet-description">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
-                <div class="price-month">$300.000 mensual</div>
-                <div class="price-day">$11.000 al día</div>
+            {% if menu.name != 'Iniciación' %}
+              <div class="diet-card select-option">
+                <div class="check"></div>
+                <h2>{{ menu.name }}</h2>
+                <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Gastro">
+                <div class="diet-description">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
+                  <div class="price-month">${% widthratio data.price 1 30 as price_month %}{{ price_month|intcomma }} mensual</div>
+                  <div class="price-day">${{data.price|intcomma}} al día</div>
+                </div>
+                <a href="{% url 'menu-detail' menu.id pet.id %}">Ver detalles</a>
               </div>
-              <a href="{% url 'menu-detail' menu.id pet.id %}">Ver detalles</a>
-            </div>
+            {% endif %}
           {% endfor %}
         </div>
 

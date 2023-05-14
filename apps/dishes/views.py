@@ -3,8 +3,11 @@ from django.contrib.auth.models import User
 from .models import Breeds, Pet, ContactDetail, Menus, MenuSendData
 from .forms import PetForm, MenusForm
 from .utils import *
+from utils.privacy import Privacy
 import json
 
+
+privacy = Privacy()
 
 YOUNG_AGE = 2
 MIDDLE_AGE = 4
@@ -66,7 +69,8 @@ def formulate_home(request, menu_id=None):
             grams_percent=grams_percent,
             points=points,
             is_barf_active=request.POST.get('natural_food'),
-            menu_id=menu_id
+            menu_id=menu_id,
+            owner_ip_mask=Privacy.mask_ip(request.META.get('REMOTE_ADDR')),
         )
 
         puppy.save()
@@ -83,7 +87,7 @@ def formulate_home(request, menu_id=None):
 
             contact = ContactDetail(
                 name_contact=name,
-                email_contact=email,
+                email_contact=privacy.secure_email(email)['mask'],
                 pet=puppy
             )
             contact.save()

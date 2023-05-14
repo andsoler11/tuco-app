@@ -236,14 +236,16 @@
         overflow: auto;
         padding: calc(var(--base-space) * 3) calc(var(--base-space) * 2);
         position: fixed;
-        transition: left ease-out 0.2s;
+        transition: left ease-out 0.5s;
         top: var(--header-height-mobile);
         width: 100%;
         z-index: 1;
+
     }
 
     .header__menu--open {
         left: 0;
+        transition: 0.5s;
     }
 
     .header__nav {

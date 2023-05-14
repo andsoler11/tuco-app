@@ -1,13 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from apps.dishes.models import Pet, Menus
-from django.contrib.auth.models import User
+from apps.users.models import CustomUser
 
 
 @login_required(login_url='login')
 def listPets(request):
     page = 'pets'
-    user_id = User.objects.get(username=request.user.username)
+    user_id = CustomUser.objects.get(username=request.user.username)
     pets = Pet.objects.filter(owner_id=user_id).order_by('name')
 
     for pet in pets:

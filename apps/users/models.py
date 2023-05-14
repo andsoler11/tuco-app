@@ -1,6 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import User
 import uuid
+from django.contrib.auth.models import AbstractUser
+
 
 class Profile(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
@@ -10,3 +11,10 @@ class Profile(models.Model):
 
     def __str__(self):
         return str(self.email)
+    
+
+class CustomUser(AbstractUser):
+    email_hash = models.CharField(max_length=255)
+    email_mask = models.CharField(max_length=255)
+    phone_number = models.CharField(max_length=255, null=True, blank=True)
+    phone_number_mask = models.CharField(max_length=255, null=True, blank=True)
