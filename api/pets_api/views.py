@@ -2,8 +2,11 @@ from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import PetSerializer
-from apps.dishes.models import Pet
+from .serializers import PetSerializer, MenusSerializer
+from apps.dishes.models import Pet, Menus
+from utils.privacy import Privacy
+
+privacy = Privacy()
 
 class PetListView(generics.ListCreateAPIView):
     queryset = Pet.objects.all()
@@ -36,13 +39,19 @@ class PetDetailView(generics.RetrieveUpdateDestroyAPIView):
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
-        """function to update a pet"""
-        pet = get_object_or_404(Pet, pk=pk)
-        serializer = PetSerializer(pet, data=request.data)
+        """Function to update a pet"""
+        pet_data = get_object_or_404(Pet, id=pk)
+        serializer = PetSerializer(pet_data, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+  
+        errors = serializer.errors
+        error_messages = []
+        for field, field_errors in errors.items():
+            for error in field_errors:
+                error_messages.append(f"{field}: {error}")
+        return Response({"errors": error_messages}, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
         """function to delete a pet"""
@@ -62,7 +71,46 @@ class PetCreateView(generics.CreateAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    
+class MenusView(generics.ListCreateAPIView):
+    queryset = Menus.objects.all()
+    serializer_class = MenusSerializer
 
+    def get(self, request, format=None):
+        """function to get all the menus"""
+        # return only the pets of the user
+        menus = Menus.objects.all()
+        serializer = MenusSerializer(menus, many=True)
+        return Response(serializer.data)
 
+    def post(self, request, format=None):
+        """function to create a new menu"""
 
+        required_fields = [
+            'name', 
+            'description',
+            'percents',
+        ]
+        for field in required_fields:
+            if field not in request.data:
+                return Response({'error': f'{field} is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = MenusSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, pk, format=None):
+        """function to update a menu"""
+        menu = get_object_or_404(Menus, pk=pk)
+        serializer = MenusSerializer(menu, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        """function to delete a menu"""
+        menu = get_object_or_404(Menus, pk=pk)
+        menu.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
