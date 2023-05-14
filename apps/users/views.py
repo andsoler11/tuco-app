@@ -3,9 +3,11 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from apps.users.models import Profile
-import hashlib
 from .forms import CustomUserCreationForm
-from pprint import pprint
+from utils.privacy import Privacy
+
+privacy = Privacy()
+
 
 def renderHomepage(request):
     """Render the homepage"""
@@ -22,16 +24,16 @@ def userLogin(request):
         return redirect('dishes')
 
     if request.method == 'POST':
-        username = request.POST['email'].lower()
+        email_secured = privacy.secure_email(request.POST['email'].lower())
+        username = email_secured['mask']
         password = request.POST['password']
 
-        try:
+        try:    
             user = User.objects.get(username = username)
         except:
             messages.error(request, 'Username doest not exist')
-        
-        user = authenticate(request, username=username, password=password)
-        
+    
+        user = authenticate(request, username=username, password=password)    
         if user is not None:
             login(request, user)
             return redirect('dishes')
@@ -46,13 +48,19 @@ def registerUser(request):
     page = 'register'
     form = CustomUserCreationForm
 
-    
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.username = user.email.lower()
-            user.email = user.email.lower()
+            email_secured = privacy.secure_email(user.email)
+            user.username = email_secured['mask']
+            user.email = email_secured['encrypted']
+            user.email_mask = email_secured['mask']
+            user.email_hash = email_secured['hash']
+
+            phone = user.phone_number
+            user.phone_number = privacy.encrypt(phone)
+            user.phone_number_mask = Privacy.mask_phone_number(phone)
             user.save()
 
             messages.success(request, 'User account was created!')

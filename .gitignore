@@ -3,6 +3,8 @@ __pycache__/
 
 tuco/__pycache__/
 
+db_copies/
+
 *.py[cod]
 
 # C extensions

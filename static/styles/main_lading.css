@@ -7,9 +7,6 @@
     font-weight: 400;
 }
 
-.hidden {
-    display: none;
-}
 h1 {
     font-weight: 700;
 }
@@ -30,10 +27,6 @@ html, body {
     font-size: 18px;
 }
 
-ul {
-    list-style: none;
-}
-
 body{
     font-size: 18px;
     background: #f8f8f8;
@@ -44,10 +37,6 @@ body{
 .mt-2{margin-top: 2rem;}
 .mt-3{margin-top: 3rem;}
 .mt-4{margin-top: 4rem;}
-.mb-1{margin-bottom: 1rem;}
-.mb-2{margin-bottom: 2rem;}
-.mb-3{margin-bottom: 3rem;}
-.mb-4{margin-bottom: 4rem;}
 
 .mt-less-8 {margin-top: -8rem;}
 .mt-less-10 {margin-top: -10rem;}
@@ -237,33 +226,6 @@ form .name-details .field:last-child {
     border-right: 1px solid var(--light-blue);
     right: 20px;
 }
-.form form .input.breed-input .nice-select .nice-select-search-box {
-    width: 300px;
-    max-width: 300px;
-    display: none;
-    margin-top: 5px;
-    left: 0;
-    top: 100%;
-    z-index: 10;
-    position: absolute;
-    background: var(--bg-blue-dark);
-    border-radius: 4px 4px 0 0;
-    padding: 5px;
-}
-.form form .input.breed-input .nice-select .nice-select-search-box input {
-    width: 100%;
-    height: 40px;
-    padding: 5px 20px;
-}
-
-.form form .input.breed-input .nice-select.open .nice-select-search-box {
-    display: block;
-}
-.form form .input.breed-input .nice-select .list {
-    padding-top: 52px;
-    width: 300px;
-    max-width: 300px;
-}
 
 .form .field .nice-select .list {
     min-width: 100%;
@@ -334,7 +296,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 .form form .field input.error,
 .form form .field select.error,
-.form form .field.error input:not(.nice-select-search),
+.form form .field.error input,
 .form form .field.error .nice-select {
     border: 1px solid #D95F57;
 }
@@ -417,18 +379,6 @@ input[type="number"]::-webkit-inner-spin-button {
     width: 100%;
     height: 100%;
 }
-
-/* ACCOUNT FORM*/
-.form form#account-form .input input[disabled],
-.form form#account-form .input input[nochange] {
-    background: #ccc!important;
-    cursor: no-drop!important;
-    color: #666;
-}
-.form form#account-form #cancel-edit-form {
-    cursor: pointer;
-}
-/* ACCOUNT FORM */
 
 .main_container--home {
     justify-content: flex-start;
@@ -695,7 +645,7 @@ input[type="number"]::-webkit-inner-spin-button {
 #why-choose .owl-carousel .owl-nav button span {
     font-size: 2rem;
     font-weight: 200;
-    line-height: 1.5rem;
+    line-height: 2rem;
 }
 #why-choose .owl-carousel .owl-nav .owl-prev {
     left: 0;
@@ -712,10 +662,20 @@ input[type="number"]::-webkit-inner-spin-button {
 #testimonials .owl-carousel .card {
     text-align: left;
 }
+
+#testimonials .owl-carousel .card .image-content {
+    width: 11rem;
+    height: 11rem;
+    overflow: hidden;
+    background-color: antiquewhite;
+    border-radius: 50%;
+}
+
 #testimonials .owl-carousel .card img {
-    width: 70%;
+    width: 100%;
     height: auto;
     margin-bottom: 2rem;
+    object-fit: cover;
 }
 #testimonials .owl-dots {
     margin-top: 2rem;
@@ -798,62 +758,6 @@ input[type="number"]::-webkit-inner-spin-button {
     background-color: #C8C8C8;
     pointer-events: none;
 }
-
-
-/* PROFILE */
-.main_container--profile .page-header img{
-    width: 100%;
-    max-width: 400px;
-}
-.main_container--profile .dashboard-wrapper .options-list{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 10px 20px;
-}
-.main_container--profile .dashboard-wrapper .options-list li {
-    cursor: pointer;
-}
-.main_container--profile .dashboard-wrapper .options-list li a{
-    color: #fff;
-    font-weight: 700;
-    padding: 1rem 2rem 1rem 1.2rem;
-    background: var(--light-blue);
-    border-radius: 8px;
-    position: relative;
-    display: flex;
-    justify-content: initial;
-    align-items: center;
-}
-.main_container--profile .dashboard-wrapper .options-list li img {
-    margin-right: 10px;
-    height: 40px;
-    width: auto;
-}
-.main_container--profile .dashboard-wrapper .options-list li a:after {
-    width: 15px;
-    height: 15px;
-    margin-top: -5px;
-    border-top: 1px solid #fff;
-    border-right: 1px solid #fff;
-    content: '';
-    position: absolute;
-    transform-origin: 66% 66%;
-    transform: rotate(45deg);
-    top: 50%;
-    right: 20px;
-}
-.main_container--profile .dashboard-wrapper .options-list li a:hover {
-    filter: brightness(1.1);
-}
-.main_container--profile .dashboard-wrapper .wrapper-button a {
-    color: var(--black-font);
-    font-size: .9rem;
-    font-weight: 700;
-    text-decoration: underline;
-}
-/* PROFILE */
-
-
 
 /*
  * Breakpoints from: https://getbootstrap.com/docs/5.0/layout/breakpoints/
@@ -1031,13 +935,6 @@ input[type="number"]::-webkit-inner-spin-button {
         flex-direction: column;
     }
     /*HOME - MEET OUR DOGTOR*/
-
-    /* PROFILE */
-    .main_container--profile .dashboard-wrapper .options-list{
-        grid-template-columns: repeat(1, 1fr);
-        grid-gap: 10px;
-    }
-    /* PROFILE */
 }
 
 .form.login {

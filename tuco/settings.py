@@ -89,17 +89,6 @@ WSGI_APPLICATION = 'tuco.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'tuco',
-#         'USER': 'postgres',
-#         'PASSWORD': '1234',
-#         'HOST': 'localhost',
-#         'PORT': '5432'
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -108,7 +97,15 @@ DATABASES = {
         'PASSWORD': env('DB_PASS'),
         'HOST': env('DB_HOST'),
         'PORT': env('DB_PORT'),
-    }
+    },
+    'local': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'tuco',
+        'USER': 'postgres',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
+        'PORT': '5432'
+    },
 }
 
 
@@ -169,6 +166,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_RECEIVER = os.environ.get('EMAIL_RECEIVER')
+PRIVACY_KEY = os.environ.get('PRIVACY_KEY')
+
+AUTH_USER_MODEL = 'users.CustomUser'
 
 # LOGGING = {
 #     'version': 1,
