@@ -237,6 +237,33 @@ form .name-details .field:last-child {
     border-right: 1px solid var(--light-blue);
     right: 20px;
 }
+.form form .input.breed-input .nice-select .nice-select-search-box {
+    width: 300px;
+    max-width: 300px;
+    display: none;
+    margin-top: 5px;
+    left: 0;
+    top: 100%;
+    z-index: 10;
+    position: absolute;
+    background: var(--bg-blue-dark);
+    border-radius: 4px 4px 0 0;
+    padding: 5px;
+}
+.form form .input.breed-input .nice-select .nice-select-search-box input {
+    width: 100%;
+    height: 40px;
+    padding: 5px 20px;
+}
+
+.form form .input.breed-input .nice-select.open .nice-select-search-box {
+    display: block;
+}
+.form form .input.breed-input .nice-select .list {
+    padding-top: 52px;
+    width: 300px;
+    max-width: 300px;
+}
 
 .form .field .nice-select .list {
     min-width: 100%;
@@ -307,7 +334,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 .form form .field input.error,
 .form form .field select.error,
-.form form .field.error input,
+.form form .field.error input:not(.nice-select-search),
 .form form .field.error .nice-select {
     border: 1px solid #D95F57;
 }
