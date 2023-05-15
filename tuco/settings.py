@@ -175,6 +175,14 @@ AUTHENTICATION_BACKENDS = [
     'apps.users.authentication.EmailBackend',
 ]
 
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'cache_table',
+    }
+}
+
 # LOGGING = {
 #     'version': 1,
 #     'disable_existing_loggers': False,

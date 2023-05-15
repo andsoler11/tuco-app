@@ -10,19 +10,37 @@
                 <p>Lorem ipsum</p>
             </div>
 
-            <form id="account-form" action="{% url 'register' %}" method="POST" class="disabled-form">
+            {% if messages|length > 0 %}
+                <div style="display: flex; justify-content: center;">
+                    {% for message in messages %}
+                        <div class="alert alert--{% if message.tags == 'error' %}error{% elif message.tags == 'success' %}success{% endif %}">
+                            <p class="alert__message">{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form id="account-form" method="POST" class="disabled-form">
                 {% csrf_token %}
                 <div class="field input">
                     <label for="name" class="form-label">Nombre</label>
-                    <input type="text" id="name" name="name" value="Edisson Duarte" required disabled noChange>
+                    {% if user_data.full_name %}
+                        <input type="text" id="name" name="name" value="{{user_data.full_name}}" required disabled>
+                    {% else %}
+                        <input type="text" id="name" name="name" value="Ingresa tu nombre" required disabled>
+                    {% endif %}
                 </div>
                 <div class="field input">
                     <label for="email" class="form-label">Correo</label>
-                    <input type="email" id="email" name="email"  value="edisson.duarte@mail.com" required disabled noChange>
+                    <input type="email" id="email" name="email"  value="{{user_data.email}}" required disabled noChange>
                 </div>
                 <div class="field input">
                     <label for="phone" class="form-label">Celular</label>
-                    <input type="number" id="phone" name="phone" value="3001234567" required disabled>
+                    {% if user_data.first_name %}
+                        <input type="number" id="phone" name="phone" value="{{user_data.phone_number}}" required disabled>
+                    {% else %}
+                        <input type="number" id="phone" name="phone" value="Ingresa tu numero de celular" required disabled>
+                    {% endif %}
                 </div>
                 
                 <div class="field button">
