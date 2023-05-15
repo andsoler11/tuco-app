@@ -6,8 +6,23 @@
     <section class="page-section">
         <div class="page-header">
             <img src="{% static 'images/image-profile.svg' %}" alt="Bienvenido a Forever Dog">
-            <h1 class="page-title mt-1"><b>Hola</b> <span id="user-name"><b>Edisson</b></span></h1>
+            
+            <h1 class="page-title mt-1"><b>Hola</b> 
+                {% if user_data.full_name %}
+                    <span id="user-name"><b>{{ user_data.full_name }}</b></span>
+                {% endif %}            
+            </h1>
         </div>
+
+        {% if messages|length > 0 %}
+            <div style="display: flex; justify-content: center;">
+                {% for message in messages %}
+                    <div class="alert alert--{% if message.tags == 'error' %}error{% elif message.tags == 'success' %}success{% endif %}">
+                        <p class="alert__message">{{ message }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
 
         <div class="dashboard-wrapper mt-0">
             <ul class="options-list mb-2">

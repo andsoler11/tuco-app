@@ -18,3 +18,4 @@ class CustomUser(AbstractUser):
     email_mask = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=255, null=True, blank=True)
     phone_number_mask = models.CharField(max_length=255, null=True, blank=True)
+    full_name = models.CharField(max_length=255, null=True, blank=True)
