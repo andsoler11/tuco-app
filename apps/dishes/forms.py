@@ -23,6 +23,10 @@ class PetForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        # Sort the choices for allergies and special_needs
+        self.fields['allergies'].choices = sorted(self.fields['allergies'].choices, key=lambda x: (x[1] != 'Ninguna', x[1]))
+        self.fields['special_needs'].choices = sorted(self.fields['special_needs'].choices, key=lambda x: (x[1] != 'Ninguna', x[1]))
+
         self.fields['body_image'].widget.attrs.update({
             'class': 'form-control',
         })

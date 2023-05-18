@@ -1,6 +1,6 @@
 import re
 import json
-
+import math
 
 SUPLEMENTOS = {
     'huevo_codorniz_semana': {
@@ -145,21 +145,6 @@ def determine_grams(activity_level, reproductive_state, body_image, weight, age_
         'extra_large': [1.4, 1.6, 1.8, 2.2, 2.5, 2.7],
     }
 
-    # percents array
-    # percents = {
-    #     'mini': [4.4, 5.2, 5.5],
-    #     'small': [4.6, 5.5, 6.5],
-    #     'medium': [2.5, 3.3, 3.8],
-    #     'large': [2, 2.67, 3.1],
-    #     'extra_large': [1.6, 2.2, 2.5],
-    # }
-
-    # grab the percent needed
-    # index_number = 2
-    # if 0 <= points <= 3:
-    #     index_number = 0
-    # elif 4 <= points <= 6:
-    #     index_number = 1
     index_number = 5
     if points <= 0:
         index_number = 0
@@ -318,22 +303,7 @@ def get_price_from_weight(grams, weight):
         price = 1900
 
     price_grams = round((grams / 100) * price)
-
     return price_grams
-
-# def migrate_breeds_from_local_to_production():
-#     breeds = Breeds.objects.using('local').all()
-#     for breed in breeds:
-#         new_breed = Breeds(
-#             name=breed.name,
-#             life_span=breed.life_span,
-#             breed_group=breed.breed_group,
-#             image_url=breed.image_url,
-#         )
-#         new_breed.save()
-
-
-
 
 # def determine_activity_level(age, breed, daily_exercise_hours):
 #     # Define breed-specific average daily exercise levels
