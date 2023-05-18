@@ -55,6 +55,10 @@ def formulate_home(request, menu_id=None):
             owner = None
         ##########################################################
 
+        ip = request.META.get('HTTP_X_REAL_IP')
+        if ip is None:
+            ip = request.META.get('REMOTE_ADDR')
+
         puppy = Pet(
             owner=owner,
             name=request.POST.get('name'),
@@ -71,7 +75,7 @@ def formulate_home(request, menu_id=None):
             points=points,
             is_barf_active=request.POST.get('natural_food'),
             menu_id=menu_id,
-            owner_ip_mask=Privacy.mask_ip(request.META.get('REMOTE_ADDR')),
+            owner_ip_mask=Privacy.mask_ip(ip),
         )
 
         puppy.save()
