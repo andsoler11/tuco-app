@@ -34,16 +34,15 @@ def userLogin(request):
 
         try:    
             user = CustomUser.objects.get(username=username)
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('dishes')
+            else:
+                messages.error(request, 'Usuario o contraseña incorrectos')
         except:
-            messages.error(request, 'Username doest not exist')
-    
-        user = authenticate(request, username=username, password=password)    
-        if user is not None:
-            login(request, user)
-            return redirect('dishes')
-        else:        
-            messages.error(request, 'username or password is incorrect')
- 
+            messages.error(request, 'El usuario no existe')
+
     return render(request, 'users/login_register.html', context)
 
 
@@ -65,6 +64,8 @@ def registerUser(request):
             phone = user.phone_number
             user.phone_number = privacy.encrypt(phone)
             user.phone_number_mask = Privacy.mask_phone_number(phone)
+
+            user.full_name = privacy.encrypt(user.full_name)
             user.save()
 
             messages.success(request, 'User account was created!')
@@ -155,7 +156,8 @@ def logoutUser(request):
 def profile(request):
     """Render user dashboard"""
     user_data = CustomUser.objects.get(id=request.user.id)
-    user_data.full_name = privacy.decrypt(user_data.full_name)
+    if user_data.full_name:
+        user_data.full_name = privacy.decrypt(user_data.full_name)
     context = {'page': 'profile', 'user_data': user_data}
     return render(request, 'users/dashboard.html', context)
 
@@ -185,7 +187,9 @@ def account(request):
         messages.success(request, 'User data was updated')
 
     user_data.email = privacy.decrypt(user_data.email)
-    user_data.full_name = privacy.decrypt(user_data.full_name)
-    user_data.phone_number = privacy.decrypt(user_data.phone_number)
+    if user_data.full_name:
+        user_data.full_name = privacy.decrypt(user_data.full_name)
+    if user_data.phone_number:
+        user_data.phone_number = privacy.decrypt(user_data.phone_number)
     context = {'page': 'account', 'user_data': user_data}
     return render(request, 'users/account.html', context)
