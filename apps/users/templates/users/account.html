@@ -1,0 +1,61 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<main class="main_container main_container--form">
+    <div class="form_wrapper">
+        <section class="form">
+            <div class="form_header">
+                <h1 class="title-form">Mis datos</h1>
+                <p>Lorem ipsum</p>
+            </div>
+
+            {% if messages|length > 0 %}
+                <div style="display: flex; justify-content: center;">
+                    {% for message in messages %}
+                        <div class="alert alert--{% if message.tags == 'error' %}error{% elif message.tags == 'success' %}success{% endif %}">
+                            <p class="alert__message">{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form id="account-form" method="POST" class="disabled-form">
+                {% csrf_token %}
+                <div class="field input">
+                    <label for="name" class="form-label">Nombre</label>
+                    {% if user_data.full_name %}
+                        <input type="text" id="name" name="name" value="{{user_data.full_name}}" required disabled>
+                    {% else %}
+                        <input type="text" id="name" name="name" value="Ingresa tu nombre" required disabled>
+                    {% endif %}
+                </div>
+                <div class="field input">
+                    <label for="email" class="form-label">Correo</label>
+                    <input type="email" id="email" name="email"  value="{{user_data.email}}" required disabled noChange>
+                </div>
+                <div class="field input">
+                    <label for="phone" class="form-label">Celular</label>
+                    {% if user_data.first_name %}
+                        <input type="number" id="phone" name="phone" value="{{user_data.phone_number}}" required disabled>
+                    {% else %}
+                        <input type="number" id="phone" name="phone" value="Ingresa tu numero de celular" required disabled>
+                    {% endif %}
+                </div>
+                
+                <div class="field button">
+                    <div class="wrapper-edit-button">
+                        <input id="editMyAccount" type="button" value="Editar mis datos">
+                    </div>
+                    
+                    <div class="wrapper-submit-button hidden">
+                        <div class="link mb-1"><a id="cancel-edit-form">Cancelar</a></div>
+                        <input type="submit" value="Guardar Cambios" class="mt-1">
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+</main>
+
+{% endblock %}

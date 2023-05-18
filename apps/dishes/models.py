@@ -1,7 +1,7 @@
 from django.utils import timezone
 
 from django.db import models
-from django.contrib.auth.models import User
+from apps.users.models import CustomUser
 import uuid
 
 BODY_IMAGES = {
@@ -51,7 +51,7 @@ AGE_TYPES = {
 
 class Pet(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=255)
     age = models.IntegerField(default=0)
     age_type = models.CharField(max_length=255, null=False, blank=False, choices=AGE_TYPES, default='años')
@@ -73,6 +73,7 @@ class Pet(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     menu = models.ForeignKey('Menus', on_delete=models.DO_NOTHING, null=True, blank=True)
+    owner_ip_mask = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return str(self.name)

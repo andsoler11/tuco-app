@@ -241,8 +241,10 @@ for (i = 0; i < acc.length; i++) {
   });
 }
 
-
 $(document).ready(function(){
+  // Add active class to menu link
+  activeMenu();
+
   //Construye carousel How It Works
   $('#how-it-works .owl-carousel').owlCarousel({
     margin:20,
@@ -317,6 +319,25 @@ $(document).ready(function(){
     }
   });
 
+  //Construye carousel How It Works
+  $('#make-transition .owl-carousel').owlCarousel({
+    margin:20,
+    nav:false,
+    responsive:{
+        0:{
+          items:1.3,
+          loop:true
+        },
+        580:{
+          items:2
+        },
+        768:{
+          items:3,
+          loop: false
+      }
+    }
+  });
+
   // Agrega clase focused a elemento padre de input para animar label de formularios
   $('.form input').focus(function(){
     $(this).parents('.field').addClass('focused');
@@ -328,6 +349,9 @@ $(document).ready(function(){
       $(this).parents('.field').removeClass('focused');  
     }
   });
+
+  // Valida valor de input y agrega clase focused si el campo del formulario NO está vacío
+  checkValInputsForms();
 
 
   // MENSAJES DE VALIDACIÓN
@@ -359,6 +383,91 @@ $(document).ready(function(){
     }
   });
 
+
+  // Registro usuarios
+  $("#register-form").validate({
+    rules: {
+      name: {
+        required: true,
+      },
+      email: {
+        required: true,
+        email: true,
+      },
+      phone: {
+        required: true,
+        number: true,
+      },
+      password1: {
+        required: true,
+      },
+      password2: {
+        required: true,
+        equalTo: "#password1"
+      },
+    },
+    messages: {
+      name: {
+        required: messageRequired,
+      },
+      email: {
+        required: messageRequired,
+        email: messageEmail,
+      },
+      phone: {
+        required: messageRequired,
+        number: messageNumber,
+      },
+      password1: {
+        required: messageRequired,
+      },
+      password2: {
+        required: messageRequired,
+        equalTo: messageEqualTo
+      }
+    }
+  });
+
+
+  // Recuperar contraseña
+  $("#password-form").validate({
+    rules: {
+      email: {
+        required: true,
+        email: true,
+      },
+    },
+    messages: {
+      email: {
+        required: messageRequired,
+        email: messageEmail,
+      }
+    }
+  });
+
+  // Nueva contraseña
+  $("#newpassword-form").validate({
+    rules: {
+      password1: {
+        required: true,
+      },
+      password2: {
+        required: true,
+        equalTo: "#password1"
+      },
+    },
+    messages: {
+      password1: {
+        required: messageRequired,
+      },
+      password2: {
+        required: messageRequired,
+        equalTo: messageEqualTo
+      }
+    }
+  });
+
+  // Formulario de formulación
   $("#diet-form").validate({
     rules: {
       name: {
@@ -398,8 +507,140 @@ $(document).ready(function(){
     }
   });
 
+  // Editar Mis datos
+  $("#account-form").validate({
+    rules: {
+      name: {
+        required: true,
+      },
+      email: {
+        required: true,
+        email: true,
+      },
+      phone: {
+        required: true,
+        number: true,
+      },
+    },
+    messages: {
+      name: {
+        required: messageRequired,
+      },
+      email: {
+        required: messageRequired,
+        email: messageEmail,
+      },
+      phone: {
+        required: messageRequired,
+        number: messageNumber,
+      }
+    }
+  });
+
+  // Personaliza select field
   $(".form .field select").niceSelect();
+  //$(".form_breed_sex_input .breed-input .list").prepend(`<input type="text" class="nice-select-search" placeholder="Escribe la raza de tu mascota">`);
+
+  //Ajusta altura de textos en cards de menú
+  if($('.diet-card-list').length){
+    heightTitleCards();
+  }
+
+  // Selecciona menú para realizar compra
+  $('.diet-card.select-option .check').click(function(){
+    $('.diet-card.select-option').removeClass('checked');
+    $(this).parent().addClass('checked');
+
+    // Habilita btn de compra
+    $('.wrapper-button.button-buy-now a.link-button').removeAttr('disabled');
+  });
+
+
+  // Habilita edición de formulario Mis Datos
+  var arrayDataAccount = {};
+  $('#editMyAccount').click(function(){
+    var thisForm = $('.main_container--form form').attr('id');
+    var inputs = $('#'+thisForm).find('input, select').not('[type="hidden"], [type="submit"], [type="button"], [noChange]');
+
+    $(inputs).removeAttr('disabled');
+
+    $(this).parent().addClass('hidden');
+    $('.wrapper-submit-button').removeClass('hidden');
+
+    $.each(inputs, function(i, val){
+      var idVal = $(val).attr('id');
+      arrayDataAccount[idVal] = $(val).val();
+    });
+  });
+
+  // Cancela edición de formulario Mis Datos
+  $('#cancel-edit-form').click(function(){
+    var thisForm = $('.main_container--form form').attr('id');
+    var inputs = $('#'+thisForm).find('input, select').not('[type="hidden"], [type="submit"], [type="button"], [noChange]');
+
+    $(inputs).attr('disabled', 'disabled');
+    $(inputs).removeClass('error');
+    $(inputs).parent().addClass('focused');
+    $('label.error').remove();
+
+    $(this).parents('.wrapper-submit-button').addClass('hidden');
+    $('.wrapper-edit-button').removeClass('hidden');
+
+    $.each(arrayDataAccount, function(keyArray, valueArray){
+      $.each(inputs, function(i, val){
+        var valInput = $(val).attr('id');
+        if(keyArray === valInput){
+          $(val).val(valueArray);
+        }
+      });
+    });
+    arrayDataAccount = {};
+  });
 });
+
+
+// FN Add active class to menu link
+function activeMenu(){
+  var pathname = window.location.pathname;
+
+  var linksMenu = $('.header__nav__item a');
+  $.each(linksMenu, function(i, val){
+    var attrHref = $(val).attr('href');
+    if(attrHref === pathname){
+      $(this).addClass('active');
+    }
+  });
+}
+
+// FN Ajusta altura de textos en cards de menú
+function heightTitleCards(){
+  var cardsMenu = $('.diet-card-list .diet-card');
+  var arrayTitles = [];
+
+  // Recorre listado para calcular añtura de titulo mayor
+  $.each(cardsMenu, function(i, val){
+    var titleCard = $(val).find('h2').height();
+    arrayTitles.push(titleCard);
+  });
+  var maxHTitle = Math.max(...arrayTitles);
+
+  // Asigna css a titulos para estandarizar altura
+  $(cardsMenu).find('h2').css('min-height', maxHTitle+'px');
+}
+
+// FN Valida valor de input y agrega clase focused si el campo del formulario NO está vacío
+function checkValInputsForms(){
+  var thisForm = $('.main_container--form form').attr('id');
+  var inputs = $('#'+thisForm).find('input, select').not('[type="hidden"], [type="submit"]');
+
+  $.each(inputs, function(i, val){
+    var valThisInput = $(val).val();
+
+    if(valThisInput != ""){
+      $(val).parent().addClass('focused');
+    }
+  });
+}
 
 
 

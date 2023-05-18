@@ -3,10 +3,10 @@
 {% load humanize %}
 {% block content %}
 
-<main class="main_container">
+<main class="main_container pt-0">
     <div class="main_form_container main_form_container__diet">
-        <div class="wrapper diet_wrapper">
-            <section class="form login  diet_container">
+        <div class="diet_wrapper">
+            <section class="page-section section-xl diet_container">
                 
                 <div class="back_icon_container">
                     <i class="fa fa-angle-left"></i>
@@ -17,9 +17,16 @@
 
 
                 {% if menu.name == 'Iniciación'%}
-                    <div class="diet_data_container">
+                <div class="diet_data_container mt-1">
+                    <div class="wrapper-banner">
+                        <picture>
+                            <source srcset="{% static 'images/banner-menu-desktop.jpeg' %}" media="(min-width: 600px)" />
+                            <img src="{% static 'images/banner-menu-mobile.jpeg' %}" alt="">
+                        </picture>
+                    </div>
 
-                        <h2 class="menu_title">{{ menu.name }}</h2>
+                    <div class="wrapper-text">
+                        <h1 class="menu_title">{{ menu.name }}</h1>
 
                         <div class="menu_data__description">
                             <p class="menu_data__description--text">{{ menu.description }}</p>
@@ -30,72 +37,194 @@
                         </div>
 
                         <div class="menu_data__nutrition">
-                        {% for k,v in menu.nutrition_information.items %}
-                            <p class="menu_data__nutrition--text">{{ k }} {{ v }}%</p>
-                        {% endfor %}
+                            {% for k,v in menu.nutrition_information.items %}
+                            <p class="menu_data__nutrition--text">{{ k }}: <b>{{ v }}%</b></p>
+                            {% endfor %}
                         </div>
 
                         {% if menu.prices %}
                             {% for pet_name,data in menu.prices.items %}
                             <div class="menu_data__price">
-                                <p class="prices_container__text price_month">${% widthratio data.price 1 30 as price_month %}{{ price_month|intcomma }} Mensual</p>
-                                <p class="prices_container__text">${{data.price|intcomma}} al día</p>
-
+                                <div class="price_container">
+                                    <p class="prices_container__text price_month">${% widthratio data.price 1 30 as price_month %}{{ price_month|intcomma }} Mensual</p>
+                                    <p class="prices_container__text price_day">${{data.price|intcomma}} al día</p>
+                                </div>
+                                
                                 <form method="POST">
                                     {% csrf_token %}
-                                    <button class="add-btn update-cart">{{button_message}}</button>
+                                    <div class="field button">
+                                        <button class="add-btn update-cart"><img src="{% static 'images/icon-cart.svg' %}"><span>{{button_message}}</span></button>
+                                    </div>
                                 </form>
-
-
                             </div>
                             {% endfor %}
                         {% endif %}
                     </div>
+                </div>
 
 
                 {% else %}
 
-                    <div class="diet_data_container">
-
-                        <h2 class="menu_title">{{ menu.name }}</h2>
-
-                        <div class="menu_data__description">
-                            <p class="menu_data__description--text">{{ menu.description }}</p>
+                    <div class="diet_data_container mt-1">
+                        <div class="wrapper-banner">
+                            <picture>
+                                <source srcset="{% static 'images/banner-menu-desktop.jpeg' %}" media="(min-width: 600px)" />
+                                <img src="{% static 'images/banner-menu-mobile.jpeg' %}" alt="">
+                            </picture>
                         </div>
 
-                        <div class="menu_data__description">
-                            <p class="menu_data__description--text">{{ menu.ingredients_description }}</p>
-                        </div>
+                        <div class="wrapper-text">
+                            <h1 class="menu_title">{{ menu.name }}</h1>
 
-                        <div class="menu_data__nutrition">
-                        {% for k,v in menu.nutrition_information.items %}
-                            <p class="menu_data__nutrition--text">{{ k }} {{ v }}%</p>
-                        {% endfor %}
-                        </div>
-
-                        {% if menu.prices %}
-                            {% for pet_name,data in menu.prices.items %}
-                            <div class="menu_data__price">
-                                <p class="total_grams_container__text"><img src="{% static 'images/calendar.svg' %}"><strong>{{pet_name}}</strong> necesita {{data.grams}} gr díarios</p>
-                                <p class="total_grams_container__text"><img src="{% static 'images/food_can.svg' %}">2 porciones: {% widthratio data.grams 2 1 %} grms c/u</p>
-                                <p class="prices_container__text price_month">${% widthratio data.price 1 30 as price_month %}{{ price_month|intcomma }} Mensual</p>
-                                <p class="prices_container__text">${{data.price|intcomma}} al día</p>
-
-                                <form method="POST">
-                                    {% csrf_token %}
-                                    <button class="add-btn update-cart">{{button_message}}</button>
-                                </form>
-
-
+                            <div class="menu_data__description">
+                                <p class="menu_data__description--text">{{ menu.description }}</p>
                             </div>
-                            {% endfor %}
-                        {% endif %}
+
+                            <div class="menu_data__description">
+                                <p class="menu_data__description--text">{{ menu.ingredients_description }}</p>
+                            </div>
+
+                            <div class="menu_data__nutrition">
+                                {% for k,v in menu.nutrition_information.items %}
+                                <p class="menu_data__nutrition--text">{{ k }}: <b>{{ v }}%</b></p>
+                                {% endfor %}
+                            </div>
+
+                            {% if menu.prices %}
+                                {% for pet_name,data in menu.prices.items %}
+                                <div class="menu_data__icons">
+                                    <div class="col total_grams_container__text">
+                                        <img src="{% static 'images/calendar.svg' %}">
+                                        <p><b>{{pet_name}}</b> necesita {{data.grams}} gr díarios</p>
+                                    </div>
+                                    <p class="col total_grams_container__text"><img src="{% static 'images/food_can.svg' %}">2 porciones: {% widthratio data.grams 2 1 %} grms c/u</p>
+                                </div>
+
+                                <div class="menu_data__price">
+                                    <div class="price_container">
+                                        <p class="prices_container__text price_month">${% widthratio data.price 1 30 as price_month %}{{ price_month|intcomma }} Mensual</p>
+                                        <p class="prices_container__text price_day">${{data.price|intcomma}} al día</p>
+                                    </div>
+                                    
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <div class="field button">
+                                            <button class="add-btn update-cart"><img src="{% static 'images/icon-cart.svg' %}"><span>{{button_message}}</span></button>
+                                        </div>
+                                    </form>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="field button wrapper-button">
+                                    <a class="link-button" href="/dishes">Descubre su porción</a>
+                                </div>
+                            {% endif %}
+                        </div>
                     </div>
                 {% endif %}
-
-
             </section>
         </div>
-    </div>  
+    </div>
+
+    <section class="page-section" id="make-transition">
+        <div class="header-section">
+          <h2>¿Cómo hacer su transición?</h2>
+        </div>
+        <div class="owl-carousel">
+          <div class="card">
+            <span class="number">1</span>
+            <h3>¡Ding, dong! Tu pedido está en la puerta.</h3>
+            <p>¡El momento más esperado! Lleva su dieta al congelador y revisa las guías que encontrarás en la caja por si tienes alguna duda antes de empezar.</p>
+          </div>
+          <div class="card">
+            <span class="number">2</span>
+            <h3>¡Ding, dong! Tu pedido está en la puerta.</h3>
+            <p>¡El momento más esperado! Lleva su dieta al congelador y revisa las guías que encontrarás en la caja por si tienes alguna duda antes de empezar.</p>
+          </div>
+          <div class="card">
+            <span class="number">3</span>
+            <h3>¡Ding, dong! Tu pedido está en la puerta.</h3>
+            <p>¡El momento más esperado! Lleva su dieta al congelador y revisa las guías que encontrarás en la caja por si tienes alguna duda antes de empezar.</p>
+          </div>
+        </div>
+    </section>
+
+    <div class="benefits-container bg-blue-dark">
+        <section class="page-section" id="why-choose">
+            <div class="header-section">
+            <h2>¿Por qué elegir Forever Dog?</h2>
+            </div>
+            <div class="owl-carousel">
+            <div class="card">
+                <img src="/static/images/whyChoose-icon-card-1.svg">
+                <p>Emoción al comer. Platos limpios</p>
+            </div>
+            <div class="card">
+                <img src="/static/images/whyChoose-icon-card-2.svg">
+                <p>Disminuye el sarro y mal aliento.</p>
+            </div>
+            <div class="card">
+                <img src="/static/images/whyChoose-icon-card-3.svg">
+                <p>Pelo más brillante.</p>
+            </div>
+            <div class="card">
+                <img src="/static/images/whyChoose-icon-card-4.svg">
+                <p>Piel más sana.</p>
+            </div>
+            </div>
+            <a href="/dishes" class="link-button mt-4">Empieza ahora</a>
+        </section>
+    </div>
+
+    <section class="page-section full-height" id="frequent-questions">
+        <div class="header-section">
+          <h2>No te quedes con la duda</h2>
+          <p>Las respuestas que buscas sobre la alimentación de tu perro están aquí</p>
+        </div>
+        <div id="wrapper-accordion">
+          <div class="accordion">
+            <button class="accordion-tab">¿Quién formula las dietas?</button>
+            <div class="panel">
+              <p>Contamos con dos nutricionistas veterinarias certificadas que supervisan la creación de cada fórmula y receta, son expertas en nutrición natural y la prevención de enfermedades a través de la alimentación. Mejor dicho, no podrías contar con mejores aliadas para formular la dieta de tu Forever Dog.</p>
+            </div>
+          </div>
+          <div class="accordion">
+            <button class="accordion-tab">¿Los perros pueden comer carne cruda?</button>
+            <div class="panel">
+              <p>Sí, el 98% del ADN del perro es igual al del lobo. Los perros son carnívoros facultativos, esto quiere decir que desde sus dientes hasta su sistema digestivo está preparado para razgar, morder y descomponer  los alimentos crudos como lo hacían sus antepesados. Al consumir los alimentos crudos, pueden absorber mucho mejor los nutrientes, ya que al cocinarlos se desnaturalizan las proteínas y gran parte de los aminoácidos se destruyen.</p>
+            </div>
+          </div>
+          <div class="accordion">
+            <button class="accordion-tab">¿Voy a notar cambios en mi perro?</button>
+            <div class="panel">
+              <p>Es completamente normal que tu Forever Dog experimente algún cambio durante la transición. No te asustes si bebe menos agua, sus heces son más blandas o si está un poco estreñido. Puedes aprender más sobre estos cambios aquí.</p>
+            </div>
+          </div>
+          <div class="accordion">
+            <button class="accordion-tab">¿Puedo hacerle cambios a la dieta de mi Forever Dog?</button>
+            <div class="panel">
+              <p>Al crear tu perfil en Forever Dog, tienes el control total de su dieta, puedes ajustar su peso, sus necesidades especiales y su menús.</p>
+            </div>
+          </div>
+          <div class="accordion">
+            <button class="accordion-tab">¿Cómo almacenar la dieta de mi Forever Dog?</button>
+            <div class="panel">
+              <p>Para conservar nuestros menús debes mantenerlos congelados. Sube al refrigerador 2 horas antes únicamente la porción que vas a darle. Si olvidas subirlas al refrigerador, puedes usar el microondas en la función de descongelar.</p>
+            </div>
+          </div>
+          <div class="accordion">
+            <button class="accordion-tab">¿Cómo funcionan los planes de suscripción?</button>
+            <div class="panel">
+              <p>Nuestras dietas son personalizadas y crudas para cada necesidad nutricional de tu Forever Dog. El envío siempre es gratuito. Los menús se entregan porcionados y congelados en tu puerta según la frecuencia de entrega que elijas: semanal, quincenal o mensual.</p>
+            </div>
+          </div>
+          <div class="accordion">
+            <button class="accordion-tab">¿Cuánto tiempo puede manterse fresca la comida de Forever Dog?</button>
+            <div class="panel">
+              <p>Nuestros menús son naturales y frescos, por lo que deben mantenerse refrigerados o congelados. Una vez descongelada una porción, debe consurmirse o en caso de no hacerlo, guardarse en el refrigerador por un tiempo máximo de 18 horas. Nuestras dietas pueden durar congeladas sin perder nutrientes hasta 30 días.</p>
+            </div>
+          </div>
+        </div>
+    </section>
 </main>
 {% endblock %}

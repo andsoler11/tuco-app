@@ -1,0 +1,26 @@
+from django.contrib.auth.backends import ModelBackend
+from django.contrib.auth import get_user_model
+from utils.privacy import Privacy
+
+privacy = Privacy()
+
+class EmailBackend(ModelBackend):
+    def authenticate(self, request, username=None, password=None, **kwargs):
+        email = username
+        UserModel = get_user_model()
+        email_secured = privacy.secure_email(email.lower())
+        email = email_secured['hash']
+        try:
+            user = UserModel.objects.get(email_hash=email)
+        except UserModel.DoesNotExist:
+            return None
+
+        if user.check_password(password):
+            return user
+
+    def get_user(self, user_id):
+        UserModel = get_user_model()
+        try:
+            return UserModel.objects.get(pk=user_id)
+        except UserModel.DoesNotExist:
+            return None

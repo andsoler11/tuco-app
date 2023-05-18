@@ -1,0 +1,1130 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Bitter', sans-serif;
+    font-weight: 400;
+}
+
+h1 {
+    font-weight: 700;
+}
+
+h2, h3, h4 {
+    font-weight: 500;
+}
+
+b, strong {
+    font-weight: 600;
+}
+
+.show-mobile {
+    display: none!important;
+}
+
+html, body {
+    font-size: 18px;
+}
+
+body{
+    font-size: 18px;
+    background: #f8f8f8;
+    padding-top: var(--header-height-desktop);
+}
+
+.mt-1{margin-top: 1rem;}
+.mt-2{margin-top: 2rem;}
+.mt-3{margin-top: 3rem;}
+.mt-4{margin-top: 4rem;}
+
+.mt-less-8 {margin-top: -8rem;}
+.mt-less-10 {margin-top: -10rem;}
+
+.pt-0 {padding-top: 0 !important;}
+.pb-0 {padding-top: 0 !important;}
+.none-padding {padding:0 !important;}
+
+.bg-blue-dark {
+    background-color: var(--bg-blue-dark);
+}
+.bg-white {
+    background-color: #fff;
+}
+
+.main_container {
+    align-items: center;
+    /*background-color: #84AEAF;
+    background-image: url(../images/main_container_background.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center bottom;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(100vh - var(--header-height-desktop));
+    padding: calc(var(--base-space) * 6) 0;
+    width: 100%;
+}
+
+.form_wrapper {
+    background: #fff;
+    width: 470px;
+    min-height: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.15);
+}
+
+
+/* Create Pet Diest Form*/
+.alert {
+    color: #ea3e4f;
+    padding: 8px 10px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.alert--success {
+    color: #2ecc71;
+}
+
+.form {
+    padding: calc(var(--base-space) * 4);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.form .form_header {
+    color: var(--black-font);
+    font-weight: 600;
+    margin-bottom: calc(var(--base-space) * 4);
+    text-align: left;
+}
+
+.form .form_header .title-form{
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.form .form_header p {
+    font-size: 1rem;
+}
+
+.form_wrapper hr {
+    border: 0;
+    border-bottom: 1px solid #FFC397;
+}
+
+.form form .error-txt {
+    color: #721c24;
+    background: #f8d7da;
+    padding: 8px 10px;
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #f5c6cb;
+}
+
+.form form .good-txt {
+    color: #000000;
+    background: #bddfbb;
+    padding: 8px 10px;
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #90df9e;
+}
+
+.form form .name-details {
+    display: flex;
+}
+
+form .name-details .field:first-child {
+    margin-right: 10px;
+}
+
+form .name-details .field:last-child {
+    margin-left: 10px;
+}
+
+.form form .field {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.form form .field .form-label {
+    position: absolute;
+    left: 20px;
+    top: 15px;
+    color: #9C9C9C;
+    z-index: 2;
+    transition: transform 300ms ease-out, font-size 300ms ease-out;
+    pointer-events: none;
+}
+.field.focused .form-label {
+    transform: translateY(-80%);
+    font-size: .65em;
+}
+
+.form form .field input {
+    outline: none;
+}
+
+.form form .field label.error,
+.error-general-message {
+    color: #D95F57;
+    font-size: .66rem;
+    font-weight: 500;
+    margin-top: 5px;
+    padding: 0 2px;
+}
+.error-general-message {
+    display: none;
+    margin: 0 0 20px;
+}
+
+.form form .input input,
+#id_allergies,
+#id_special_needs,
+.form form .input select,
+.form form .input .nice-select,
+.form-control {
+    height: 50px;
+    width: 100%;
+    font-size: 16px;
+    color: #222222;
+    font-weight: 500;
+    background-color: var(--light-gray);
+    outline: none;
+    border-radius: 8px;
+    border: 0;
+}
+
+.form form .input input,
+#id_allergies,
+#id_special_needs,
+.form-control {
+    padding: 10px 20px 0;
+}
+
+.form form .input select {
+    padding: 0 20px;
+}
+
+.form form .input .nice-select {
+    padding: 5px 20px 0;
+}
+
+.form form .input .nice-select:after {
+    width: 9px;
+    height: 9px;
+    margin-top: -5px;
+    border-bottom: 1px solid var(--light-blue);
+    border-right: 1px solid var(--light-blue);
+    right: 20px;
+}
+
+.form .field .nice-select .list {
+    min-width: 100%;
+    max-height: 400px;
+    overflow-y: scroll;
+    background: var(--light-blue);
+}
+.form .field .nice-select .list .option{
+    font-size: .8rem;
+}
+.form .field .nice-select .list .option:not(.disabled){
+    color: #fff;
+    font-size: .8rem;
+    border-bottom: 0.5px solid #F4F3DE;
+    position: relative;
+}
+.form .field .nice-select .list .option.selected:not(.disabled):after {
+    width: 5px;
+    height: 10px;
+    content: '';
+    top: 50%;
+    right: 15px;
+    position: absolute;
+    border-bottom: 2px solid #fff;
+    border-right: 2px solid #fff;
+    display: block;
+    margin-top: -8px;
+    pointer-events: none;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.nice-select .option:hover,
+.nice-select .option.focus,
+.nice-select .option.selected.focus {
+    background: #647ba6;
+}
+.nice-select .option.disabled,
+.nice-select .list:hover .option.disabled {
+    background: var(--bg-blue-dark)!important;
+}
+.nice-select .option.disabled {
+    color: #759cdd;
+}
+
+input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.input > label {
+    color: #c2c7ca;
+    font-size: 1rem;
+}
+
+.form-control {
+    margin: 8px 0px;
+}
+
+.form form .input input:focus,
+.form form .input select:focus,
+.form form .input select:focus-visible {
+    border: 1px solid var(--black-font);
+}
+.form form .field input.error,
+.form form .field select.error,
+.form form .field.error input,
+.form form .field.error .nice-select {
+    border: 1px solid #D95F57;
+}
+
+.form form .image input {
+    font-size: 17px;
+}
+
+.form form .button input,
+.field.button button {
+    width: 100%;
+    min-width: 220px;
+    color: #202B3E;
+    font-size: 1rem;
+    font-weight: 700;
+    align-self: center;
+    text-align: center;
+    background-color: #FFC397;
+    padding: calc(var(--base-space) * 2);
+    transition: all 0.5s ease;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.field.button button.update-cart{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+}
+.field.button button.update-cart img {
+    margin-right: 10px;
+}
+.form form .button input:hover,
+.field.button button:hover {
+    background-color: #FFCDA8;
+}
+
+.form form .button input:focus,
+.field.button button:focus {
+    background-color:#FCAC71;
+}
+.form form .button input:disabled,
+.form form .button input[disabled],
+.field.button button:disabled,
+.field.button button[disabled]{
+    color: #989898;
+    background-color: #C8C8C8;
+    pointer-events: none;
+}
+
+
+.form .link {
+    text-align: center;
+    margin: 10px 0;
+    font-weight: 300;
+}
+
+.form .link a {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--black-font);
+    text-decoration: underline;
+}
+
+.form .link a:hover {
+    font-weight: 700;
+}
+
+.form_header_image {
+    width: 100%;
+    height: 14rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.form_header_image img {
+    width: 100%;
+    height: 100%;
+}
+
+.main_container--home {
+    justify-content: flex-start;
+    line-height: 1.5;
+    padding: 0;
+}
+
+.main_container--form {
+    background: url(../images/main_container_background_2.png) center bottom no-repeat;
+    background-size: cover;
+}
+
+.home-wrapper {
+    width: 100%;
+}
+
+.home-wrapper.hero {
+    /*background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../images/banner-home-un-bocado-a-la-vez.jpeg');*/
+    background: url(../images/banner-home-un-bocado-a-la-vez.jpeg) center center no-repeat;
+    background-size: cover;
+}
+.home-wrapper.hero .wrapper-text {
+    width: 400px;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+}
+.home-wrapper.hero .wrapper-text .link-button {
+    align-self: end;
+}
+
+.page-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 992px;
+    padding: calc(var(--base-space) * 5) calc(var(--base-space) * 8);
+    text-align: center;
+    width: 100%;
+}
+.page-section.section-xl {
+    max-width: 1120px;
+}
+.page-section.no-padding {
+    padding: 0;
+}
+.page-section.full-height {
+    min-height: calc(100vh - var(--header-height-desktop));
+}
+.page-section h1 {
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: calc(var(--base-space) * 3);
+    align-self: end;
+}
+
+.page-section h1 b {
+    font-weight: 600;
+}
+
+.page-section h2 {
+    font-size: 1.8rem;
+}
+.page-section h3 {
+    font-size: 1.3rem;
+    margin-bottom: calc(var(--base-space) * 3);
+}
+.page-section .header-section {
+    margin-bottom: calc(var(--base-space) * 4);
+}
+.page-section .header-section p {
+    font-size: 0.888rem;
+}
+
+.page-section.hero {
+    color: #fff;
+    align-items: end;
+    max-width: 700px;
+}
+
+.hero p {
+    font-size: 1.3rem;
+    width: 60%;
+}
+/*CAROUSEL*/
+.owl-carousel .owl-dots button{
+    width: 12px;
+    height: 12px;
+    margin: 0 5px;
+    background: #FFC397;
+    border-radius: 50%;
+}
+.owl-carousel .owl-dots button.active{
+    background: #202B3E;
+}
+.dots-over .owl-carousel .owl-dots{
+    width: 100%;
+    bottom: 15px;
+    position: absolute;
+}
+.dots-white .owl-carousel .owl-dots button{
+    background: #fff;
+}
+.dots-white .owl-carousel .owl-dots button.active{
+    background: #202B3E;
+}
+/*CAROUSEL*/
+
+/*//////*/
+/*HOME - HOW IT WORKS*/
+#how-it-works.home-wrapper {
+    color: #202B3E;
+}
+
+#how-it-works ol {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: calc(var(--base-space) * 7);
+    padding-left: calc(var(--base-space) * 3);
+}
+
+#how-it-works li {
+    flex-basis: calc(50% - (var(--base-space) * 4));
+    margin-bottom: calc(var(--base-space) * 3);
+    text-align: left;
+}
+#how-it-works .card{
+    min-height: 400px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 2rem;
+}
+
+#how-it-works .card .number {
+    font-size: 2.7rem;
+    font-weight: 700;
+    display: block;
+    text-align: left;
+}
+
+#how-it-works .card .icon-wrapper img{
+    width: auto;
+    height: 75px;
+    margin: 0 auto 1rem;
+}
+
+#how-it-works .owl-carousel {
+    margin-bottom: 3rem;
+}
+#how-it-works .owl-carousel .owl-dots {
+    margin-top: 2rem;
+}
+/*HOME - HOW IT WORKS*/
+
+/*//////*/
+/*HOME - MEET OUR DOGTOR*/
+
+#meet-our-dogtor .wrapper-banner {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 1rem 4rem;
+    border-radius: 8px;
+}
+
+#meet-our-dogtor .wrapper-banner .text-content {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0;
+    text-align: left;
+}
+
+#meet-our-dogtor .wrapper-banner .text-content a {
+    margin-top: 1rem;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+#meet-our-dogtor .wrapper-banner .image-content {
+    flex: 1;
+}
+#meet-our-dogtor .wrapper-banner .text-content {
+    flex: 1.5;
+}
+
+#meet-our-dogtor .wrapper-banner.light-blue{
+    background-color: var(--light-blue);
+}
+#meet-our-dogtor .wrapper-banner.olive-green{
+    background-color: var(--olive-green);
+}
+#meet-our-dogtor .wrapper-banner.light-yellow{
+    background-color: var(--light-yellow);
+}
+
+#meet-our-dogtor .wrapper-banner.light-blue .text-content,
+#meet-our-dogtor .wrapper-banner.light-blue .text-content a,
+#meet-our-dogtor .wrapper-banner.olive-green .text-content,
+#meet-our-dogtor .wrapper-banner.olive-green .text-content a{
+    color: var(--beige);
+}
+#meet-our-dogtor .wrapper-banner.light-yellow .text-content,
+#meet-our-dogtor .wrapper-banner.light-yellow .text-content a {
+    color: var(--black-font);
+}
+/*HOME - MEET OUR DOGTOR*/
+
+
+
+/*HOME - WHY CHOOSE US*/
+.bg-blue-dark h1,
+.bg-blue-dark h2,
+.bg-blue-dark h3 {
+    color: #fff;
+}
+.main_container--home #why-choose.page-section {
+    padding: calc(var(--base-space) * 20) calc(var(--base-space) * 8) calc(var(--base-space) * 10);
+}
+#why-choose .owl-carousel .card{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 1rem .5rem;
+    min-height: 90px;
+}
+#why-choose .owl-carousel .card img {
+    width: 50px;
+    height: auto;
+}
+#why-choose .owl-carousel .card p {
+    text-align: left;
+    font-size: 1rem;
+}
+#why-choose .owl-carousel .owl-dots {
+    margin-top: 2rem;
+}
+#why-choose .owl-carousel .owl-nav {
+    bottom: 0;
+    left: 50%;
+    width: 300px;
+    height: 40px;
+    position: absolute;
+    pointer-events: none;
+    transform: translate(-50%, 12px);
+}
+#why-choose .owl-carousel .owl-nav button {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    pointer-events: auto;
+    background: var(--curuba);
+    border-radius: 50%;
+    transition: .5s all ease;
+}
+#why-choose .owl-carousel .owl-nav button:hover {
+    background: #fff;
+}
+#why-choose .owl-carousel .owl-nav button span {
+    font-size: 2rem;
+    font-weight: 200;
+    line-height: 2rem;
+}
+#why-choose .owl-carousel .owl-nav .owl-prev {
+    left: 0;
+}
+#why-choose .owl-carousel .owl-nav .owl-next {
+    right: 0;
+}
+.bg-blue-dark .owl-carousel .owl-dots button.active {
+    background: #fff;
+}
+/*HOME - WHY CHOOSE US*/
+
+/*HOME - TESTIMONIALS*/
+#testimonials .owl-carousel .card {
+    text-align: left;
+}
+
+#testimonials .owl-carousel .card .image-content {
+    width: 11rem;
+    height: 11rem;
+    overflow: hidden;
+    background-color: antiquewhite;
+    border-radius: 50%;
+}
+
+#testimonials .owl-carousel .card img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 2rem;
+    object-fit: cover;
+}
+#testimonials .owl-dots {
+    margin-top: 2rem;
+}
+/*HOME - TESTIMONIALS*/
+
+/*HOME - QUESTIONS*/
+#frequent-questions .accordion {
+    margin-bottom: 1rem;
+}
+#frequent-questions .accordion-tab {
+    cursor: pointer;
+    padding: 1rem;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: 0.4s;
+    background-color: #fff;
+}
+#frequent-questions .accordion-tab.active,
+#frequent-questions .accordion-tab:hover {
+    box-shadow: 0 0 12px rgba(0,0,0,.05);
+}
+#frequent-questions .accordion-tab:after {
+    content: '\002B';
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+#frequent-questions .accordion-tab.active:after {
+    content: "\2212";
+}
+#frequent-questions .panel {
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    text-align: left;
+}
+#frequent-questions .panel p {
+    padding: 1rem;
+}
+/*HOME - QUESTIONS*/
+
+.benefits-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.benefits-row div {
+    flex-basis: 25%;
+}
+
+.link-button {
+    min-width: 220px;
+    color: #202B3E;
+    font-size: 1rem;
+    font-weight: 700;
+    align-self: center;
+    text-align: center;
+    background-color: #FFC397;
+    padding: calc(var(--base-space) * 2);
+    transition: all 0.5s ease;
+    border-radius: 8px;
+}
+
+.link-button:hover {
+    background-color: #FFCDA8;
+}
+.link-button:focus {
+    background-color:#FCAC71;
+}
+.link-button:disabled,
+.link-button[disabled]{
+    color: #989898;
+    background-color: #C8C8C8;
+    pointer-events: none;
+}
+
+/*
+ * Breakpoints from: https://getbootstrap.com/docs/5.0/layout/breakpoints/
+ */
+@media screen and (max-width: 992px) {
+    html, body {
+        font-size: 16px;
+    }
+    body{
+        padding-top: var(--header-height-mobile);
+    }
+    .show-mobile {
+        display: flex!important;
+    }
+    .hide-mobile {
+        display: none!important;
+    }
+
+    .main_container {
+        background-size: 138% auto;
+        min-height: calc(100vh - var(--header-height-mobile));
+        padding: calc(var(--base-space) * 4) 0;
+    }
+
+    .form_wrapper {
+        height: auto;
+    }
+
+    .wrapper {
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+        min-width: unset;
+    }
+
+    .form {
+        height: 100%;
+    }
+
+    .main_container--home {
+
+        padding: 0;
+    }
+
+    .page-section {
+        padding: calc(var(--base-space) * 6);
+    }
+    .page-section.full-height {
+        min-height: calc(100vh - var(--header-height-mobile));
+    }
+
+    /*HOME - MEET OUR DOGTOR*/
+
+    #meet-our-dogtor .wrapper-banner {
+        padding: 1rem 2rem;
+    }
+    /*HOME - MEET OUR DOGTOR*/
+}
+
+@media screen and (max-width: 768px) {
+    .page-section h2 {
+        font-size: 1.6rem;
+    }
+    .page-section h3 {
+        margin-bottom: calc(var(--base-space) * 2);
+    }
+    #meet-our-dogtor .wrapper-banner .text-content {
+        padding: 1rem 1rem 2rem 0;
+    }
+    .main_container--home #why-choose.page-section {
+        padding: calc(var(--base-space) * 6) calc(var(--base-space) * 6) calc(var(--base-space) * 6);
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .main_container {
+        background-position: bottom center;
+        padding: calc(var(--base-space) * 3) 0;
+    }
+
+    .main_container--form {
+        background: #fff;
+        min-height: auto;
+        padding: calc(var(--base-space) * 10) 0;
+    }
+
+    .form_wrapper {
+        background: none;
+        box-shadow: none;
+        width: calc(100vw - (var(--base-space) * 4));
+    }
+
+    .form_wrapper .form {
+        padding: 0;
+    }
+
+    .wrapper {
+        width: 90%;
+        height: 100%;
+        min-height: 0;
+        min-width: unset;
+    }
+
+    .form form .field input {
+        font-size: 1rem;
+    }
+
+    .field.focused .form-label {
+        transform: translateY(-65%);
+        font-size: .8em;
+    }
+
+    .form form .field label.error,
+    .error-general-message {
+        font-size: .8rem;
+    }
+
+    .form form .button input {
+        font-size: 1rem;
+    }
+
+    .main_container--home {
+        padding: 0;
+    }
+
+    .page-section {
+        padding: calc(var(--base-space) * 6) calc(var(--base-space) * 2);
+    }
+    .page-section.full-height {
+        min-height: calc(100vh - var(--header-height-mobile));
+    }
+
+    .hero p {
+        width: auto;
+    }
+
+    .home-wrapper.hero .page-section.full-height{
+        min-height: calc(60vh - var(--header-height-mobile));
+    }
+
+    .page-section.hero h1 {
+        width: 80%;
+        font-size: 1.5rem;
+    }
+    .home-wrapper.hero {
+        background: url(../images/banner-home-un-bocado-a-la-vez-mobile.jpeg) center center no-repeat;
+        background-size: cover;
+    }
+    .home-wrapper.hero .wrapper-text {
+        width: 100%;
+    }
+    .home-wrapper.hero .wrapper-text .link-button {
+        align-self: stretch;
+    }
+
+    #how-it-works ol {
+        margin-bottom: calc(var(--base-space) * 3);
+    }
+
+    #how-it-works li {
+        flex-basis: auto;
+    }
+
+    .link-button {
+        align-self: stretch;
+    }
+
+
+    #how-it-works .card {
+        padding: 1.5rem;
+    }
+
+    /*HOME - MEET OUR DOGTOR*/
+    #meet-our-dogtor .wrapper-banner{
+        flex-direction: column;
+    }
+    /*HOME - MEET OUR DOGTOR*/
+}
+
+.form.login {
+    overflow-y: auto;
+}
+
+/* breeds table */
+.breed-table {
+    border-collapse: collapse;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.breed-table th {
+    background-color: #FFC397;
+    color: #202B3E;
+    font-weight: 400;
+    font-size: 16px;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.breed-table td {
+    padding: 10px 0;
+    text-align: center;
+    font-size: 14px;
+    color: #c2c7ca;
+}
+
+.breed-table tr:nth-child(even) {
+    background-color: #202B3E;
+}
+
+.breed-table tr:nth-child(odd) {
+    background-color: #2B3A4F;
+}
+
+
+.breed-table a {
+    color: #FFC397;
+}
+
+
+.breed-tabl tr td a:hover {
+    text-decoration: underline;
+}
+
+.breed-tabl tr td {
+    padding: 10px 0;
+    text-align: center;
+    font-size: 14px;
+    color: #c2c7ca;
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 200px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: start;
+    margin-top: 20px;
+}
+
+#deleteForm input {
+    background-color: red;
+    color: #202B3E;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 5rem;
+}
+
+.button-container button {
+    background-color: #FFC397;
+    color: #202B3E;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 5rem;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Add animation */
+.modal-content {
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+/* Responsive styles */
+
+/* Tablet and mobile */
+@media screen and (max-width: 768px) {
+    .modal-content {
+        width: 90%;
+        padding: 10px;
+    }
+
+    .button-container {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #deleteForm input,
+    .button-container button {
+        width: 100%;
+        max-width: none;
+        margin-bottom: 10px;
+    }
+}
+
+/* Mobile */
+@media screen and (max-width: 480px) {
+    .modal-content {
+        width: 100%;
+        padding: 10px;
+    }    
+}

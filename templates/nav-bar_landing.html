@@ -1,0 +1,60 @@
+{% load static %}
+
+<!-- Header Section -->
+<header class="homepage_header">
+    <div class="header__logo">
+        <button class="hamburger" onclick="toggleMenu();"><span></span>Menu</button>
+        <a href="/">
+            <img class="logo logo-desktop" src="{% static 'images/main_logo.svg' %}" alt="logo">
+            <img class="logo logo-mobile" src="{% static 'images/logo-mobile.svg' %}" alt="logo">
+        </a>
+        <div class="top-shelf-icons">
+            {% if request.user.is_authenticated %}
+            {% else %}
+                <a href="{% url 'login' %}">
+                    <img src="{% static 'images/user-icon.svg' %}" alt="user">
+                </a>
+                <a href="">
+                    <img src="{% static 'images/cart-icon.svg' %}" alt="cart">
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="header__menu">
+        <ul class="header__nav">
+            <li class="header__nav__item"><a href="#" onclick="closeMenu();">Inicio</a></li>
+            <li class="header__nav__item"><a href="#why-choose" onclick="closeMenu()">Beneficios</a></li>
+            <li class="header__nav__item"><a href="#testimonials" onclick="closeMenu()">Lo que dice la manada</a></li>
+            <li class="header__nav__item"><a href="#frequent-questions" onclick="closeMenu()">No te quedes con la duda</a></li>
+
+            <!--<li class="header__nav__item"><a href="{% url 'list-pets' %}">Mascotas</a></li>-->
+            <!--<li class="header__nav__item"><a href="{% url 'dishes' %}">Formular</a></li>-->
+            {% if request.user.is_authenticated %}
+                <!--<li class="header__nav__item"><a href="{% url 'menus' %}">Menus</a></li>
+                <li class="header__nav__item"><a href="{% url 'logout' %}">Cerrar Sesión</a></li>-->
+            {% else %}
+            {% endif %}
+        </ul>
+        
+        <div class="top-shelf-icons-desktop hide-mobile">
+            {% if request.user.is_authenticated %}
+            {% else %}
+                <a href="{% url 'login' %}">
+                    <img src="{% static 'images/user-icon.svg' %}" alt="user">
+                </a>
+                <a href="">
+                    <img src="{% static 'images/cart-icon.svg' %}" alt="cart">
+                </a>
+            {% endif %}
+        </div>
+
+        <ul class="header__social show-mobile">
+            {% comment %} <li class="header__nav__item"><a href="{% url 'login' %}"><img src="{% static 'images/tiktok_logo.svg' %}" class="navbar_logo" /></a></li>
+            <li class="header__nav__item"><a href="{% url 'register' %}"><img src="{% static 'images/facebook_logo.svg' %}" class="navbar_logo" /></a></li> {% endcomment %}
+            <li class="header__nav__item"><a href="https://www.instagram.com/forever_dog_food/"><img src="{% static 'images/instagram_logo.svg' %}" class="navbar_logo" /></a></li>
+        </ul>
+    </div>
+</header>
+
+

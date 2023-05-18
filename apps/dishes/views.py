@@ -3,8 +3,11 @@ from django.contrib.auth.models import User
 from .models import Breeds, Pet, ContactDetail, Menus, MenuSendData
 from .forms import PetForm, MenusForm
 from .utils import *
+from utils.privacy import Privacy
 import json
 
+
+privacy = Privacy()
 
 YOUNG_AGE = 2
 MIDDLE_AGE = 4
@@ -66,7 +69,8 @@ def formulate_home(request, menu_id=None):
             grams_percent=grams_percent,
             points=points,
             is_barf_active=request.POST.get('natural_food'),
-            menu_id=menu_id
+            menu_id=menu_id,
+            owner_ip_mask=Privacy.mask_ip(request.META.get('REMOTE_ADDR')),
         )
 
         puppy.save()
@@ -83,7 +87,7 @@ def formulate_home(request, menu_id=None):
 
             contact = ContactDetail(
                 name_contact=name,
-                email_contact=email,
+                email_contact=privacy.secure_email(email)['mask'],
                 pet=puppy
             )
             contact.save()
@@ -94,7 +98,7 @@ def formulate_home(request, menu_id=None):
 
         return redirect('menus', pk=pk)
 
-    breeds = Breeds.objects.all()
+    breeds = Breeds.objects.all().order_by('name')
 
     context = {
         'page': page,
@@ -293,7 +297,7 @@ def menu_detail(request, menu_id, pet_id=None):
 
     if pet_id:
         puppy = Pet.objects.get(id=pet_id)
-        button_message = 'Seleccionar menú'
+        button_message = 'Agregar al carrito'
         puppies_grams = {
             puppy.name: {
                 'grams': int(puppy.grams),
@@ -306,7 +310,6 @@ def menu_detail(request, menu_id, pet_id=None):
         # get last puppy created
         if request.user.is_authenticated:
             puppy = Pet.objects.filter(owner=request.user).last()
-
             if puppy is None:
                 return redirect('dishes')
 
