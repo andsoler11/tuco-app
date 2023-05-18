@@ -4,6 +4,7 @@ from .models import Breeds, Pet, ContactDetail, Menus, MenuSendData
 from .forms import PetForm, MenusForm
 from .utils import *
 from utils.privacy import Privacy
+from django.core.cache import cache
 import json
 
 
@@ -54,6 +55,10 @@ def formulate_home(request, menu_id=None):
             owner = None
         ##########################################################
 
+        ip = request.META.get('HTTP_X_REAL_IP')
+        if ip is None:
+            ip = request.META.get('REMOTE_ADDR')
+
         puppy = Pet(
             owner=owner,
             name=request.POST.get('name'),
@@ -70,7 +75,7 @@ def formulate_home(request, menu_id=None):
             points=points,
             is_barf_active=request.POST.get('natural_food'),
             menu_id=menu_id,
-            owner_ip_mask=Privacy.mask_ip(request.META.get('REMOTE_ADDR')),
+            owner_ip_mask=Privacy.mask_ip(ip),
         )
 
         puppy.save()
@@ -98,7 +103,10 @@ def formulate_home(request, menu_id=None):
 
         return redirect('menus', pk=pk)
 
-    breeds = Breeds.objects.all().order_by('name')
+    breeds = cache.get('breeds')
+    if breeds is None:
+        breeds = Breeds.objects.all().order_by('name')
+        cache.set('breeds', breeds, 60 * 60 * 24)
 
     context = {
         'page': page,
