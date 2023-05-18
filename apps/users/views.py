@@ -155,7 +155,8 @@ def logoutUser(request):
 def profile(request):
     """Render user dashboard"""
     user_data = CustomUser.objects.get(id=request.user.id)
-    user_data.full_name = privacy.decrypt(user_data.full_name)
+    if user_data.full_name:
+        user_data.full_name = privacy.decrypt(user_data.full_name)
     context = {'page': 'profile', 'user_data': user_data}
     return render(request, 'users/dashboard.html', context)
 
