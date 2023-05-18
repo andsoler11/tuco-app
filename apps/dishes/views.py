@@ -4,6 +4,7 @@ from .models import Breeds, Pet, ContactDetail, Menus, MenuSendData
 from .forms import PetForm, MenusForm
 from .utils import *
 from utils.privacy import Privacy
+from django.core.cache import cache
 import json
 
 
@@ -98,7 +99,10 @@ def formulate_home(request, menu_id=None):
 
         return redirect('menus', pk=pk)
 
-    breeds = Breeds.objects.all().order_by('name')
+    breeds = cache.get('breeds')
+    if breeds is None:
+        breeds = Breeds.objects.all().order_by('name')
+        cache.set('breeds', breeds, 60 * 60 * 24)
 
     context = {
         'page': page,
