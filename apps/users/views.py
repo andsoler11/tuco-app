@@ -187,7 +187,9 @@ def account(request):
         messages.success(request, 'User data was updated')
 
     user_data.email = privacy.decrypt(user_data.email)
-    user_data.full_name = privacy.decrypt(user_data.full_name)
-    user_data.phone_number = privacy.decrypt(user_data.phone_number)
+    if user_data.full_name:
+        user_data.full_name = privacy.decrypt(user_data.full_name)
+    if user_data.phone_number:
+        user_data.phone_number = privacy.decrypt(user_data.phone_number)
     context = {'page': 'account', 'user_data': user_data}
     return render(request, 'users/account.html', context)
