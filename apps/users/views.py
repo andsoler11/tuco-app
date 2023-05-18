@@ -34,16 +34,15 @@ def userLogin(request):
 
         try:    
             user = CustomUser.objects.get(username=username)
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('dishes')
+            else:
+                messages.error(request, 'Usuario o contraseña incorrectos')
         except:
-            messages.error(request, 'Username doest not exist')
-    
-        user = authenticate(request, username=username, password=password)    
-        if user is not None:
-            login(request, user)
-            return redirect('dishes')
-        else:        
-            messages.error(request, 'username or password is incorrect')
- 
+            messages.error(request, 'El usuario no existe')
+
     return render(request, 'users/login_register.html', context)
 
 
@@ -65,6 +64,8 @@ def registerUser(request):
             phone = user.phone_number
             user.phone_number = privacy.encrypt(phone)
             user.phone_number_mask = Privacy.mask_phone_number(phone)
+
+            user.full_name = privacy.encrypt(user.full_name)
             user.save()
 
             messages.success(request, 'User account was created!')

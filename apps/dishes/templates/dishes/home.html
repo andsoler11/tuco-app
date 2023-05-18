@@ -5,6 +5,15 @@
 
 <main class="main_container main_container--form">
     <div class="form_wrapper">
+        {% if messages|length > 0 %}
+            <div style="display: flex; justify-content: center;">
+                <div class="alert alert--{{message.tags}}">
+                    {% for message in messages %}
+                        <p class="alert__message">{{message}}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
         <section class="form">
             <form id="diet-form" method="POST" novalidate>
                 {% csrf_token %}
