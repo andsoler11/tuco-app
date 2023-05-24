@@ -1,15 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
-from django.contrib.auth.models import User
 from apps.users.models import CustomUser
 from .forms import CustomUserCreationForm
 from utils.privacy import Privacy
 from django.contrib.auth.decorators import login_required
 from apps.users.utils import *
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
 
 privacy = Privacy()
 
@@ -56,6 +52,10 @@ def registerUser(request):
         if form.is_valid():
             user = form.save(commit=False)
             email_secured = privacy.secure_email(user.email)
+            if CustomUser.objects.filter(email_hash=email_secured['hash']).exists():
+                messages.error(request, 'Este correo ya está registrado')
+                return redirect('register')
+
             user.username = email_secured['mask']
             user.email = email_secured['encrypted']
             user.email_mask = email_secured['mask']
@@ -68,7 +68,7 @@ def registerUser(request):
             user.full_name = privacy.encrypt(user.full_name)
             user.save()
 
-            messages.success(request, 'User account was created!')
+            messages.success(request, '¡Te has registrado exitosamente!')
             login(request, user)
             return redirect('dishes')
 
@@ -101,6 +101,7 @@ def recoverPassword(request):
     return render(request, 'users/login_register.html', context)
 
 
+@login_required(login_url='login')
 def newPassword(request):
     """Render new password page"""
     if request.method == 'POST':
@@ -124,32 +125,60 @@ def newPassword(request):
         else:
             messages.error(request, 'Las contraseñas no coinciden')
             return redirect('new-password')
-
-    if request.GET.get('token'):
-        reset_token = request.GET.get('token')
-        email = cache.get(reset_token)
-
-        if not email:
-            # Reset token is invalid or expired
-            messages.error(request, 'Invalid or expired reset token.')
-            return redirect('recover-password')
-    
-
-        user = CustomUser.objects.get(email_hash=privacy.hash_string(email))
-        if user is None:
-            messages.error(request, 'Invalid or expired reset token.')
-            return redirect('recover-password')
-
-        context = {'page': 'newPassword', 'email': email}
-        return render(request, 'users/login_register.html', context)
             
     context = {'page': 'newPassword'}
     return render(request, 'users/login_register.html', context)
 
 
+def newPasswordToken(request):
+    """Render new password page"""
+    if not request.GET.get('token'):
+        messages.error(request, 'No se ha enviado un token')
+        return redirect('recover-password')
+    
+    reset_token = request.GET.get('token')
+    email = cache.get(reset_token)
+
+    if request.method == 'POST':
+        if not request.GET.get('token'):
+            messages.error(request, 'Token inválido o expirado')
+            return redirect('recover-password')
+
+        password = request.POST['password1']
+        confirm_password = request.POST['password2']
+
+        if password == confirm_password:
+            if not validate_password(request, password):
+                redirect_url = f'/new-password-token/?token={reset_token}'
+                return redirect(redirect_url)
+
+            user = CustomUser.objects.get(email_hash=privacy.hash_string(email))
+            user.set_password(password)
+            user.save()
+            login(request, user)
+            messages.success(request, 'contraseña actualizada')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Las contraseñas no coinciden')
+            return redirect('new-password')
+
+    if not email:
+        # Reset token is invalid or expired
+        messages.error(request, 'Token inválido o expirado')
+        return redirect('recover-password')
+    
+    user = CustomUser.objects.get(email_hash=privacy.hash_string(email))
+    if user is None:
+        messages.error(request, 'Token inválido o expirado')
+        return redirect('recover-password')
+
+    context = {'page': 'newPassword', 'email': email}
+    return render(request, 'users/login_register.html', context)
+
+
 def logoutUser(request):
     logout(request)
-    messages.info(request, 'User was logout')
+    messages.info(request, 'Sesión cerrada')
     return redirect('login')
 
 @login_required(login_url='login')
@@ -169,22 +198,22 @@ def account(request):
     if request.method == 'POST':
         name = request.POST['name']
         if len(name) > 50:
-            messages.error(request, 'Name is too long')
+            messages.error(request, 'El nombre es demasiado largo')
             return redirect('account')
         
         if len(name) < 3:
-            messages.error(request, 'Name is too short')
+            messages.error(request, 'El nombre es demasiado corto')
             return redirect('account')
 
         if not name.replace(" ", "").isalpha():
-            messages.error(request, 'Name is not valid')
+            messages.error(request, 'El nombre es inválido')
             return redirect('account')
 
         user_data.full_name = privacy.encrypt(request.POST['name'])
         user_data.phone_number = privacy.encrypt(request.POST['phone'])
         user_data.phone_number_mask = Privacy.mask_phone_number(request.POST['phone'])
         user_data.save()
-        messages.success(request, 'User data was updated')
+        messages.success(request, 'Datos actualizados')
 
     user_data.email = privacy.decrypt(user_data.email)
     if user_data.full_name:
@@ -193,3 +222,7 @@ def account(request):
         user_data.phone_number = privacy.decrypt(user_data.phone_number)
     context = {'page': 'account', 'user_data': user_data}
     return render(request, 'users/account.html', context)
+
+
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)
