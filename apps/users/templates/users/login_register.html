@@ -6,20 +6,22 @@
 
 <main class="main_container main_container--form">
     <div class="form_wrapper">
-        {% if messages|length > 0 %}
-            <div style="display: flex; justify-content: center;">
-                <div class="alert alert--{{message.tags}}">
-                    {% for message in messages %}
-                        <p class="alert__message">{{message}}</p>
-                    {% endfor %}
-                </div>
-            </div>
-        {% endif %}
+
         <section class="form register">
             <div class="form_header">
                 <h1 class="title-form">Regístrate</h1>
                 <p>Crea una cuenta y sé parte de la manada Forever Dog</p>
             </div>
+
+            {% if messages|length > 0 %}
+                <div style="display: flex; justify-content: center;">
+                    {% for message in messages %}
+                        <div class="alert alert--{% if message.tags == 'error' %}error{% elif message.tags == 'success' %}success{% endif %}">
+                            <p class="alert__message">{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
 
             <form id="register-form" action="{% url 'register' %}" method="POST">
                 {% csrf_token %}
@@ -60,13 +62,13 @@
 {% if page == 'login' %}
 <main class="main_container main_container--form">
     {% if messages|length > 0 %}
-    <div style="display: flex; justify-content: center;">
-        <div class="alert alert--{{message.tags}}">
+        <div style="display: flex; justify-content: center;">
             {% for message in messages %}
-                <p class="alert__message">{{message}}</p>
+                <div class="alert alert--{% if message.tags == 'error' %}error{% elif message.tags == 'success' %}success{% endif %}">
+                    <p class="alert__message">{{ message }}</p>
+                </div>
             {% endfor %}
         </div>
-    </div>
     {% endif %}
 
     <div class="form_wrapper">

@@ -20,7 +20,7 @@ def send_recovery_email(request, user_email):
     subject = 'Recuperación de contraseña Foreverdog'
     reset_token = generate_reset_token()
 
-    message = f'Dale click al siguiente enlace para recuperar tu contraseña : {request.build_absolute_uri("/new-password/")}?token={reset_token}'
+    message = f'Dale click al siguiente enlace para recuperar tu contraseña : {request.build_absolute_uri("/new-password-token/")}?token={reset_token}'
     from_email = settings.EMAIL_HOST_USER
     to_email = user_email
 

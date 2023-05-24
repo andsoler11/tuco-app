@@ -92,7 +92,7 @@ def formulate_home(request, menu_id=None):
 
             contact = ContactDetail(
                 name_contact=name,
-                email_contact=privacy.secure_email(email)['mask'],
+                email_contact=privacy.secure_email(email)['encrypted'],
                 pet=puppy
             )
             contact.save()
