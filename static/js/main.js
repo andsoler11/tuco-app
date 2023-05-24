@@ -79,45 +79,48 @@ function nextPrev(n) {
   var requiredInputs = x[currentTab].querySelectorAll('[required]');
 
   var allInputsFilled = true;
-  requiredInputs.forEach(input => {
-    if (input.value.trim() === '') {
-      allInputsFilled = false;
-      input.parentElement.classList.add('error');
-    } else {
-      input.parentElement.classList.remove('error');
-    }
-  });
 
-  if (!allInputsFilled) {
-    // Show error message
-    var errorMessage = document.getElementsByClassName("error-general-message");
-    $(errorMessage).text("Por favor, complete todos los campos requeridos antes de continuar.");
-    $(errorMessage).css("display", "block")
-    //errorMessage[0].innerText = "Por favor, complete todos los campos requeridos antes de continuar.";
-    //errorMessage[0].style.display = "block";
-    return;
-  }
-
-  // Hide error message if previously displayed
-  var errorMessage = document.getElementsByClassName("error-general-message");
-  //errorMessage.style.display = "none";
-  $(errorMessage).css("display", "none")
-
-
-  // Validate weight input
-  var weightInput = x[currentTab].querySelector('input[name="weight"]');
-  if (weightInput) {
-    var weightValue = weightInput.value.trim();
-    if (weightValue === '' || weightValue === '0') {
-      // Show error message if it's not already displayed
-      if (errorMessage.style.display === 'none') {
-        errorMessage.innerText = "Por favor, ingrese un peso válido.";
-        errorMessage.style.display = "block";
+  if(n === 1){
+    requiredInputs.forEach(input => {
+      if (input.value.trim() === '') {
+        allInputsFilled = false;
+        input.parentElement.classList.add('error');
+      } else {
+        input.parentElement.classList.remove('error');
       }
-      weightInput.classList.add('error');
+    });
+
+    console.log('n es = 1');
+    if (!allInputsFilled) {
+      // Show error message
+      var errorMessage = document.getElementsByClassName("error-general-message");
+      $(errorMessage).text("Por favor, complete todos los campos requeridos antes de continuar.");
+      $(errorMessage).css("display", "block")
+      //errorMessage[0].innerText = "Por favor, complete todos los campos requeridos antes de continuar.";
+      //errorMessage[0].style.display = "block";
       return;
-    } else {
-      weightInput.classList.remove('error');
+    }
+
+    // Hide error message if previously displayed
+    var errorMessage = document.getElementsByClassName("error-general-message");
+    //errorMessage.style.display = "none";
+    $(errorMessage).css("display", "none");
+
+    // Validate weight input
+    var weightInput = x[currentTab].querySelector('input[name="weight"]');
+    if (weightInput) {
+      var weightValue = weightInput.value.trim();
+      if (weightValue === '' || weightValue === '0') {
+        // Show error message if it's not already displayed
+        if (errorMessage.style.display === 'none') {
+          errorMessage.innerText = "Por favor, ingrese un peso válido.";
+          errorMessage.style.display = "block";
+        }
+        weightInput.classList.add('error');
+        return;
+      } else {
+        weightInput.classList.remove('error');
+      }
     }
   }
 
