@@ -154,7 +154,7 @@ def edit_pet(request, pk):
 
     context = {'puppy': puppy, 'page': 'edit-pet', 'form': form}
 
-    return render(request, 'dishes/home.html', context)
+    return render(request, 'dishes/edit-pet.html', context)
 
 
 def create_menu(request):

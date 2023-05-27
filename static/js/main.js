@@ -510,6 +510,46 @@ $(document).ready(function(){
     }
   });
 
+  // Formulario de editar mascota
+  $("#edit-pet-form").validate({
+    rules: {
+      name: {
+        required: true,
+      },
+      age: {
+        required: true,
+      },
+      weight: {
+        required: true,
+      },
+      name_contact: {
+        required: true,
+      },
+      email_contact: {
+        required: true,
+        email: true,
+      },
+    },
+    messages: {
+      name: {
+        required: messageRequired,
+      },
+      age: {
+        required: messageRequired,
+      },
+      weight: {
+        required: messageRequired,
+      },
+      name_contact: {
+        required: messageRequired,
+      },
+      email_contact: {
+        required: messageRequired,
+        email: messageEmail
+      }
+    }
+  });
+
   // Editar Mis datos
   $("#account-form").validate({
     rules: {
@@ -559,9 +599,9 @@ $(document).ready(function(){
   });
 
 
-  // Habilita edición de formulario Mis Datos
-  var arrayDataAccount = {};
-  $('#editMyAccount').click(function(){
+  // Habilita edición de formularios
+  var arrayDataForm = {};
+  $('#editDataForm').click(function(){
     var thisForm = $('.main_container--form form').attr('id');
     var inputs = $('#'+thisForm).find('input, select').not('[type="hidden"], [type="submit"], [type="button"], [noChange]');
 
@@ -571,12 +611,16 @@ $(document).ready(function(){
     $('.wrapper-submit-button').removeClass('hidden');
 
     $.each(inputs, function(i, val){
+      if($(val).is('select')){
+        $(val).parent().find('.nice-select').removeClass('disabled');
+      }
       var idVal = $(val).attr('id');
-      arrayDataAccount[idVal] = $(val).val();
+      arrayDataForm[idVal] = $(val).val();
     });
+    console.log(arrayDataForm);
   });
 
-  // Cancela edición de formulario Mis Datos
+  // Cancela edición de formularios
   $('#cancel-edit-form').click(function(){
     var thisForm = $('.main_container--form form').attr('id');
     var inputs = $('#'+thisForm).find('input, select').not('[type="hidden"], [type="submit"], [type="button"], [noChange]');
@@ -589,18 +633,35 @@ $(document).ready(function(){
     $(this).parents('.wrapper-submit-button').addClass('hidden');
     $('.wrapper-edit-button').removeClass('hidden');
 
-    $.each(arrayDataAccount, function(keyArray, valueArray){
+    $.each(arrayDataForm, function(keyArray, valueArray){
       $.each(inputs, function(i, val){
+        if($(val).is('select')){
+          $(val).parent().find('.nice-select').addClass('disabled');
+          returnSelectValue(val);
+        }
+        
         var valInput = $(val).attr('id');
         if(keyArray === valInput){
           $(val).val(valueArray);
         }
       });
     });
-    arrayDataAccount = {};
+    arrayDataForm = {};
   });
 });
 
+// FN return select value
+function returnSelectValue(obj){
+  var valSelect = $(obj).val();
+  var optNiceSelect = $(obj).parent().find('.nice-select li');
+
+  $.each(optNiceSelect, function(i, val){
+    var optDataValue = $(val).attr('data-value');
+    if(optDataValue === valSelect){
+      $(val).trigger('click');
+    }
+  });
+}
 
 // FN Add active class to menu link
 function activeMenu(){
