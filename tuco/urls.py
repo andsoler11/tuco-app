@@ -12,3 +12,6 @@ urlpatterns = [
     path('api/' + api_version + '/users/', include('api.users_api.urls')),
     path('api/' + api_version + '/pets/', include('api.pets_api.urls')),
 ]
+
+
+handler404 = 'apps.users.views.custom_404'
