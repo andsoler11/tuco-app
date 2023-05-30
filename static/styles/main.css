@@ -40,6 +40,7 @@ body{
     padding-top: var(--header-height-desktop);
 }
 
+.mt-0{margin-top: 0!important;}
 .mt-1{margin-top: 1rem!important;}
 .mt-2{margin-top: 2rem!important;}
 .mt-3{margin-top: 3rem!important;}
@@ -204,6 +205,7 @@ form .name-details .field:last-child {
 #id_special_needs,
 .form form .input select,
 .form form .input .nice-select,
+.form form .input textarea, 
 .form-control {
     height: 50px;
     width: 100%;
@@ -228,6 +230,13 @@ form .name-details .field:last-child {
 .form-control {
     padding: 10px 15px 0;
 }
+.form form .input textarea,
+.form-control {
+    padding: 20px 15px;
+}
+.form form .input textarea {
+    height: 120px;
+}
 
 .form form .input select {
     padding: 0 15px;
@@ -250,9 +259,8 @@ form .name-details .field:last-child {
     overflow: hidden;
 }
 
-.form form .input.breed-input .nice-select .nice-select-search-box {
-    width: 300px;
-    max-width: 300px;
+.form form .input.select-search-box .nice-select .nice-select-search-box {
+    width: 100%;
     display: none;
     margin-top: 5px;
     left: 0;
@@ -263,17 +271,24 @@ form .name-details .field:last-child {
     border-radius: 4px 4px 0 0;
     padding: 5px;
 }
-.form form .input.breed-input .nice-select .nice-select-search-box input {
+.form form .two-fields .input.select-search-box .nice-select .nice-select-search-box {
+    width: 300px;
+    max-width: 300px;
+}
+.form form .input.select-search-box .nice-select .nice-select-search-box input {
     width: 100%;
     height: 40px;
     padding: 5px 20px;
 }
 
-.form form .input.breed-input .nice-select.open .nice-select-search-box {
+.form form .input.select-search-box .nice-select.open .nice-select-search-box {
     display: block;
 }
-.form form .input.breed-input .nice-select .list {
+.form form .input.select-search-box .nice-select .list {
+    width: 100%;
     padding-top: 52px;
+}
+.form form .two-fields .input.select-search-box .nice-select .list {
     width: 300px;
     max-width: 300px;
 }
@@ -341,12 +356,15 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .form form .input input:focus,
+.form form .input textarea:focus,
 .form form .input select:focus,
 .form form .input select:focus-visible {
     border: 1px solid var(--black-font);
 }
 .form form .field input.error,
+.form form .field textarea.error,
 .form form .field select.error,
+.form form .input .nice-select:has(+ select.error),
 .form form .field.error input:not(.nice-select-search),
 .form form .field.error .nice-select {
     border: 1px solid #D95F57;
@@ -455,7 +473,7 @@ input[type="number"]::-webkit-inner-spin-button {
     padding: 0;
 }
 
-.main_container--form {
+.main_container--form:not(.not-background) {
     background: url(../images/main_container_background_2.png) center bottom no-repeat;
     background-size: cover;
     background-attachment: fixed;

@@ -58,8 +58,8 @@
                     </div>
 
                     <div class="form_breed_sex_input two-fields">
-                        <div class="field input breed-input">
-                            <select id="breed" name="breed" required>
+                        <div class="field input select-search-box">
+                            <select id="breed" class="search-box" name="breed" required>
                                 <option value="" selected disabled>Raza</option>
                                 {% for breed in breeds %}
                                 <option value="{{ breed.name }}">{{ breed.name }}</option>
@@ -212,7 +212,7 @@
 
                     <input id="input_weight_image" name='body_image' type="hidden" value="{{ puppy.body_image|default:'peso_ideal' }}">
 
-                    <span class="small">Pongamos la báscula a trabajar y descubramos su peso exacto.</span>
+                    <span class="small mt-2">Pongamos la báscula a trabajar y descubramos su peso exacto.</span>
                     <div class="field input">
                         <label for="weight" class="form-label">Peso (en Kilos)</label>
                         <input type="number" id="id_weight" name="weight" required><!--value="{{ form.weight.value|floatformat:0 }}"-->

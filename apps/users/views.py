@@ -231,3 +231,7 @@ def custom_404(request, exception):
 def myAddresses(request):
     context = {'page': 'addresses'}
     return render(request, 'users/addresses.html', context)
+
+def newAddress(request):
+    context = {'page': 'new-address'}
+    return render(request, 'users/new-address.html', context)

@@ -90,7 +90,6 @@ function nextPrev(n) {
       }
     });
 
-    console.log('n es = 1');
     if (!allInputsFilled) {
       // Show error message
       var errorMessage = document.getElementsByClassName("error-general-message");
@@ -342,11 +341,11 @@ $(document).ready(function(){
   });
 
   // Agrega clase focused a elemento padre de input para animar label de formularios
-  $('.form input').focus(function(){
+  $('.form input, .form textarea').focus(function(){
     $(this).parents('.field').addClass('focused');
   });
   // Valida input blur y elimina clase focused si el campo del formulario está vacío
-  $('.form input').blur(function(){
+  $('.form input, .form textarea').blur(function(){
     var inputValue = $(this).val();
     if ( inputValue == "" ) {
       $(this).parents('.field').removeClass('focused');  
@@ -390,14 +389,14 @@ $(document).ready(function(){
   // Registro usuarios
   $("#register-form").validate({
     rules: {
-      name: {
+      full_name: {
         required: true,
       },
       email: {
         required: true,
         email: true,
       },
-      phone: {
+      phone_number: {
         required: true,
         number: true,
       },
@@ -410,14 +409,14 @@ $(document).ready(function(){
       },
     },
     messages: {
-      name: {
+      full_name: {
         required: messageRequired,
       },
       email: {
         required: messageRequired,
         email: messageEmail,
       },
-      phone: {
+      phone_number: {
         required: messageRequired,
         number: messageNumber,
       },
@@ -580,6 +579,56 @@ $(document).ready(function(){
     }
   });
 
+  // Agregar Dirección
+  $("#address-form").validate({
+    ignore: [],
+    errorPlacement: function(error, element) {
+      error.insertAfter(element);
+    },
+    rules: {
+      name_address: {
+        required: true,
+      },
+      address: {
+        required: true,
+      },
+      additional_info: {
+        required: true,
+      },
+      depto: {
+        required: true,
+      },
+      city: {
+        required: true,
+      },
+      user_phone: {
+        required: true,
+        number: true,
+      },
+    },
+    messages: {
+      name_address: {
+        required: messageRequired,
+      },
+      address: {
+        required: messageRequired,
+      },
+      additional_info: {
+        required: messageRequired,
+      },
+      depto: {
+        required: messageRequired,
+      },
+      city: {
+        required: messageRequired,
+      },
+      user_phone: {
+        required: messageRequired,
+        number: messageNumber,
+      }
+    }
+  });
+
   // Personaliza select field
   $(".form .field select").niceSelect();
   //$(".form_breed_sex_input .breed-input .list").prepend(`<input type="text" class="nice-select-search" placeholder="Escribe la raza de tu mascota">`);
@@ -695,7 +744,7 @@ function heightTitleCards(){
 // FN Valida valor de input y agrega clase focused si el campo del formulario NO está vacío
 function checkValInputsForms(){
   var thisForm = $('.main_container--form form').attr('id');
-  var inputs = $('#'+thisForm).find('input, select').not('[type="hidden"], [type="submit"]');
+  var inputs = $('#'+thisForm).find('input, select, textarea').not('[type="hidden"], [type="submit"]');
 
   $.each(inputs, function(i, val){
     var valThisInput = $(val).val();

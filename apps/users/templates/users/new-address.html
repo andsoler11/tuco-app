@@ -1,0 +1,78 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<main class="main_container main_container--form">
+    <div class="form_wrapper">
+        <section class="form">
+            <div class="form_header">
+                <h1 class="title-form">Agregar Dirección</h1>
+            </div>
+
+            {% if messages|length > 0 %}
+                <div style="display: flex; justify-content: center;">
+                    {% for message in messages %}
+                        <div class="alert alert--{% if message.tags == 'error' %}error{% elif message.tags == 'success' %}success{% endif %}">
+                            <p class="alert__message">{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form id="address-form" method="POST" class="disabled-form">
+                {% csrf_token %}
+                <div class="field input">
+                    <label for="name_address" class="form-label">Nombre (Ej: Casa)</label>
+                    <input type="text" id="name_address" name="name_address" value="" required>
+                </div>
+
+                <div class="field input">
+                    <label for="address" class="form-label">Dirección</label>
+                    <input type="text" id="address" name="address" value="" required>
+                </div>
+
+                <div class="field input">
+                    <label for="additional_info" class="form-label">Información adicional</label>
+                    <textarea id="additional_info" name="additional_info" value="" required></textarea>
+                    <span class="small">Ejemplo: Barrio, edificio, torre, apartamento</span>
+                </div>
+
+                <div class="field input select-search-box">
+                    <select id="depto" class="search-box" name="depto" option="Departamento" required>
+                        <option value="" selected disabled>Departamento</option>
+                        <option value="depto1">Depto 1</option>
+                        <option value="depto2">Depto 2</option>
+                    </select>
+                </div>
+
+                <div class="field input select-search-box">
+                    <select id="city" class="search-box" name="city" required>
+                        <option value="" selected disabled>Ciudad</option>
+                        <option value="city1">Ciudad 1</option>
+                        <option value="city2">Ciudad 2</option>
+                    </select>
+                </div>
+
+                <div class="field input">
+                    <label for="user_phone" class="form-label">Teléfono</label>
+                    <input type="tel" id="user_phone" name="user_phone" value="" required>
+                    <span class="small">Solo te llamaremos si tenemos alguna duda sobre tu pedido.</span>
+                </div>
+                
+                
+                <div class="field button">
+                    <div class="wrapper-edit-button">
+                        <input id="SaveAddressForm" type="submit" value="Guardar dirección">
+                    </div>
+                    
+                    <div class="wrapper-submit-button hidden">
+                        <div class="link mb-1"><a id="cancel-edit-form">Cancelar</a></div>
+                        <input type="submit" value="Guardar Cambios" class="mt-1">
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+</main>
+
+{% endblock %}
