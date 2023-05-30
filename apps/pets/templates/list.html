@@ -18,7 +18,7 @@
             <p>Crea una cuenta y sé parte de la manada Forever Dog</p>
         </div>
 
-        <div class="pets-list-wrapper mt-2">
+        <div class="list-wrapper mt-2">
             {% if pets|length == 1 %}
             <ul class="options-list center-list mb-2">
             {% elif pets|length > 1%}
@@ -26,7 +26,7 @@
             {% endif %}
                 {% for pet in pets %}
                 <li class="item-list">
-                    <a href="{% url 'edit-pet' pet.id %}">{{pet.name}}</a>
+                    <a href="{% url 'edit-pet' pet.id %}" class="blue-card">{{pet.name}}</a>
                 </li>
                 {% endfor %}
             </ul>

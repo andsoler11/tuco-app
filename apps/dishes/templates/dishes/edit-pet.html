@@ -128,7 +128,10 @@
               <div class="field button focused mt-2">
                 <div class="wrapper-edit-button focused">
                   <input id="editDataForm" type="button" value="Editar información" class="valid" aria-invalid="false">
-                  <div class="link mt-4"><a id="delet-pet" onclick="showModal('{{ pet.id }}')">Eliminar mascota</a></div>
+                  <a class="link-button mt-1" href="#">Editar menú</a>
+                  <div class="link mt-4">
+                    <a id="delet-pet" onclick="showModal('{{ pet.id }}')">Eliminar mascota</a>
+                  </div>
                 </div>
                 <div class="wrapper-submit-button hidden">
                   <div class="link"><a id="cancel-edit-form">Cancelar</a></div>
