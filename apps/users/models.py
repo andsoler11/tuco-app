@@ -19,3 +19,4 @@ class CustomUser(AbstractUser):
     phone_number = models.CharField(max_length=255, null=True, blank=True)
     phone_number_mask = models.CharField(max_length=255, null=True, blank=True)
     full_name = models.CharField(max_length=255, null=True, blank=True)
+    addresses = models.TextField(null=True, blank=True)

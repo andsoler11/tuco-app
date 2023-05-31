@@ -55,9 +55,9 @@ def formulate_home(request, menu_id=None):
             owner = None
         ##########################################################
 
-        ip = request.META.get('HTTP_X_REAL_IP')
-        if ip is None:
-            ip = request.META.get('REMOTE_ADDR')
+        ip = request.META.get('HTTP_X_FORWARDED_FOR') or request.META.get('HTTP_X_REAL_IP') or request.META.get('REMOTE_ADDR')
+        if type(ip) == list:
+            ip = ip[0]
 
         puppy = Pet(
             owner=owner,
