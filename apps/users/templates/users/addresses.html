@@ -18,6 +18,16 @@
             <p>Crea una cuenta y sé parte de la manada Forever Dog</p>
         </div>
 
+        {% if messages|length > 0 %}
+            <div style="display: flex; justify-content: center;">
+                {% for message in messages %}
+                    <div class="alert alert--{% if message.tags == 'error' %}error{% elif message.tags == 'success' %}success{% endif %}">
+                        <p class="alert__message">{{ message }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
         <div class="list-wrapper mt-2">
             <!-- SI SOLO HAY UNA DIRECCIÓN
             <ul class="options-list center-list mb-2">

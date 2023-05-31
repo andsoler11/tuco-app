@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
@@ -232,6 +233,58 @@ def myAddresses(request):
     context = {'page': 'addresses'}
     return render(request, 'users/addresses.html', context)
 
+
+@login_required(login_url='login')
 def newAddress(request):
     context = {'page': 'new-address'}
+    if request.method == 'POST':
+        required_fields = ['depto', 'city', 'address', 'user_phone', 'name_address']
+        for field in required_fields:
+            if not request.POST.get(field):
+                messages.error(request, f'El campo {field} es requerido')
+                return redirect('new-address')
+
+        name_address = request.POST['name_address']
+        if len(name_address) > 50:
+            messages.error(request, 'El nombre es demasiado largo')
+            return redirect('new-address')
+
+        if len(name_address) < 3:
+            messages.error(request, 'El nombre es demasiado corto')
+            return redirect('new-address')
+
+        if not name_address.replace(" ", "").isalpha():
+            messages.error(request, 'El nombre es inválido')
+            return redirect('new-address')
+
+        address = request.POST['address']
+        if len(address) > 50:
+            messages.error(request, 'La dirección es demasiado larga')
+            return redirect('new-address')
+
+        if len(address) < 3:
+            messages.error(request, 'La dirección es demasiado corta')
+            return redirect('new-address')
+
+        user = CustomUser.objects.get(id=request.user.id)
+
+        addresses = []
+        if user.addresses:
+            addresses = user.addresses
+
+        new_address = {
+            'name': name_address,
+            'address': address,
+            'additional_info': request.POST['additional_info'],
+            'depto': request.POST['depto'],
+            'city': request.POST['city'],
+            'user_phone': request.POST['user_phone'],
+        }
+
+        addresses.append(new_address)
+        user.addresses = json.dumps(addresses)
+        user.save()
+        messages.success(request, 'Dirección agregada correctamente')
+        return redirect('addresses')
+
     return render(request, 'users/new-address.html', context)
