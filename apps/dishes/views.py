@@ -55,9 +55,9 @@ def formulate_home(request, menu_id=None):
             owner = None
         ##########################################################
 
-        ip = request.META.get('HTTP_X_REAL_IP')
-        if ip is None:
-            ip = request.META.get('REMOTE_ADDR')
+        ip = request.META.get('HTTP_X_FORWARDED_FOR') or request.META.get('HTTP_X_REAL_IP') or request.META.get('REMOTE_ADDR')
+        if type(ip) == list:
+            ip = ip[0]
 
         puppy = Pet(
             owner=owner,
@@ -154,7 +154,7 @@ def edit_pet(request, pk):
 
     context = {'puppy': puppy, 'page': 'edit-pet', 'form': form}
 
-    return render(request, 'dishes/home.html', context)
+    return render(request, 'dishes/edit-pet.html', context)
 
 
 def create_menu(request):

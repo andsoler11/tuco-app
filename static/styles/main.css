@@ -8,7 +8,7 @@
 }
 
 .hidden {
-    display: none;
+    display: none!important;
 }
 h1 {
     font-weight: 700;
@@ -40,17 +40,20 @@ body{
     padding-top: var(--header-height-desktop);
 }
 
-.mt-1{margin-top: 1rem;}
-.mt-2{margin-top: 2rem;}
-.mt-3{margin-top: 3rem;}
-.mt-4{margin-top: 4rem;}
-.mb-1{margin-bottom: 1rem;}
-.mb-2{margin-bottom: 2rem;}
-.mb-3{margin-bottom: 3rem;}
-.mb-4{margin-bottom: 4rem;}
+.mt-0{margin-top: 0!important;}
+.mt-1{margin-top: 1rem!important;}
+.mt-2{margin-top: 2rem!important;}
+.mt-3{margin-top: 3rem!important;}
+.mt-4{margin-top: 4rem!important;}
+.mt-5{margin-top: 5rem!important;}
+.mb-1{margin-bottom: 1rem!important;}
+.mb-2{margin-bottom: 2rem!important;}
+.mb-3{margin-bottom: 3rem!important;}
+.mb-4{margin-bottom: 4rem!important;}
+.mb-5{margin-bottom: 5rem!important;}
 
-.mt-less-8 {margin-top: -8rem;}
-.mt-less-10 {margin-top: -10rem;}
+.mt-less-8 {margin-top: -8rem!important;}
+.mt-less-10 {margin-top: -10rem!important;}
 
 .pt-0 {padding-top: 0 !important;}
 .pb-0 {padding-top: 0 !important;}
@@ -168,7 +171,7 @@ form .name-details .field:last-child {
 
 .form form .field .form-label {
     position: absolute;
-    left: 20px;
+    left: 15px;
     top: 15px;
     color: #9C9C9C;
     z-index: 2;
@@ -202,6 +205,7 @@ form .name-details .field:last-child {
 #id_special_needs,
 .form form .input select,
 .form form .input .nice-select,
+.form form .input textarea, 
 .form-control {
     height: 50px;
     width: 100%;
@@ -214,19 +218,32 @@ form .name-details .field:last-child {
     border: 0;
 }
 
+.form form .input .nice-select.disabled{
+    background: #d5d5d5!important;
+    cursor: no-drop!important;
+    color: #666;
+}
+
 .form form .input input,
 #id_allergies,
 #id_special_needs,
 .form-control {
-    padding: 10px 20px 0;
+    padding: 10px 15px 0;
+}
+.form form .input textarea,
+.form-control {
+    padding: 20px 15px;
+}
+.form form .input textarea {
+    height: 120px;
 }
 
 .form form .input select {
-    padding: 0 20px;
+    padding: 0 15px;
 }
 
 .form form .input .nice-select {
-    padding: 5px 20px 0;
+    padding: 5px 30px 0 15px;
 }
 
 .form form .input .nice-select:after {
@@ -237,9 +254,13 @@ form .name-details .field:last-child {
     border-right: 1px solid var(--light-blue);
     right: 20px;
 }
-.form form .input.breed-input .nice-select .nice-select-search-box {
-    width: 300px;
-    max-width: 300px;
+.form form .input .nice-select .current {
+    display: block;
+    overflow: hidden;
+}
+
+.form form .input.select-search-box .nice-select .nice-select-search-box {
+    width: 100%;
     display: none;
     margin-top: 5px;
     left: 0;
@@ -250,17 +271,24 @@ form .name-details .field:last-child {
     border-radius: 4px 4px 0 0;
     padding: 5px;
 }
-.form form .input.breed-input .nice-select .nice-select-search-box input {
+.form form .two-fields .input.select-search-box .nice-select .nice-select-search-box {
+    width: 300px;
+    max-width: 300px;
+}
+.form form .input.select-search-box .nice-select .nice-select-search-box input {
     width: 100%;
     height: 40px;
     padding: 5px 20px;
 }
 
-.form form .input.breed-input .nice-select.open .nice-select-search-box {
+.form form .input.select-search-box .nice-select.open .nice-select-search-box {
     display: block;
 }
-.form form .input.breed-input .nice-select .list {
+.form form .input.select-search-box .nice-select .list {
+    width: 100%;
     padding-top: 52px;
+}
+.form form .two-fields .input.select-search-box .nice-select .list {
     width: 300px;
     max-width: 300px;
 }
@@ -328,12 +356,15 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .form form .input input:focus,
+.form form .input textarea:focus,
 .form form .input select:focus,
 .form form .input select:focus-visible {
     border: 1px solid var(--black-font);
 }
 .form form .field input.error,
+.form form .field textarea.error,
 .form form .field select.error,
+.form form .input .nice-select:has(+ select.error),
 .form form .field.error input:not(.nice-select-search),
 .form form .field.error .nice-select {
     border: 1px solid #D95F57;
@@ -418,14 +449,20 @@ input[type="number"]::-webkit-inner-spin-button {
     height: 100%;
 }
 
+.form .wrapper-edit-button .link-button {
+    display: block;
+}
+
 /* ACCOUNT FORM*/
-.form form#account-form .input input[disabled],
-.form form#account-form .input input[nochange] {
-    background: #ccc!important;
+.form form.disabled-form .input input[disabled],
+.form form.disabled-form .input input[nochange],
+.form form.disabled-form .input select[disabled],
+.form form.disabled-form .input select[nochange] {
+    background: #d5d5d5!important;
     cursor: no-drop!important;
     color: #666;
 }
-.form form#account-form #cancel-edit-form {
+.form form.disabled-form #cancel-edit-form {
     cursor: pointer;
 }
 /* ACCOUNT FORM */
@@ -436,9 +473,10 @@ input[type="number"]::-webkit-inner-spin-button {
     padding: 0;
 }
 
-.main_container--form {
+.main_container--form:not(.not-background) {
     background: url(../images/main_container_background_2.png) center bottom no-repeat;
     background-size: cover;
+    background-attachment: fixed;
 }
 
 .home-wrapper {
@@ -853,6 +891,101 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 /* PROFILE */
 
+/* PETS and ADDRESSES */
+.list-wrapper .options-list.grid-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px 20px;
+}
+.list-wrapper .options-list.center-list li{
+    width: 100%;
+    max-width: 400px;
+    display: block;
+    margin: 0 auto;
+}
+.list-wrapper .options-list li a {
+    font-weight: 700;
+    padding: 1.2rem 2rem 1.2rem 1.2rem;
+    position: relative;
+    display: flex;
+    justify-content: initial;
+    align-items: initial;
+    flex-direction: column;
+    text-align: left;
+    transition: .5s all ease;
+}
+.list-wrapper .options-list li a.blue-card {
+    color: #fff;
+    background: var(--light-blue);
+}
+.list-wrapper .options-list li a.white-card {
+    color: var(--black-font);
+    background: #fff;
+    box-shadow: 0 0 5px rgba(0,0,0,.05);
+}
+.list-wrapper .options-list li a.border-radius {
+    border-radius: 8px;
+}
+
+.list-wrapper .options-list li a.blue-card:hover {
+    filter: brightness(1.2);
+}
+.list-wrapper .options-list li a.white-card:hover {
+    box-shadow: 0 0 10px 5px rgba(0,0,0,.05);
+}
+
+.list-wrapper .options-list li a:after {
+    width: 15px;
+    height: 15px;
+    margin-top: -5px;
+    content: '';
+    position: absolute;
+    transform-origin: 66% 66%;
+    transform: rotate(45deg);
+    top: 50%;
+    right: 20px;
+}
+.list-wrapper .options-list li a.blue-card:after {
+    border-top: 1px solid #fff;
+    border-right: 1px solid #fff;
+}
+.list-wrapper .options-list li a.white-card:after {
+    border-top: 1px solid var(--black-font);
+    border-right: 1px solid var(--black-font);
+}
+.list-wrapper .options-list li a span {
+    display: block;
+}
+.list-wrapper .options-list li a span.title-address {
+    font-weight: 900;
+}
+
+.list-wrapper .wrapper-button a {
+    width: 50px;
+    height: 50px;
+    background: var(--curuba);
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    transition: .5s all ease;
+}
+.list-wrapper .wrapper-button a:after{
+    content: '\002B';
+    top: 50%;
+    left: 50%;
+    color: #000;
+    font-size: 3rem;
+    font-weight: 100;
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+.list-wrapper .wrapper-button a:hover {
+    background-color: #FFCDA8;
+    transform: rotate(180deg)
+}
+/* PETS and ADDRESSES */
+
 
 
 /*
@@ -1097,24 +1230,11 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 99999; /* Sit on top */
     padding-top: 200px; /* Location of the box */
     left: 0;
     top: 0;
@@ -1128,34 +1248,14 @@ input[type="number"]::-webkit-inner-spin-button {
 .modal-content {
     background-color: #fefefe;
     margin: auto;
-    padding: 20px;
+    padding: 3rem 1rem 2rem;
     border: 1px solid #888;
     width: 80%;
-    max-width: 600px;
+    max-width: 450px;
     border-radius: 10px;
-}
-
-.button-container {
-    display: flex;
-    justify-content: start;
-    margin-top: 20px;
-}
-
-#deleteForm input {
-    background-color: red;
-    color: #202B3E;
-    border: none;
-    padding: 10px 20px;
     text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 10px;
-    width: 100%;
-    max-width: 5rem;
+    position: relative;
 }
-
 .button-container button {
     background-color: #FFC397;
     color: #202B3E;
@@ -1170,20 +1270,38 @@ input[type="number"]::-webkit-inner-spin-button {
     width: 100%;
     max-width: 5rem;
 }
+.modal-content .form {
+    padding: 0;
+}
+.modal-content .form .link {
+    margin: 0;
+}
 
 /* The Close Button */
-.close {
+.modal-content .close {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
 }
-
-.close:hover,
-.close:focus {
+.modal-content .close:hover,
+.modal-content .close:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+.modal-content .close:after{
+    content: '\002B';
+    color: #000;
+    font-size: 2rem;
+    font-weight: 200;
+    transform: rotate(45deg) translate(-12px, 3px);
+    position: absolute;
 }
 
 /* Add animation */

@@ -1,0 +1,57 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<style>
+  .pet-options {
+    display: flex;
+    flex-direction: column;
+  }
+  .pet-options a,
+  .pet-options button {
+    margin-bottom: 5px;
+  }
+</style>
+<main class="main_container pt-0">
+    <section class="page-section">
+        <div class="page-header">
+            <h1 class="page-title">Mis direcciones</h1>
+            <p>Crea una cuenta y sé parte de la manada Forever Dog</p>
+        </div>
+
+        {% if messages|length > 0 %}
+            <div style="display: flex; justify-content: center;">
+                {% for message in messages %}
+                    <div class="alert alert--{% if message.tags == 'error' %}error{% elif message.tags == 'success' %}success{% endif %}">
+                        <p class="alert__message">{{ message }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="list-wrapper mt-2">
+            {% if addresses %}
+                <ul class="options-list grid-list mb-2">
+                    {% for address in addresses %}
+                        <li class="item-list">
+                            <a href="#" class="blue-card border-radius">
+                                <span class="title-address">{{ address.name|capfirst }}</span>
+                                <span class="address">{{ address.display_address|capfirst }}.</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="alert alert--error">
+                    <p class="alert__message">No tienes direcciones registradas</p>
+                </div>
+            {% endif %}
+            <div class="wrapper-button">
+                <a class="add-pet-button" href="/new-address"></a><!--Agregar url-->
+            </div>
+        </div>
+    </section>
+</main>
+
+
+
+{% endblock %}

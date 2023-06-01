@@ -79,45 +79,47 @@ function nextPrev(n) {
   var requiredInputs = x[currentTab].querySelectorAll('[required]');
 
   var allInputsFilled = true;
-  requiredInputs.forEach(input => {
-    if (input.value.trim() === '') {
-      allInputsFilled = false;
-      input.parentElement.classList.add('error');
-    } else {
-      input.parentElement.classList.remove('error');
-    }
-  });
 
-  if (!allInputsFilled) {
-    // Show error message
-    var errorMessage = document.getElementsByClassName("error-general-message");
-    $(errorMessage).text("Por favor, complete todos los campos requeridos antes de continuar.");
-    $(errorMessage).css("display", "block")
-    //errorMessage[0].innerText = "Por favor, complete todos los campos requeridos antes de continuar.";
-    //errorMessage[0].style.display = "block";
-    return;
-  }
-
-  // Hide error message if previously displayed
-  var errorMessage = document.getElementsByClassName("error-general-message");
-  //errorMessage.style.display = "none";
-  $(errorMessage).css("display", "none")
-
-
-  // Validate weight input
-  var weightInput = x[currentTab].querySelector('input[name="weight"]');
-  if (weightInput) {
-    var weightValue = weightInput.value.trim();
-    if (weightValue === '' || weightValue === '0') {
-      // Show error message if it's not already displayed
-      if (errorMessage.style.display === 'none') {
-        errorMessage.innerText = "Por favor, ingrese un peso válido.";
-        errorMessage.style.display = "block";
+  if(n === 1){
+    requiredInputs.forEach(input => {
+      if (input.value.trim() === '') {
+        allInputsFilled = false;
+        input.parentElement.classList.add('error');
+      } else {
+        input.parentElement.classList.remove('error');
       }
-      weightInput.classList.add('error');
+    });
+
+    if (!allInputsFilled) {
+      // Show error message
+      var errorMessage = document.getElementsByClassName("error-general-message");
+      $(errorMessage).text("Por favor, complete todos los campos requeridos antes de continuar.");
+      $(errorMessage).css("display", "block")
+      //errorMessage[0].innerText = "Por favor, complete todos los campos requeridos antes de continuar.";
+      //errorMessage[0].style.display = "block";
       return;
-    } else {
-      weightInput.classList.remove('error');
+    }
+
+    // Hide error message if previously displayed
+    var errorMessage = document.getElementsByClassName("error-general-message");
+    //errorMessage.style.display = "none";
+    $(errorMessage).css("display", "none");
+
+    // Validate weight input
+    var weightInput = x[currentTab].querySelector('input[name="weight"]');
+    if (weightInput) {
+      var weightValue = weightInput.value.trim();
+      if (weightValue === '' || weightValue === '0') {
+        // Show error message if it's not already displayed
+        if (errorMessage.style.display === 'none') {
+          errorMessage.innerText = "Por favor, ingrese un peso válido.";
+          errorMessage.style.display = "block";
+        }
+        weightInput.classList.add('error');
+        return;
+      } else {
+        weightInput.classList.remove('error');
+      }
     }
   }
 
@@ -339,11 +341,11 @@ $(document).ready(function(){
   });
 
   // Agrega clase focused a elemento padre de input para animar label de formularios
-  $('.form input').focus(function(){
+  $('.form input, .form textarea').focus(function(){
     $(this).parents('.field').addClass('focused');
   });
   // Valida input blur y elimina clase focused si el campo del formulario está vacío
-  $('.form input').blur(function(){
+  $('.form input, .form textarea').blur(function(){
     var inputValue = $(this).val();
     if ( inputValue == "" ) {
       $(this).parents('.field').removeClass('focused');  
@@ -387,14 +389,14 @@ $(document).ready(function(){
   // Registro usuarios
   $("#register-form").validate({
     rules: {
-      name: {
+      full_name: {
         required: true,
       },
       email: {
         required: true,
         email: true,
       },
-      phone: {
+      phone_number: {
         required: true,
         number: true,
       },
@@ -407,14 +409,14 @@ $(document).ready(function(){
       },
     },
     messages: {
-      name: {
+      full_name: {
         required: messageRequired,
       },
       email: {
         required: messageRequired,
         email: messageEmail,
       },
-      phone: {
+      phone_number: {
         required: messageRequired,
         number: messageNumber,
       },
@@ -507,6 +509,46 @@ $(document).ready(function(){
     }
   });
 
+  // Formulario de editar mascota
+  $("#edit-pet-form").validate({
+    rules: {
+      name: {
+        required: true,
+      },
+      age: {
+        required: true,
+      },
+      weight: {
+        required: true,
+      },
+      name_contact: {
+        required: true,
+      },
+      email_contact: {
+        required: true,
+        email: true,
+      },
+    },
+    messages: {
+      name: {
+        required: messageRequired,
+      },
+      age: {
+        required: messageRequired,
+      },
+      weight: {
+        required: messageRequired,
+      },
+      name_contact: {
+        required: messageRequired,
+      },
+      email_contact: {
+        required: messageRequired,
+        email: messageEmail
+      }
+    }
+  });
+
   // Editar Mis datos
   $("#account-form").validate({
     rules: {
@@ -537,6 +579,56 @@ $(document).ready(function(){
     }
   });
 
+  // Agregar Dirección
+  $("#address-form").validate({
+    ignore: [],
+    errorPlacement: function(error, element) {
+      error.insertAfter(element);
+    },
+    rules: {
+      name_address: {
+        required: true,
+      },
+      address: {
+        required: true,
+      },
+      additional_info: {
+        required: true,
+      },
+      depto: {
+        required: true,
+      },
+      city: {
+        required: true,
+      },
+      user_phone: {
+        required: true,
+        number: true,
+      },
+    },
+    messages: {
+      name_address: {
+        required: messageRequired,
+      },
+      address: {
+        required: messageRequired,
+      },
+      additional_info: {
+        required: messageRequired,
+      },
+      depto: {
+        required: messageRequired,
+      },
+      city: {
+        required: messageRequired,
+      },
+      user_phone: {
+        required: messageRequired,
+        number: messageNumber,
+      }
+    }
+  });
+
   // Personaliza select field
   $(".form .field select").niceSelect();
   //$(".form_breed_sex_input .breed-input .list").prepend(`<input type="text" class="nice-select-search" placeholder="Escribe la raza de tu mascota">`);
@@ -556,9 +648,9 @@ $(document).ready(function(){
   });
 
 
-  // Habilita edición de formulario Mis Datos
-  var arrayDataAccount = {};
-  $('#editMyAccount').click(function(){
+  // Habilita edición de formularios
+  var arrayDataForm = {};
+  $('#editDataForm').click(function(){
     var thisForm = $('.main_container--form form').attr('id');
     var inputs = $('#'+thisForm).find('input, select').not('[type="hidden"], [type="submit"], [type="button"], [noChange]');
 
@@ -568,12 +660,16 @@ $(document).ready(function(){
     $('.wrapper-submit-button').removeClass('hidden');
 
     $.each(inputs, function(i, val){
+      if($(val).is('select')){
+        $(val).parent().find('.nice-select').removeClass('disabled');
+      }
       var idVal = $(val).attr('id');
-      arrayDataAccount[idVal] = $(val).val();
+      arrayDataForm[idVal] = $(val).val();
     });
+    console.log(arrayDataForm);
   });
 
-  // Cancela edición de formulario Mis Datos
+  // Cancela edición de formularios
   $('#cancel-edit-form').click(function(){
     var thisForm = $('.main_container--form form').attr('id');
     var inputs = $('#'+thisForm).find('input, select').not('[type="hidden"], [type="submit"], [type="button"], [noChange]');
@@ -586,18 +682,35 @@ $(document).ready(function(){
     $(this).parents('.wrapper-submit-button').addClass('hidden');
     $('.wrapper-edit-button').removeClass('hidden');
 
-    $.each(arrayDataAccount, function(keyArray, valueArray){
+    $.each(arrayDataForm, function(keyArray, valueArray){
       $.each(inputs, function(i, val){
+        if($(val).is('select')){
+          $(val).parent().find('.nice-select').addClass('disabled');
+          returnSelectValue(val);
+        }
+        
         var valInput = $(val).attr('id');
         if(keyArray === valInput){
           $(val).val(valueArray);
         }
       });
     });
-    arrayDataAccount = {};
+    arrayDataForm = {};
   });
 });
 
+// FN return select value
+function returnSelectValue(obj){
+  var valSelect = $(obj).val();
+  var optNiceSelect = $(obj).parent().find('.nice-select li');
+
+  $.each(optNiceSelect, function(i, val){
+    var optDataValue = $(val).attr('data-value');
+    if(optDataValue === valSelect){
+      $(val).trigger('click');
+    }
+  });
+}
 
 // FN Add active class to menu link
 function activeMenu(){
@@ -631,7 +744,7 @@ function heightTitleCards(){
 // FN Valida valor de input y agrega clase focused si el campo del formulario NO está vacío
 function checkValInputsForms(){
   var thisForm = $('.main_container--form form').attr('id');
-  var inputs = $('#'+thisForm).find('input, select').not('[type="hidden"], [type="submit"]');
+  var inputs = $('#'+thisForm).find('input, select, textarea').not('[type="hidden"], [type="submit"]');
 
   $.each(inputs, function(i, val){
     var valThisInput = $(val).val();

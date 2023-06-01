@@ -58,8 +58,8 @@
                     </div>
 
                     <div class="form_breed_sex_input two-fields">
-                        <div class="field input breed-input">
-                            <select id="breed" name="breed" required>
+                        <div class="field input select-search-box">
+                            <select id="breed" class="search-box" name="breed" required>
                                 <option value="" selected disabled>Raza</option>
                                 {% for breed in breeds %}
                                 <option value="{{ breed.name }}">{{ breed.name }}</option>
@@ -212,7 +212,7 @@
 
                     <input id="input_weight_image" name='body_image' type="hidden" value="{{ puppy.body_image|default:'peso_ideal' }}">
 
-                    <span class="small">Pongamos la báscula a trabajar y descubramos su peso exacto.</span>
+                    <span class="small mt-2">Pongamos la báscula a trabajar y descubramos su peso exacto.</span>
                     <div class="field input">
                         <label for="weight" class="form-label">Peso (en Kilos)</label>
                         <input type="number" id="id_weight" name="weight" required><!--value="{{ form.weight.value|floatformat:0 }}"-->
@@ -242,7 +242,7 @@
                         <p>Si <span class="name_container"></span> tiene alergia a alguna proteína, <b>te recomendaremos el menú más adecuado</b>. Si tiene una patología diagnosticada, <b>crearemos un menú que responda a sus necesidades únicas</b>.</p>
                     </div>
 
-                    <div class="form_breed_input">
+                    <div class="form_allergies_input">
                         <div class="field input">
                         <select id="id_allergies" name="allergies" required>
                             <option value="" selected disabled>Alergias</option>
@@ -254,7 +254,7 @@
                         </div>
                     </div>
 
-                    <div class="form_breed_input">
+                    <div class="form_needs_input">
                         <div class="field input">
                             <select name="{{form.special_needs.name}}" id="{{form.special_needs.id_for_label}}" required>
                                 <option value="" selected disabled>Patologías</option>

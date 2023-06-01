@@ -11,8 +11,32 @@
     margin-bottom: 5px;
   }
 </style>
-<main class="main_container">
-    <div class="main_form_container">
+<main class="main_container pt-0">
+    <section class="page-section">
+        <div class="page-header">
+            <h1 class="page-title">Mis forever dog</h1>
+            <p>Crea una cuenta y sé parte de la manada Forever Dog</p>
+        </div>
+
+        <div class="list-wrapper mt-2">
+            {% if pets|length == 1 %}
+            <ul class="options-list center-list mb-2">
+            {% elif pets|length > 1%}
+            <ul class="options-list grid-list mb-2">
+            {% endif %}
+                {% for pet in pets %}
+                <li class="item-list">
+                    <a href="{% url 'edit-pet' pet.id %}" class="blue-card">{{pet.name}}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="wrapper-button">
+                <a class="add-pet-button" href="/dishes/"></a>
+            </div>
+        </div>
+    </section>
+
+    <!--<div class="main_form_container">
         <div class="wrapper">
             <section class="form login">
                 <table class="breed-table">
@@ -35,10 +59,10 @@
                         <td><a href="{% url 'edit-pet-menu' pet.id %}">Change menu</a></td>
                     </tr>
                     {% endfor %}
-                </table>
+                </table>-->
 
                 <!-- Modal -->
-                <div id="myModal" class="modal">
+                <!--<div id="myModal" class="modal">
                     <div class="modal-content">
                         <span class="close" style="cursor: pointer;">&times;</span>
                         <p>Are you sure you want to delete this pet?</p>
@@ -54,7 +78,7 @@
 
             </section>
         </div>
-    </div>
+    </div>-->
 </main>
 
 
