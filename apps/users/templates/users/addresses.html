@@ -29,25 +29,22 @@
         {% endif %}
 
         <div class="list-wrapper mt-2">
-            <!-- SI SOLO HAY UNA DIRECCIÓN
-            <ul class="options-list center-list mb-2">
-            -->
-            <!-- SI HAY MÁS DE 1 DIRECCIÓN-->
-            <ul class="options-list grid-list mb-2">
-            <!---->
-                <li class="item-list">
-                    <a href="#" class="blue-card border-radius">
-                        <span class="title-address">Casa</span>
-                        <span class="address">Cra 72 #4-18, Mandalay Bogotá</span>
-                    </a>
-                </li>
-                <li class="item-list">
-                    <a href="#" class="blue-card border-radius">
-                        <span class="title-address">Oficina</span>
-                        <span class="address">Cra 72 #4-18, Mandalay Bogotá</span>
-                    </a>
-                </li>
-            </ul>
+            {% if addresses %}
+                <ul class="options-list grid-list mb-2">
+                    {% for address in addresses %}
+                        <li class="item-list">
+                            <a href="#" class="blue-card border-radius">
+                                <span class="title-address">{{ address.name|capfirst }}</span>
+                                <span class="address">{{ address.display_address|capfirst }}.</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="alert alert--error">
+                    <p class="alert__message">No tienes direcciones registradas</p>
+                </div>
+            {% endif %}
             <div class="wrapper-button">
                 <a class="add-pet-button" href="/new-address"></a><!--Agregar url-->
             </div>

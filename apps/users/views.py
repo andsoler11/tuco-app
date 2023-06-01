@@ -28,9 +28,10 @@ def userLogin(request):
     if request.method == 'POST':
         username = request.POST['email'].lower()
         password = request.POST['password']
+        username_mask = privacy.secure_email(username)['mask']
 
-        try:    
-            user = CustomUser.objects.get(username=username)
+        try:
+            user = CustomUser.objects.get(username=username_mask)
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
@@ -228,9 +229,19 @@ def account(request):
 def custom_404(request, exception):
     return render(request, '404.html', status=404)
 
-
+@login_required(login_url='login')
 def myAddresses(request):
+    """Render My Addresses page"""
+    user = CustomUser.objects.get(id=request.user.id)
     context = {'page': 'addresses'}
+    if user.addresses:
+        addresses = json.loads(user.addresses)
+        for address in addresses:
+            address['address'] = privacy.decrypt(address['address'])
+            address['user_phone'] = privacy.decrypt(address['user_phone'])
+            address['display_address'] = f"{address['address']}, {address['depto']}, {address['city']}"
+
+        context['addresses'] = addresses
     return render(request, 'users/addresses.html', context)
 
 
@@ -253,10 +264,6 @@ def newAddress(request):
             messages.error(request, 'El nombre es demasiado corto')
             return redirect('new-address')
 
-        if not name_address.replace(" ", "").isalpha():
-            messages.error(request, 'El nombre es inválido')
-            return redirect('new-address')
-
         address = request.POST['address']
         if len(address) > 50:
             messages.error(request, 'La dirección es demasiado larga')
@@ -270,15 +277,15 @@ def newAddress(request):
 
         addresses = []
         if user.addresses:
-            addresses = user.addresses
+            addresses = json.loads(user.addresses)
 
         new_address = {
             'name': name_address,
-            'address': address,
+            'address': privacy.encrypt(address),
             'additional_info': request.POST['additional_info'],
             'depto': request.POST['depto'],
             'city': request.POST['city'],
-            'user_phone': request.POST['user_phone'],
+            'user_phone': privacy.encrypt(request.POST['user_phone']),
         }
 
         addresses.append(new_address)
