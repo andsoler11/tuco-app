@@ -130,7 +130,7 @@
                   <input id="editDataForm" type="button" value="Editar información" class="valid" aria-invalid="false">
                   <a class="link-button mt-1" href="#">Editar menú</a>
                   <div class="link mt-4">
-                    <a id="delet-pet" onclick="showModal('{{ pet.id }}')">Eliminar mascota</a>
+                    <a id="delet-pet" onclick="showModal('{{ puppy.id }}')">Eliminar mascota</a>
                   </div>
                 </div>
                 <div class="wrapper-submit-button hidden">
@@ -157,7 +157,7 @@
         Perderás el seguimiento de su progreso con Forever Dog</p>
     </div>
     <div class="button-container form mt-2">
-      <form id="deleteForm" method="POST">
+      <form id="deleteForm" method="POST" action="{% url 'delete-pet' puppy.id %}">
           {% csrf_token %}
           <div class="field button">
             <input type="submit" value="Si, Eliminar mascota" class="button">

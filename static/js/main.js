@@ -770,7 +770,6 @@ var deleteForm = document.getElementById("deleteForm");
 // Get the pet ID from the clicked button and set the form action URL
 function showModal(petId) {
     modal.style.display = "block";
-    deleteForm.action = "delete/" + petId;
 }
 
 // When the user clicks on <span> (x), close the modal
