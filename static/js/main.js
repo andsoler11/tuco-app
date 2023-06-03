@@ -652,7 +652,7 @@ $(document).ready(function(){
   var arrayDataForm = {};
   $('#editDataForm').click(function(){
     var thisForm = $('.main_container--form form').attr('id');
-    var inputs = $('#'+thisForm).find('input, select').not('[type="hidden"], [type="submit"], [type="button"], [noChange]');
+    var inputs = $('#'+thisForm).find('input, select, textarea').not('[type="hidden"], [type="submit"], [type="button"], [noChange]');
 
     $(inputs).removeAttr('disabled');
 
@@ -666,13 +666,13 @@ $(document).ready(function(){
       var idVal = $(val).attr('id');
       arrayDataForm[idVal] = $(val).val();
     });
-    console.log(arrayDataForm);
+    //console.log(arrayDataForm);
   });
 
   // Cancela edición de formularios
   $('#cancel-edit-form').click(function(){
     var thisForm = $('.main_container--form form').attr('id');
-    var inputs = $('#'+thisForm).find('input, select').not('[type="hidden"], [type="submit"], [type="button"], [noChange]');
+    var inputs = $('#'+thisForm).find('input, select, textarea').not('[type="hidden"], [type="submit"], [type="button"], [noChange]');
 
     $(inputs).attr('disabled', 'disabled');
     $(inputs).removeClass('error');

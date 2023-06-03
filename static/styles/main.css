@@ -453,19 +453,21 @@ input[type="number"]::-webkit-inner-spin-button {
     display: block;
 }
 
-/* ACCOUNT FORM*/
 .form form.disabled-form .input input[disabled],
 .form form.disabled-form .input input[nochange],
 .form form.disabled-form .input select[disabled],
-.form form.disabled-form .input select[nochange] {
+.form form.disabled-form .input select[nochange],
+.form form.disabled-form .input textarea[disabled],
+.form form.disabled-form .input textarea[nochange] {
     background: #d5d5d5!important;
     cursor: no-drop!important;
     color: #666;
 }
+
 .form form.disabled-form #cancel-edit-form {
     cursor: pointer;
 }
-/* ACCOUNT FORM */
+
 
 .main_container--home {
     justify-content: flex-start;

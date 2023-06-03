@@ -295,3 +295,8 @@ def newAddress(request):
         return redirect('addresses')
 
     return render(request, 'users/new-address.html', context)
+
+def addressDetail(request):
+    """Render detail address"""
+    context = {'page': 'address-detail'}
+    return render(request, 'users/address-detail.html', context)

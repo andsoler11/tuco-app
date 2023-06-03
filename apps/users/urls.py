@@ -11,6 +11,7 @@ urlpatterns = [
     path('account/', views.account, name='account'),
     path('my-addresses/', views.myAddresses, name='addresses'),
     path('new-address/', views.newAddress, name='new-address'),
+    path('address-detail/', views.addressDetail, name='address-detail'),
     path('recover-password/', views.recoverPassword, name='recover-password'),
     path('new-password-token/', views.newPasswordToken, name='new-password-token'),
     path('new-password/', views.newPassword, name='new-password'),
