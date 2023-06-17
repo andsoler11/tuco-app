@@ -10,6 +10,12 @@
         </a>
         <div class="top-shelf-icons">
             {% if request.user.is_authenticated %}
+            <a href="{% url 'profile' %}">
+                <img src="{% static 'images/user-icon.svg' %}" alt="user">
+            </a>
+            <a href="">
+                <img src="{% static 'images/cart-icon.svg' %}" alt="cart">
+            </a>
             {% else %}
                 <a href="{% url 'login' %}">
                     <img src="{% static 'images/user-icon.svg' %}" alt="user">
@@ -45,6 +51,12 @@
         
         <div class="top-shelf-icons-desktop hide-mobile">
             {% if request.user.is_authenticated %}
+                <a href="{% url 'profile' %}">
+                    <img src="{% static 'images/user-icon.svg' %}" alt="user">
+                </a>
+                <a href="">
+                    <img src="{% static 'images/cart-icon.svg' %}" alt="cart">
+                </a>
             {% else %}
                 <a href="{% url 'login' %}">
                     <img src="{% static 'images/user-icon.svg' %}" alt="user">

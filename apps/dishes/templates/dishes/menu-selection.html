@@ -47,7 +47,7 @@
                             {% for pet_name,data in menu.prices.items %}
                             <div class="menu_data__price">
                                 <div class="price_container">
-                                    <p class="prices_container__text price_month">${% widthratio data.price 1 30 as price_month %}{{ price_month|round_thousands|intcomma }} Mensual</p>
+                                    <p class="prices_container__text price_month"><span>${% widthratio data.price 1 30 as price_month %}{{ price_month|round_thousands|intcomma }}</span> Mensual</p>
                                     <p class="prices_container__text price_day">${{data.price|round_thousands|intcomma}} al día</p>
                                 </div>
                                 
@@ -103,7 +103,7 @@
 
                                 <div class="menu_data__price">
                                     <div class="price_container">
-                                        <p class="prices_container__text price_month">${% widthratio data.price 1 30 as price_month %}{{ price_month|round_thousands|intcomma }} Mensual</p>
+                                        <p class="prices_container__text price_month"><span>${% widthratio data.price 1 30 as price_month %}{{ price_month|round_thousands|intcomma }}</span> Mensual</p>
                                         <p class="prices_container__text price_day">${{data.price|round_thousands|intcomma}} al día</p>
                                     </div>
                                     

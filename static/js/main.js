@@ -385,7 +385,6 @@ $(document).ready(function(){
     }
   });
 
-
   // Registro usuarios
   $("#register-form").validate({
     rules: {
@@ -429,7 +428,6 @@ $(document).ready(function(){
       }
     }
   });
-
 
   // Recuperar contraseña
   $("#password-form").validate({
@@ -629,8 +627,55 @@ $(document).ready(function(){
     }
   });
 
+  // Agregar Método de pago
+  $("#paymentMethod-form").validate({
+    ignore: [],
+    errorPlacement: function(error, element) {
+      error.insertAfter(element);
+    },
+    rules: {
+      number_card: {
+        required: true,
+        number: true,
+      },
+      due_date: {
+        required: true,
+      },
+      ccv: {
+        required: true,
+        number: true,
+      },
+      document_type: {
+        required: true,
+      },
+      document_number: {
+        required: true,
+      },
+    },
+    messages: {
+      number_card: {
+        required: messageRequired,
+        number: messageNumber,
+      },
+      due_date: {
+        required: messageRequired,
+      },
+      ccv: {
+        required: messageRequired,
+        number: messageNumber,
+      },
+      document_type: {
+        required: messageRequired,
+      },
+      document_number: {
+        required: messageRequired,
+      }
+    }
+  });
+
   // Personaliza select field
   $(".form .field select").niceSelect();
+  $(".cart-item-group .item select").niceSelect();
   //$(".form_breed_sex_input .breed-input .list").prepend(`<input type="text" class="nice-select-search" placeholder="Escribe la raza de tu mascota">`);
 
   //Ajusta altura de textos en cards de menú

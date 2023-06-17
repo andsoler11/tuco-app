@@ -1,0 +1,130 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<main class="main_container main_container--cart">
+    <section class="page-section section-xl">
+        <div class="cart-info">
+            <div class="page-header">
+                <h1 class="page-title">Carrito</h1>
+                <p><b>TOTAL (3 productos) $400.000</b></p><br>
+                <p>Termina el proceso de compra ahora para darle a tu Foreverdog lo que se merece.</p>
+            </div>
+            <div class="cart-item-group mt-2">
+                <div class="item">
+                    <div class="item-image">
+                        <a href="#"><img src="{% static 'images/contact_detail_image2.svg' %}" alt=""></a>
+                    </div>
+                    <div class="item-attributes">
+                        <div class="item-name">
+                            <p><b>Pollo campesino, Frutas & Verduras Frescas</b></p>
+                        </div>
+                        <div class="item-price">
+                            <p>$300.000 mensual</p>
+                        </div>
+                        <div class="item-amount">
+                            <div class="wrapper-select">
+                                <span>Cantidad:</span>
+                                <select id="item-amount" name="item-amount" required>
+                                    <option value="1" selected>1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="item-link">
+                            <a href="#">Ver detalle</a>
+                        </div>
+                    </div>
+                    <div class="item-action">
+                        <button class="remove-item"></button>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="item-image">
+                        <a href="#"><img src="{% static 'images/contact_detail_image2.svg' %}" alt=""></a>
+                    </div>
+                    <div class="item-attributes">
+                        <div class="item-name">
+                            <p><b>Pollo campesino, Frutas & Verduras Frescas</b></p>
+                        </div>
+                        <div class="item-price">
+                            <p>$300.000 mensual</p>
+                        </div>
+                        <div class="item-amount">
+                            <div class="wrapper-select">
+                                <span>Cantidad:</span>
+                                <select id="item-amount" name="item-amount" required>
+                                    <option value="1" selected>1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="item-link">
+                            <a href="#">Ver detalle</a>
+                        </div>
+                    </div>
+                    <div class="item-action">
+                        <button class="remove-item"></button>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="item-image">
+                        <a href="#"><img src="{% static 'images/contact_detail_image2.svg' %}" alt=""></a>
+                    </div>
+                    <div class="item-attributes">
+                        <div class="item-name">
+                            <p><b>Pollo campesino, Frutas & Verduras Frescas</b></p>
+                        </div>
+                        <div class="item-price">
+                            <p>$300.000 mensual</p>
+                        </div>
+                        <div class="item-amount">
+                            <div class="wrapper-select">
+                                <span>Cantidad:</span>
+                                <select id="item-amount" name="item-amount" required>
+                                    <option value="1" selected>1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="item-link">
+                            <a href="#">Ver detalle</a>
+                        </div>
+                    </div>
+                    <div class="item-action">
+                        <button class="remove-item"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <aside class="cart-summary mt-4">
+            <h4 class="cart-summary-title mb-2">Resumen del pedido</h4>
+            <div class="cart-summary-total-items">
+                <span class="summary-label">3 productos</span>
+                <span class="product-value">$400.000</span>
+            </div>
+            <div class="cart-summary-delivery-total">
+                <span class="summary-label">Envío</span>
+                <span class="delivery-value">A calcular</span>
+            </div>
+            <div class="cart-summary-price-total">
+                <span class="summary-label"><b>Total</b></span>
+                <span class="delivery-value"><b>$400.000</b></span>
+            </div>
+            <a class="link-button mt-2" href="/checkout">Proceder a pagar</a>
+        </aside>
+    </section>
+</main>
+
+{% endblock %}

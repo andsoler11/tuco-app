@@ -5,8 +5,15 @@
 <main class="main_container main_container--form">
     <div class="form_wrapper">
         <section class="form">
+            <div class="form_back_section">
+                <div class="back_icon_container">
+                    <i class="fa fa-angle-left"></i>
+                    <a href="{% url 'addresses' %}"><p>Volver</p></a>
+                </div>
+            </div>
+
             <div class="form_header">
-                <h1 class="title-form">Agregar Dirección</h1>
+                <h1 class="title-form">Casa</h1>
             </div>
 
             {% if messages|length > 0 %}

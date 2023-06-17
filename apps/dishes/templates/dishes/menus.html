@@ -21,7 +21,7 @@
                 <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Gastro">
                 <div class="diet-description">
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
-                  <div class="price-month">${% widthratio menu.price 1 30 as price_month %}{{ price_month|round_thousands|intcomma }} mensual</div>
+                  <div class="price-month"><span>${% widthratio menu.price 1 30 as price_month %}{{ price_month|round_thousands|intcomma }}</span> mensual</div>
                   <div class="price-day">${{menu.price|round_thousands|intcomma}} al día</div>
                 </div>
                 <a href="{% url 'menu-detail' menu.id pet.id %}">Ver detalles</a>

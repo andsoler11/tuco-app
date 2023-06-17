@@ -935,6 +935,11 @@ input[type="number"]::-webkit-inner-spin-button {
 .list-wrapper .options-list li a.white-card:hover {
     box-shadow: 0 0 10px 5px rgba(0,0,0,.05);
 }
+.list-wrapper .options-list li a.icon-card {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
 
 .list-wrapper .options-list li a:after {
     width: 15px;
@@ -955,8 +960,21 @@ input[type="number"]::-webkit-inner-spin-button {
     border-top: 1px solid var(--black-font);
     border-right: 1px solid var(--black-font);
 }
-.list-wrapper .options-list li a span {
+.list-wrapper .options-list li a span:not(.icon-method) {
     display: block;
+}
+.list-wrapper .options-list li a span.icon-method {
+    border: 1px solid #ccc;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex!important;
+    align-items: center;
+    background: #fff;
+}
+.list-wrapper .options-list li a span.icon-method img {
+    width: 80%;
+    margin: 0 auto;
 }
 .list-wrapper .options-list li a span.title-address {
     font-weight: 900;

@@ -300,3 +300,28 @@ def addressDetail(request):
     """Render detail address"""
     context = {'page': 'address-detail'}
     return render(request, 'users/address-detail.html', context)
+
+def paymentMethods(request):
+    """Render payment methods list"""
+    context = {'page': 'payment-methods'}
+    return render(request, 'users/payment-methods.html', context)
+
+def newPaymentMethod(request):
+    """Render new payment methods form"""
+    context = {'page': 'new-method'}
+    return render(request, 'users/new-method.html', context)
+
+def paymentMethodDetail(request):
+    """Render payment method detail"""
+    context = {'page': 'method-detail'}
+    return render(request, 'users/method-detail.html', context)
+
+def cart(request):
+    """Render cart page"""
+    context = {'page': 'cart'}
+    return render(request, 'users/cart.html', context)
+
+def checkout(request):
+    """Render checkout page"""
+    context = {'page': 'checkout'}
+    return render(request, 'users/checkout.html', context)
