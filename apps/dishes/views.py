@@ -100,7 +100,7 @@ def formulate_home(request, menu_id=None):
             contact.save()
         ##########################################################
 
-        if menu_id is not None:
+        if menu_id is not None or request.POST.get('update') == 'true':
             return redirect('list-pets')
 
         return redirect('menus', pk=pk)

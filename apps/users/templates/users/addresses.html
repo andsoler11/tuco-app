@@ -37,7 +37,7 @@
                 {% endif %}
                     {% for address in addresses %}
                         <li class="item-list">
-                            <a href="/address-detail" class="blue-card border-radius">
+                            <a href="{% url 'address-detail' address.name %}" class="blue-card border-radius">
                                 <span class="title-address">{{ address.name|capfirst }}</span>
                                 <span class="address">{{ address.display_address|capfirst }}.</span>
                             </a>

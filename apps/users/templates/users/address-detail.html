@@ -13,7 +13,7 @@
             </div>
 
             <div class="form_header">
-                <h1 class="title-form">Casa</h1>
+                <h1 class="title-form">{{address.name|capfirst}}</h1>
             </div>
 
             {% if messages|length > 0 %}
@@ -30,39 +30,39 @@
                 {% csrf_token %}
                 <div class="field input focused">
                     <label for="name_address" class="form-label">Nombre (Ej: Casa)</label>
-                    <input type="text" id="name_address" name="name_address" value="Casa" required disabled>
+                    <input type="text" id="name_address" name="name_address" value="{{address.name}}" required disabled>
                 </div>
 
                 <div class="field input focused">
                     <label for="address" class="form-label">Dirección</label>
-                    <input type="text" id="address" name="address" value="Calle 159 #54 - 69" required disabled>
+                    <input type="text" id="address" name="address" value="{{address.address}}" required disabled>
                 </div>
 
                 <div class="field input focused">
                     <label for="additional_info" class="form-label">Información adicional</label>
-                    <textarea id="additional_info" name="additional_info" required disabled>Portus</textarea>
+                    <textarea id="additional_info" name="additional_info" required disabled>{% if address.additional_info %}{{address.additional_info}}{% endif %}</textarea>
                     <span class="small">Ejemplo: Barrio, edificio, torre, apartamento</span>
                 </div>
 
                 <div class="field input select-search-box focused">
                     <select id="depto" class="search-box" name="depto" option="Departamento" required disabled>
                         <option value="" selected disabled>Departamento</option>
-                        <option value="depto1">Depto 1</option>
-                        <option value="depto2">Depto 2</option>
+                        <option value="depto1" {% if address.depto == 'depto1' %}selected{% endif %}>Depto 1</option>
+                        <option value="depto2" {% if address.depto == 'depto2' %}selected{% endif %}>Depto 2</option>
                     </select>
                 </div>
 
                 <div class="field input select-search-box focused">
                     <select id="city" class="search-box" name="city" required disabled>
                         <option value="" selected disabled>Ciudad</option>
-                        <option value="city1">Ciudad 1</option>
-                        <option value="city2">Ciudad 2</option>
+                        <option value="city1" {% if address.city == 'city1' %}selected{% endif %}>Ciudad 1</option>
+                        <option value="city2" {% if address.city == 'city2' %}selected{% endif %}>Ciudad 2</option>
                     </select>
                 </div>
 
                 <div class="field input focused">
                     <label for="user_phone" class="form-label">Teléfono</label>
-                    <input type="tel" id="user_phone" name="user_phone" value="1234567890" required disabled>
+                    <input type="tel" id="user_phone" name="user_phone" value="{{address.user_phone}}" required disabled>
                     <span class="small">Solo te llamaremos si tenemos alguna duda sobre tu pedido.</span>
                 </div>
                 
@@ -71,7 +71,7 @@
                       <input id="editDataForm" type="button" value="Editar dirección" class="valid" aria-invalid="false">
                       
                       <div class="link mt-4">
-                        <a id="delet-address" onclick="showModal()">Eliminar dirección</a>
+                        <a id="delet-address" onclick="showModal('{{ address.name }}')">Eliminar dirección</a>
                       </div>
                     </div>
                     <div class="wrapper-submit-button hidden">
@@ -95,7 +95,7 @@
         </p>
       </div>
       <div class="button-container form mt-2">
-        <form id="deleteForm" method="POST" action=""><!--Agregar Action-->
+        <form id="deleteForm" method="POST" action="{% url 'delete-address' address.name %}"><!--Agregar Action-->
             {% csrf_token %}
             <div class="field button">
               <input type="submit" value="Si, Eliminar dirección" class="button">

@@ -249,28 +249,9 @@ def myAddresses(request):
 def newAddress(request):
     context = {'page': 'new-address'}
     if request.method == 'POST':
-        required_fields = ['depto', 'city', 'address', 'user_phone', 'name_address']
-        for field in required_fields:
-            if not request.POST.get(field):
-                messages.error(request, f'El campo {field} es requerido')
-                return redirect('new-address')
-
-        name_address = request.POST['name_address']
-        if len(name_address) > 50:
-            messages.error(request, 'El nombre es demasiado largo')
-            return redirect('new-address')
-
-        if len(name_address) < 3:
-            messages.error(request, 'El nombre es demasiado corto')
-            return redirect('new-address')
-
-        address = request.POST['address']
-        if len(address) > 50:
-            messages.error(request, 'La dirección es demasiado larga')
-            return redirect('new-address')
-
-        if len(address) < 3:
-            messages.error(request, 'La dirección es demasiado corta')
+        message = validate_address(request)
+        if message != 'ok':
+            messages.error(request, message)
             return redirect('new-address')
 
         user = CustomUser.objects.get(id=request.user.id)
@@ -280,8 +261,8 @@ def newAddress(request):
             addresses = json.loads(user.addresses)
 
         new_address = {
-            'name': name_address,
-            'address': privacy.encrypt(address),
+            'name': request.POST['name_address'],
+            'address': privacy.encrypt(request.POST['address']),
             'additional_info': request.POST['additional_info'],
             'depto': request.POST['depto'],
             'city': request.POST['city'],
@@ -296,10 +277,72 @@ def newAddress(request):
 
     return render(request, 'users/new-address.html', context)
 
-def addressDetail(request):
+@login_required(login_url='login')
+def addressDetail(request, pk):
     """Render detail address"""
+
+    user = CustomUser.objects.get(id=request.user.id)
+    addresses = json.loads(user.addresses)
+    
+    for address in addresses:
+        if address['name'] == pk:
+            address['address'] = privacy.decrypt(address['address'])
+            address['user_phone'] = privacy.decrypt(address['user_phone'])
+            
+            if request.method == 'POST':
+                message = validate_address(request)
+                if message != 'ok':
+                    messages.error(request, message)
+                    return redirect('address-detail', pk)
+
+                user = CustomUser.objects.get(id=request.user.id)
+
+                addresses = []
+                if user.addresses:
+                    addresses = json.loads(user.addresses)
+
+                new_address = {
+                    'name': request.POST['name_address'],
+                    'address': privacy.encrypt(request.POST['address']),
+                    'additional_info': request.POST['additional_info'],
+                    'depto': request.POST['depto'],
+                    'city': request.POST['city'],
+                    'user_phone': privacy.encrypt(request.POST['user_phone']),
+                }
+
+                # delete old address
+                for address in addresses:
+                    if address['name'] == pk:
+                        addresses.remove(address)
+                        break
+
+                addresses.append(new_address)
+                user.addresses = json.dumps(addresses)
+                user.save()
+                messages.success(request, 'Dirección actualizada correctamente')
+                return redirect('addresses')
+            
+            context = {'page': 'address-detail', 'address': address}
+            return render(request, 'users/address-detail.html', context)
+
     context = {'page': 'address-detail'}
     return render(request, 'users/address-detail.html', context)
+
+
+def addressDelete(request, pk):
+    """Delete address"""
+    user = CustomUser.objects.get(id=request.user.id)
+    addresses = json.loads(user.addresses)
+    for address in addresses:
+        if address['name'] == pk:
+            addresses.remove(address)
+            user.addresses = json.dumps(addresses)
+            user.save()
+            messages.success(request, 'Dirección eliminada correctamente')
+            return redirect('addresses')
+
+    messages.error(request, 'Dirección no encontrada')
+    return redirect('addresses')
 
 def paymentMethods(request):
     """Render payment methods list"""
@@ -325,3 +368,28 @@ def checkout(request):
     """Render checkout page"""
     context = {'page': 'checkout'}
     return render(request, 'users/checkout.html', context)
+
+def validate_address(request):
+    """Validate address"""
+    output_message = 'ok'
+
+    required_fields = ['depto', 'city', 'address', 'user_phone', 'name_address']
+    for field in required_fields:
+        if not request.POST.get(field):
+            output_message = f'El campo {field} es requerido'
+
+    name_address = request.POST['name_address']
+    if len(name_address) > 50:
+        output_message = 'El nombre es demasiado largo'
+
+    if len(name_address) < 3:
+        output_message = 'El nombre es demasiado corto'
+
+    address = request.POST['address']
+    if len(address) > 50:
+        output_message = 'La dirección es demasiado larga'
+
+    if len(address) < 3:
+        output_message = 'La dirección es demasiado corta'
+
+    return output_message

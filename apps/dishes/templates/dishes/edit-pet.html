@@ -61,7 +61,9 @@
                 </div>
               </div>
 
-              <div class="form_breed_sex_input">
+              <input type="hidden" name="body_image" value="{{ puppy.body_image }}">
+
+              {% comment %} <div class="form_breed_sex_input">
                 <div class="field input">
                     <select id="sex" name="sex" required disabled>
                         <option value="" selected disabled>Sexo</option>
@@ -69,7 +71,7 @@
                         <option value="macho" {% if puppy.sex == 'macho' %}selected{% endif %}>Macho</option>
                     </select>
                 </div>
-              </div>
+              </div> {% endcomment %}
 
               <div class="wrapper-radios">
                 <div class="field input breed-input focused">
@@ -125,10 +127,13 @@
                 </div>
               </div>
 
+
+              <input type="hidden" name="update" value="true">
+
               <div class="field button focused mt-2">
                 <div class="wrapper-edit-button focused">
                   <input id="editDataForm" type="button" value="Editar información" class="valid" aria-invalid="false">
-                  <a class="link-button mt-1" href="#">Editar menú</a>
+                  <a class="link-button mt-1" href="{% url 'menus' puppy.id %}">Editar menú</a>
                   <div class="link mt-4">
                     <a id="delet-pet" onclick="showModal('{{ puppy.id }}')">Eliminar mascota</a>
                   </div>
