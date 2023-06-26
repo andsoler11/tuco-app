@@ -107,7 +107,7 @@
                                         <p class="prices_container__text price_day">${{data.price|round_thousands|intcomma}} al día</p>
                                     </div>
                                     
-                                    <form method="POST">
+                                    <form method="POST" action="{% url 'add-to-cart' menu.id pet.id %}">
                                         {% csrf_token %}
                                         <div class="field button">
                                             <button class="add-btn update-cart"><img src="{% static 'images/icon-cart.svg' %}"><span>{{button_message}}</span></button>

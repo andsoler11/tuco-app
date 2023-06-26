@@ -1,118 +1,70 @@
 {% extends 'main.html' %}
 {% load static %}
+{% load humanize %}
 {% block content %}
+{% load custom_tags %}
 
 <main class="main_container main_container--cart">
     <section class="page-section section-xl">
         <div class="cart-info">
             <div class="page-header">
                 <h1 class="page-title">Carrito</h1>
-                <p><b>TOTAL (3 productos) $400.000</b></p><br>
+                <p><b>TOTAL ({{cart_items.total.quantity}} producto{% if cart_items.total.quantity > 1 %}s{% endif %}) ${{ cart_items.total.price_month|round_thousands|intcomma }}</b></p><br>
                 <p>Termina el proceso de compra ahora para darle a tu Foreverdog lo que se merece.</p>
             </div>
+
             <div class="cart-item-group mt-2">
-                <div class="item">
-                    <div class="item-image">
-                        <a href="#"><img src="{% static 'images/contact_detail_image2.svg' %}" alt=""></a>
-                    </div>
-                    <div class="item-attributes">
-                        <div class="item-name">
-                            <p><b>Pollo campesino, Frutas & Verduras Frescas</b></p>
+                {% for menu_id, values in cart_items.items %}
+                    {% if menu_id != 'total' %}
+                    <div class="item">
+                        <div class="item-image">
+                            <a href="#"><img src="{% static 'images/contact_detail_image2.svg' %}" alt=""></a>
                         </div>
-                        <div class="item-price">
-                            <p>$300.000 mensual</p>
-                        </div>
-                        <div class="item-amount">
-                            <div class="wrapper-select">
-                                <span>Cantidad:</span>
-                                <select id="item-amount" name="item-amount" required>
-                                    <option value="1" selected>1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
+                        <div class="item-attributes">
+                            <div class="item-name">
+                                <p><b>{{values.menu_name}}</b></p>
+                            </div>
+                            {% comment %} <div class="item-price">
+                                <p>${{ values.price_month|round_thousands|intcomma }}</p>
+                            </div> {% endcomment %}
+                            <div class="item-price-{{ menu_id }}">
+                                <p id="item-price-{{ menu_id }}">Total: ${{ values.quantity|multiply:values.price_month|round_thousands|intcomma }}</p>
+                            </div>
+                            
+                            <div class="item-amount">
+                                <div class="wrapper-select">
+                                    <span>Cantidad:</span>
+                                    <select id="item-amount-{{ menu_id }}" name="item-amount" onChange="changeTotal('{{ menu_id }}', this.value, {{values}})" required>
+                                        <option value="1" {% if values.quantity == 1 %}selected{% endif %}>1</option>
+                                        <option value="2" {% if values.quantity == 2 %}selected{% endif %}>2</option>
+                                        <option value="3" {% if values.quantity == 3 %}selected{% endif %}>3</option>
+                                        <option value="4" {% if values.quantity == 4 %}selected{% endif %}>4</option>
+                                        <option value="5" {% if values.quantity == 5 %}selected{% endif %}>5</option>
+                                        <option value="6" {% if values.quantity == 6 %}selected{% endif %}>6</option>
+                                        <option value="7" {% if values.quantity == 7 %}selected{% endif %}>7</option>
+                                        <option value="8" {% if values.quantity == 8 %}selected{% endif %}>8</option>
+                                        <option value="9" {% if values.quantity == 9 %}selected{% endif %}>9</option>
+                                        <option value="10" {% if values.quantity == 10 %}selected{% endif %}>10</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="item-link">
+                                <a href="#">Ver detalle</a>
                             </div>
                         </div>
-                        <div class="item-link">
-                            <a href="#">Ver detalle</a>
+                        <div class="item-action">
+                            <button class="remove-item"></button>
                         </div>
                     </div>
-                    <div class="item-action">
-                        <button class="remove-item"></button>
-                    </div>
-                </div>
-
-                <div class="item">
-                    <div class="item-image">
-                        <a href="#"><img src="{% static 'images/contact_detail_image2.svg' %}" alt=""></a>
-                    </div>
-                    <div class="item-attributes">
-                        <div class="item-name">
-                            <p><b>Pollo campesino, Frutas & Verduras Frescas</b></p>
-                        </div>
-                        <div class="item-price">
-                            <p>$300.000 mensual</p>
-                        </div>
-                        <div class="item-amount">
-                            <div class="wrapper-select">
-                                <span>Cantidad:</span>
-                                <select id="item-amount" name="item-amount" required>
-                                    <option value="1" selected>1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="item-link">
-                            <a href="#">Ver detalle</a>
-                        </div>
-                    </div>
-                    <div class="item-action">
-                        <button class="remove-item"></button>
-                    </div>
-                </div>
-
-                <div class="item">
-                    <div class="item-image">
-                        <a href="#"><img src="{% static 'images/contact_detail_image2.svg' %}" alt=""></a>
-                    </div>
-                    <div class="item-attributes">
-                        <div class="item-name">
-                            <p><b>Pollo campesino, Frutas & Verduras Frescas</b></p>
-                        </div>
-                        <div class="item-price">
-                            <p>$300.000 mensual</p>
-                        </div>
-                        <div class="item-amount">
-                            <div class="wrapper-select">
-                                <span>Cantidad:</span>
-                                <select id="item-amount" name="item-amount" required>
-                                    <option value="1" selected>1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="item-link">
-                            <a href="#">Ver detalle</a>
-                        </div>
-                    </div>
-                    <div class="item-action">
-                        <button class="remove-item"></button>
-                    </div>
-                </div>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
         <aside class="cart-summary mt-4">
             <h4 class="cart-summary-title mb-2">Resumen del pedido</h4>
             <div class="cart-summary-total-items">
-                <span class="summary-label">3 productos</span>
-                <span class="product-value">$400.000</span>
+                <span class="summary-label">{{cart_items.total.quantity}} producto{% if cart_items.total.quantity > 1 %}s{% endif %}</span>
+                <span class="product-value">${{ cart_items.total.price_month|round_thousands|intcomma }}</span>
             </div>
             <div class="cart-summary-delivery-total">
                 <span class="summary-label">Envío</span>
@@ -120,11 +72,63 @@
             </div>
             <div class="cart-summary-price-total">
                 <span class="summary-label"><b>Total</b></span>
-                <span class="delivery-value"><b>$400.000</b></span>
+                <span class="delivery-value"><b>${{ cart_items.total.price_month|round_thousands|intcomma }}</b></span>
             </div>
             <a class="link-button mt-2" href="/checkout">Proceder a pagar</a>
         </aside>
     </section>
 </main>
+<script>
+    // Get all the select elements
+    var selects = document.querySelectorAll('[id^="item-amount-"]');
+
+    // Add event listener to each select element
+    selects.forEach(function(select) {
+        select.addEventListener('change', function() {
+            // Get the menu_id from the select element's ID
+            var menuId = select.id.split('-')[2];
+
+            // Get the selected quantity value
+            var quantity = parseInt(select.value);
+
+            // Calculate the updated total price
+            var priceMonth = parseInt('{{ values.price_month }}'); // Retrieve the price_month value from the server-side variable
+
+            var total = quantity * priceMonth;
+
+            // Update the total price element
+            var totalPriceElement = document.getElementById('total-price-' + menuId);
+            totalPriceElement.textContent = '$' + total;
+        });
+    });
+</script>
+
+<script>
+    function changeTotal(menuId, select, values) {
+        console.log('changeTotal')
+        console.log(menuId)
+        // Get the selected quantity value
+        var quantity = parseInt(select.value) ?? 1;
+        // check that quantity is not Nan 
+        if (isNaN(quantity)) {
+            quantity = 1;
+        }
+
+        // round the price_month value to thousands
+        values.price_month = Math.round(values.price_month / 1000) * 1000;
+
+        // Calculate the updated total price
+        var priceMonth = parseInt(values.price_month); // Retrieve the price_month value from the server-side variable
+        console.log(priceMonth)
+        console.log(quantity)
+        var total = quantity * priceMonth;
+
+        // Update the total price element
+        var totalPriceElement = document.getElementById('item-price-' + menuId);
+        console.log(totalPriceElement)
+        totalPriceElement.textContent = 'Total: $' + total;
+    }
+
+</script>
 
 {% endblock %}

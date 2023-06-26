@@ -20,5 +20,6 @@ urlpatterns = [
     path('new-password-token/', views.newPasswordToken, name='new-password-token'),
     path('new-password/', views.newPassword, name='new-password'),
     path('cart/', views.cart, name='cart'),
-    path('checkout/', views.checkout, name='checkout')
+    path('checkout/', views.checkout, name='checkout'),
+    path('add-to-cart/<str:menu_id>/<str:pet_id>/', views.add_to_cart, name='add-to-cart'),
 ]

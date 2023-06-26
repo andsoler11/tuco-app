@@ -274,15 +274,6 @@ def menu_detail(request, menu_id, pet_id=None):
             if puppy is None:
                 return redirect('dishes')
 
-        # puppies_grams = {
-        #     puppy.name: {
-        #         'grams': int(puppy.grams),
-        #         'price': get_price_from_weight(float(puppy.grams), float(puppy.weight)),
-        #         'id': puppy.id
-        #     }
-        # }
-        # menu.prices = puppies_grams
-
     if request.method == 'POST':
         if pet_id:
             puppy.menu_id = menu.id

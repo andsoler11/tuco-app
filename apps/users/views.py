@@ -7,6 +7,8 @@ from .forms import CustomUserCreationForm
 from utils.privacy import Privacy
 from django.contrib.auth.decorators import login_required
 from apps.users.utils import *
+from apps.dishes.models import Menus, Pet
+from apps.dishes.utils import *
 
 privacy = Privacy()
 
@@ -359,11 +361,6 @@ def paymentMethodDetail(request):
     context = {'page': 'method-detail'}
     return render(request, 'users/method-detail.html', context)
 
-def cart(request):
-    """Render cart page"""
-    context = {'page': 'cart'}
-    return render(request, 'users/cart.html', context)
-
 def checkout(request):
     """Render checkout page"""
     context = {'page': 'checkout'}
@@ -393,3 +390,48 @@ def validate_address(request):
         output_message = 'La dirección es demasiado corta'
 
     return output_message
+
+
+def add_to_cart(request, menu_id, pet_id):
+    """Add product to cart"""
+    puppy = Pet.objects.get(id=pet_id)
+
+    item_to_cart = {}
+    item_to_cart['price'] = get_price_from_weight(float(puppy.grams), float(puppy.weight))
+    item_to_cart['price_month'] = item_to_cart['price'] * 30
+    item_to_cart['pet_name'] = puppy.name
+    item_to_cart['menu_id'] = menu_id
+    item_to_cart['pet_id'] = pet_id
+    item_to_cart['quantity'] = 1
+
+    cart_items = request.session.get('cart_items', {})
+    if menu_id in cart_items:
+        cart_items[menu_id]['quantity'] += 1
+
+    cart_items[menu_id] = item_to_cart
+    request.session['cart_items'] = cart_items
+
+    return redirect('cart')
+
+
+def cart(request):
+    """Render cart page"""
+    cart_items = request.session.get('cart_items', {})
+
+    for key, item in cart_items.items():
+        menu = Menus.objects.get(id=item['menu_id'])
+        item['menu_name'] = menu.name
+
+    cart_items['total'] = {}
+
+    cart_items['total']['price'] = 0
+    cart_items['total']['price_month'] = 0
+    cart_items['total']['quantity'] = 0
+    for key, item in cart_items.items():
+        if key != 'total':
+            cart_items['total']['price'] += item['price'] * item['quantity']
+            cart_items['total']['price_month'] += item['price_month'] * item['quantity']
+            cart_items['total']['quantity'] += item['quantity']
+
+    context = {'page': 'cart', 'cart_items': cart_items}
+    return render(request, 'users/cart.html', context)
