@@ -115,7 +115,7 @@
         }
 
         // round the price_month value to thousands
-        values.price_month = Math.round(values.price_month / 1000) * 1000;
+        values.price_month = roundToNearestThousand(values.price_month);
 
         // Calculate the updated total price
         var priceMonth = parseInt(values.price_month); // Retrieve the price_month value from the server-side variable
@@ -161,6 +161,23 @@
         }
         return cookieValue;
     }
+
+
+    function roundToNearestThousand(number) {
+        var roundedNumber = Math.round(number / 1000) * 1000;
+        var difference = number - roundedNumber;
+        
+        if (difference === 500) {
+          // Round down to the nearest even number
+          if (roundedNumber % 2 === 0) {
+            return roundedNumber;
+          } else {
+            return roundedNumber - 1000;
+          }
+        }
+        
+        return roundedNumber;
+      }
 
 </script>
 
