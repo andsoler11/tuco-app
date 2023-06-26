@@ -127,6 +127,39 @@
         var totalPriceElement = document.getElementById('item-price-' + menuId);
         console.log(totalPriceElement)
         totalPriceElement.textContent = 'Total: $' + total;
+
+        // Get the CSRF token from the cookie
+        var csrftoken = getCookie('csrftoken');
+
+        // Send the AJAX request with the CSRF token
+        $.ajax({
+            url: '/update-session/', // Replace with your actual URL
+            method: 'POST',
+            headers: { 'X-CSRFToken': csrftoken },
+            data: { menuId: menuId, quantity: quantity },
+            success: function(response) {
+                console.log('Quantity stored in session successfully.');
+            },
+            error: function(error) {
+                console.error('Error storing quantity in session:', error);
+            }
+        });
+    }
+
+    // Helper function to retrieve the CSRF token from the cookie
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
     }
 
 </script>

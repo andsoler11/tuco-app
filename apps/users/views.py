@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 from apps.users.utils import *
 from apps.dishes.models import Menus, Pet
 from apps.dishes.utils import *
+from django.http import JsonResponse
+
 
 privacy = Privacy()
 
@@ -435,3 +437,17 @@ def cart(request):
 
     context = {'page': 'cart', 'cart_items': cart_items}
     return render(request, 'users/cart.html', context)
+
+
+def update_session(request):
+    if request.method == 'POST':
+        menu_id = request.POST.get('menuId')
+        quantity = request.POST.get('quantity')
+
+        # Update the session with the new quantity        
+        request.session['cart_items'][menu_id]['quantity'] = int(quantity)
+        request.session.modified = True
+
+        return JsonResponse({'message': 'Quantity stored in session successfully.'})
+
+    return JsonResponse({'error': 'Invalid request method.'})
