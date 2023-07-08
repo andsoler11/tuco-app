@@ -27,7 +27,7 @@
                             {% comment %} <div class="item-price">
                                 <p>${{ values.price_month|round_thousands|intcomma }}</p>
                             </div> {% endcomment %}
-                            <div class="item-price-{{ menu_id }}">
+                            <div class="item-price-{{ menu_id }}" data-price="{{ values.price_month|round_thousands }}">
                                 <p id="item-price-{{ menu_id }}">Total: ${{ values.quantity|multiply:values.price_month|round_thousands|intcomma }}</p>
                             </div>
                             
@@ -105,10 +105,10 @@
 
 <script>
     function changeTotal(menuId, select, values) {
-        console.log('changeTotal')
-        console.log(menuId)
+        //console.log('changeTotal');
+        //console.log(menuId);
         // Get the selected quantity value
-        var quantity = parseInt(select.value) ?? 1;
+        var quantity = parseInt(select) ?? 1;
         // check that quantity is not Nan 
         if (isNaN(quantity)) {
             quantity = 1;
@@ -119,13 +119,13 @@
 
         // Calculate the updated total price
         var priceMonth = parseInt(values.price_month); // Retrieve the price_month value from the server-side variable
-        console.log(priceMonth)
-        console.log(quantity)
+        //console.log(priceMonth)
+        //console.log(quantity)
         var total = quantity * priceMonth;
 
         // Update the total price element
         var totalPriceElement = document.getElementById('item-price-' + menuId);
-        console.log(totalPriceElement)
+        //console.log(totalPriceElement)
         totalPriceElement.textContent = 'Total: $' + total;
 
         // Get the CSRF token from the cookie
@@ -144,6 +144,33 @@
                 console.error('Error storing quantity in session:', error);
             }
         });
+        
+        calculateCartTotal();
+    }
+
+    function calculateCartTotal(){
+        var totalAmountSummary = $('.cart-summary-total-items .summary-label');
+        var totalPriceSummary = $('.cart-summary-total-items .product-value');
+        var cartItems = $(".cart-item-group .item");
+        var amountItem;
+        var priceItem;
+        var totalPriceCart = 0;
+        var totalAmountItems = 0;
+
+        $.each(cartItems, function(i, val){
+            amountItem = parseInt($(val).find("select").val());
+            priceItem = parseInt($(val).find("div[data-price]").attr("data-price"));
+            totalPriceCart += (priceItem * amountItem);
+            totalAmountItems += amountItem;
+        });
+        if(amountItem == 1){
+            $(totalAmountSummary).text(totalAmountItems + ' producto');
+        }else {
+            $(totalAmountSummary).text(totalAmountItems + ' productos');
+        }
+        $(totalPriceSummary).text("$"+totalPriceCart.toLocaleString());
+        $(".delivery-value b").text("$"+totalPriceCart.toLocaleString());
+        
     }
 
     // Helper function to retrieve the CSRF token from the cookie
