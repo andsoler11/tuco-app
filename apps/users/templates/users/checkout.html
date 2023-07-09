@@ -1,6 +1,8 @@
 {% extends 'main.html' %}
 {% load static %}
+{% load humanize %}
 {% block content %}
+{% load custom_tags %}
 
 <main class="main_container main_container--checkout main_container--form not-background">
     <section class="page-section section-xl form">
@@ -77,8 +79,8 @@
             <aside class="cart-summary mt-4">
                 <h4 class="cart-summary-title mb-2">Resumen del pedido</h4>
                 <div class="cart-summary-total-items">
-                    <span class="summary-label">3 productos</span>
-                    <span class="product-value">$400.000</span>
+                    <span class="summary-label">{{cart_items.total.quantity}} producto{% if cart_items.total.quantity > 1 %}s{% endif %}</span>
+                    <span class="product-value">${{ cart_items.total.price_month|round_thousands|intcomma }}</span>
                 </div>
                 <div class="cart-summary-delivery-total">
                     <span class="summary-label">Envío</span>
@@ -86,7 +88,7 @@
                 </div>
                 <div class="cart-summary-price-total">
                     <span class="summary-label"><b>Total</b></span>
-                    <span class="delivery-value green"><b>$400.000</b></span>
+                    <span class="delivery-value green"><b>${{ cart_items.total.price_month|round_thousands|intcomma }}</b></span>
                 </div>
 
                 <div class="promocional-code mt-2">
@@ -125,32 +127,23 @@
                 <div class="order-detail form-group mt-2">
                     <h4 class="form-group-title">Tu pedido</h4>
                     <div class="cart-item-group">
-                        <div class="item">
-                            <div class="item-image">
-                                <img src="{% static 'images/contact_detail_image2.svg' %}" alt="">
-                            </div>
-                            <div class="item-attributes">
-                                <div class="item-name">
-                                    <p><b>Pollo campesino, Frutas & Verduras Frescas</b></p>
+                        {% for menu_id, values in cart_items.items %}
+                            {% if menu_id != 'total' %}
+                                <div class="item">
+                                    <div class="item-image">
+                                        <img src="{% static 'images/contact_detail_image2.svg' %}" alt="">
+                                    </div>
+                                    <div class="item-attributes">
+                                        <div class="item-name">
+                                            <p><b>{{values.name}}</b></p>
+                                        </div>
+                                        <div class="item-price">
+                                            <p>${{values.price_total|round_thousands|intcomma}}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="item-price">
-                                    <p>$300.000 mensual</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="item-image">
-                                <img src="{% static 'images/contact_detail_image2.svg' %}" alt="">
-                            </div>
-                            <div class="item-attributes">
-                                <div class="item-name">
-                                    <p><b>Pollo campesino, Frutas & Verduras Frescas</b></p>
-                                </div>
-                                <div class="item-price">
-                                    <p>$300.000 mensual</p>
-                                </div>
-                            </div>
-                        </div>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
                 

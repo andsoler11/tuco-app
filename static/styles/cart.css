@@ -146,6 +146,10 @@
 }
 
 
+.remove-item {
+    cursor: pointer;
+}
+
 
 .main_container--checkout .page-section form {
     display: grid;

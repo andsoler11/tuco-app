@@ -9,7 +9,7 @@
         <div class="cart-info">
             <div class="page-header">
                 <h1 class="page-title">Carrito</h1>
-                <p><b>TOTAL ({{cart_items.total.quantity}} producto{% if cart_items.total.quantity > 1 %}s{% endif %}) ${{ cart_items.total.price_month|round_thousands|intcomma }}</b></p><br>
+                {% comment %} <p><b>TOTAL ({{cart_items.total.quantity}} producto{% if cart_items.total.quantity > 1 %}s{% endif %}) ${{ cart_items.total.price_month|round_thousands|intcomma }}</b></p><br> {% endcomment %}
                 <p>Termina el proceso de compra ahora para darle a tu Foreverdog lo que se merece.</p>
             </div>
 
@@ -53,7 +53,11 @@
                             </div>
                         </div>
                         <div class="item-action">
-                            <button class="remove-item"></button>
+                            <form action="{% url 'remove-item-cart' menu_id %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="menu_id" value="{{ menu_id }}">
+                                <button class="remove-item" type="submit"></button>
+                            </form>
                         </div>
                     </div>
                     {% endif %}
@@ -105,27 +109,18 @@
 
 <script>
     function changeTotal(menuId, select, values) {
-        //console.log('changeTotal');
-        //console.log(menuId);
         // Get the selected quantity value
         var quantity = parseInt(select) ?? 1;
-        // check that quantity is not Nan 
-        if (isNaN(quantity)) {
-            quantity = 1;
-        }
 
         // round the price_month value to thousands
         values.price_month = roundToNearestThousand(values.price_month);
 
         // Calculate the updated total price
         var priceMonth = parseInt(values.price_month); // Retrieve the price_month value from the server-side variable
-        //console.log(priceMonth)
-        //console.log(quantity)
         var total = quantity * priceMonth;
 
         // Update the total price element
         var totalPriceElement = document.getElementById('item-price-' + menuId);
-        //console.log(totalPriceElement)
         totalPriceElement.textContent = 'Total: $' + total;
 
         // Get the CSRF token from the cookie
@@ -193,19 +188,19 @@
     function roundToNearestThousand(number) {
         var roundedNumber = Math.round(number / 1000) * 1000;
         var difference = number - roundedNumber;
-        
+
+        difference = Math.abs(difference);
         if (difference === 500) {
-          // Round down to the nearest even number
-          if (roundedNumber % 2 === 0) {
-            return roundedNumber;
-          } else {
-            return roundedNumber - 1000;
-          }
+            if (roundedNumber % 2 === 0) {
+                // Round down to the nearest even number
+                return roundedNumber - 1000;
+            }
+          
         }
         
         return roundedNumber;
-      }
-
+    }
+      
 </script>
 
 {% endblock %}

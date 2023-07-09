@@ -365,7 +365,18 @@ def paymentMethodDetail(request):
 
 def checkout(request):
     """Render checkout page"""
-    context = {'page': 'checkout'}
+    cart_items = request.session.get('cart_items', {})
+    if not cart_items:
+        messages.error(request, 'No tienes productos en tu carrito')
+        return redirect('home')
+
+    for key, value in cart_items.items():
+        menu = Menus.objects.get(id=key)
+        cart_items[key]['name'] = menu.name
+        cart_items[key]['price_total'] = int(value['quantity']) * int(value['price_month'])
+
+    cart_items = get_total_cart(cart_items)
+    context = {'page': 'checkout', 'cart_items': cart_items}
     return render(request, 'users/checkout.html', context)
 
 def validate_address(request):
@@ -400,7 +411,7 @@ def add_to_cart(request, menu_id, pet_id):
 
     item_to_cart = {}
     item_to_cart['price'] = get_price_from_weight(float(puppy.grams), float(puppy.weight))
-    item_to_cart['price_month'] = item_to_cart['price'] * 30
+    item_to_cart['price_month'] = round(item_to_cart['price'] * 30, -3)
     item_to_cart['pet_name'] = puppy.name
     item_to_cart['menu_id'] = menu_id
     item_to_cart['pet_id'] = pet_id
@@ -424,17 +435,7 @@ def cart(request):
         menu = Menus.objects.get(id=item['menu_id'])
         item['menu_name'] = menu.name
 
-    cart_items['total'] = {}
-
-    cart_items['total']['price'] = 0
-    cart_items['total']['price_month'] = 0
-    cart_items['total']['quantity'] = 0
-    for key, item in cart_items.items():
-        if key != 'total':
-            cart_items['total']['price'] += item['price'] * item['quantity']
-            cart_items['total']['price_month'] += item['price_month'] * item['quantity']
-            cart_items['total']['quantity'] += item['quantity']
-
+    cart_items = get_total_cart(cart_items)
     context = {'page': 'cart', 'cart_items': cart_items}
     return render(request, 'users/cart.html', context)
 
@@ -451,3 +452,27 @@ def update_session(request):
         return JsonResponse({'message': 'Quantity stored in session successfully.'})
 
     return JsonResponse({'error': 'Invalid request method.'})
+
+
+def get_total_cart(cart_items):
+    cart_items['total'] = {}
+    cart_items['total']['price'] = 0
+    cart_items['total']['price_month'] = 0
+    cart_items['total']['quantity'] = 0
+    for key, item in cart_items.items():
+        if key != 'total':
+            cart_items['total']['price'] += item['price'] * item['quantity']
+            cart_items['total']['price_month'] += item['price_month'] * item['quantity']
+            cart_items['total']['quantity'] += item['quantity']
+
+    return cart_items
+
+
+def remove_item_cart(request, menu_id):
+    if request.method == 'POST':   
+        del request.session['cart_items'][menu_id]
+        request.session.modified = True
+
+        return redirect('cart')
+
+    return redirect('cart')
