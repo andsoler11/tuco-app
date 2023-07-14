@@ -55,7 +55,9 @@ def formulate_home(request, menu_id=None):
             owner = None
         ##########################################################
 
-        ip = request.META.get('HTTP_X_FORWARDED_FOR').split(',')[0].strip() or request.META.get('HTTP_X_REAL_IP') or request.META.get('REMOTE_ADDR')
+        ip = request.META.get('HTTP_X_REAL_IP') or request.META.get('REMOTE_ADDR')
+        if request.META.get('HTTP_X_FORWARDED_FOR'):
+            ip = request.META.get('HTTP_X_FORWARDED_FOR').split(',')[0]
         if type(ip) == list:
             ip = ip[0]
 
@@ -98,7 +100,7 @@ def formulate_home(request, menu_id=None):
             contact.save()
         ##########################################################
 
-        if menu_id is not None:
+        if menu_id is not None or request.POST.get('update') == 'true':
             return redirect('list-pets')
 
         return redirect('menus', pk=pk)
@@ -271,15 +273,6 @@ def menu_detail(request, menu_id, pet_id=None):
             puppy = Pet.objects.filter(owner=request.user).last()
             if puppy is None:
                 return redirect('dishes')
-
-        # puppies_grams = {
-        #     puppy.name: {
-        #         'grams': int(puppy.grams),
-        #         'price': get_price_from_weight(float(puppy.grams), float(puppy.weight)),
-        #         'id': puppy.id
-        #     }
-        # }
-        # menu.prices = puppies_grams
 
     if request.method == 'POST':
         if pet_id:

@@ -44,12 +44,12 @@
                         Mis Forever Dogs
                     </a>
                 </li>
-                <li class="item-list my-payment-methods">
-                    <a href="#">
+                {% comment %} <li class="item-list my-payment-methods">
+                    <a href="{% url 'payment-methods' %}">
                         <img src="{% static 'images/icon-methods-profile.svg' %}" alt="">
                         Mis medios de pago
                     </a>
-                </li>
+                </li> {% endcomment %}
             </ul>
             <div class="wrapper-button">
                 <a href="{% url 'logout' %}">Cerrar Sesión</a>

@@ -1,0 +1,99 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<main class="main_container main_container--form not-background">
+    <div class="form_wrapper">
+        <section class="form">
+            <div class="form_back_section">
+                <div class="back_icon_container">
+                    <i class="fa fa-angle-left"></i>
+                    <a href="{% url 'payment-methods' %}"><p>Volver</p></a>
+                </div>
+            </div> 
+
+            <div class="form_header">
+                <h1 class="title-form">Mercado Pago</h1>
+            </div>
+
+            {% if messages|length > 0 %}
+                <div style="display: flex; justify-content: center;">
+                    {% for message in messages %}
+                        <div class="alert alert--{% if message.tags == 'error' %}error{% elif message.tags == 'success' %}success{% endif %}">
+                            <p class="alert__message">{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form id="paymentMethod-form" method="POST" class="disabled-form">
+                {% csrf_token %}
+                <div class="field input focused">
+                    <label for="number_card" class="form-label">Número de la tarjeta</label>
+                    <input type="number" id="number_card" name="number_card" value="12345678901234567890" required disabled>
+                </div>
+
+                <div class="field input focused">
+                    <label for="due_date" class="form-label">Fecha de vencimiento</label>
+                    <input type="text" id="due_date" name="due_date" value="10/23" required disabled>
+                </div>
+
+                <div class="field input focused">
+                    <label for="ccv" class="form-label">CCV</label>
+                    <input type="number" id="ccv" name="ccv" value="123" required disabled>
+                </div>
+
+                <div class="field input select focused">
+                    <select id="document_type" name="document_type" option="Tipo de documento" required disabled>
+                        <option value="" disabled>Tipo de documento</option>
+                        <option value="cc" selected>Cédula de ciudadanía</option>
+                        <option value="ce">Cédula de extranjería</option>
+                        <option value="passport">Pasaporte</option>
+                    </select>
+                </div>
+
+                <div class="field input focused">
+                    <label for="document_number" class="form-label">Número de documento</label>
+                    <input type="text" id="document_number" name="document_number" value="123456789" required disabled>
+                </div>
+                
+                <div class="field button mt-2">
+                    <div class="wrapper-edit-button focused">
+                      <input id="editDataForm" type="button" value="Editar método de pago" class="valid" aria-invalid="false">
+                      
+                      <div class="link mt-4">
+                        <a id="delet-method" onclick="showModal()">Eliminar</a>
+                      </div>
+                    </div>
+                    <div class="wrapper-submit-button hidden">
+                      <div class="link"><a id="cancel-edit-form">Cancelar</a></div>
+                      <input class="mt-2" type="submit" value="Guardar Cambios">
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+</main>
+
+<!-- Modal -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="hideModal()"></span>
+      <div class="modal-header text-center">
+        <h3>Eliminar método de pago</h3>
+        <p class="mt-1">¿Estás seguro que deseas eliminar esta tarjeta?</p>
+      </div>
+      <div class="button-container form mt-2">
+        <form id="deleteForm" method="POST" action=""><!--Agregar Action-->
+            {% csrf_token %}
+            <div class="field button">
+              <input type="submit" value="Si, Eliminar tarjeta" class="button">
+            </div>
+        </form>
+        <div class="link"><a onclick="hideModal()">Cancelar</a></div>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}

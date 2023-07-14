@@ -2,11 +2,15 @@ import json
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
-from apps.users.models import CustomUser
+from apps.users.models import CustomUser, Orders
 from .forms import CustomUserCreationForm
 from utils.privacy import Privacy
 from django.contrib.auth.decorators import login_required
 from apps.users.utils import *
+from apps.dishes.models import Menus, Pet
+from apps.dishes.utils import *
+from django.http import JsonResponse
+import urllib
 
 privacy = Privacy()
 
@@ -249,28 +253,9 @@ def myAddresses(request):
 def newAddress(request):
     context = {'page': 'new-address'}
     if request.method == 'POST':
-        required_fields = ['depto', 'city', 'address', 'user_phone', 'name_address']
-        for field in required_fields:
-            if not request.POST.get(field):
-                messages.error(request, f'El campo {field} es requerido')
-                return redirect('new-address')
-
-        name_address = request.POST['name_address']
-        if len(name_address) > 50:
-            messages.error(request, 'El nombre es demasiado largo')
-            return redirect('new-address')
-
-        if len(name_address) < 3:
-            messages.error(request, 'El nombre es demasiado corto')
-            return redirect('new-address')
-
-        address = request.POST['address']
-        if len(address) > 50:
-            messages.error(request, 'La dirección es demasiado larga')
-            return redirect('new-address')
-
-        if len(address) < 3:
-            messages.error(request, 'La dirección es demasiado corta')
+        message = validate_address(request)
+        if message != 'ok':
+            messages.error(request, message)
             return redirect('new-address')
 
         user = CustomUser.objects.get(id=request.user.id)
@@ -280,8 +265,8 @@ def newAddress(request):
             addresses = json.loads(user.addresses)
 
         new_address = {
-            'name': name_address,
-            'address': privacy.encrypt(address),
+            'name': request.POST['name_address'],
+            'address': privacy.encrypt(request.POST['address']),
             'additional_info': request.POST['additional_info'],
             'depto': request.POST['depto'],
             'city': request.POST['city'],
@@ -295,3 +280,292 @@ def newAddress(request):
         return redirect('addresses')
 
     return render(request, 'users/new-address.html', context)
+
+@login_required(login_url='login')
+def addressDetail(request, pk):
+    """Render detail address"""
+
+    user = CustomUser.objects.get(id=request.user.id)
+    addresses = json.loads(user.addresses)
+    
+    for address in addresses:
+        if address['name'] == pk:
+            address['address'] = privacy.decrypt(address['address'])
+            address['user_phone'] = privacy.decrypt(address['user_phone'])
+            
+            if request.method == 'POST':
+                message = validate_address(request)
+                if message != 'ok':
+                    messages.error(request, message)
+                    return redirect('address-detail', pk)
+
+                user = CustomUser.objects.get(id=request.user.id)
+
+                addresses = []
+                if user.addresses:
+                    addresses = json.loads(user.addresses)
+
+                new_address = {
+                    'name': request.POST['name_address'],
+                    'address': privacy.encrypt(request.POST['address']),
+                    'additional_info': request.POST['additional_info'],
+                    'depto': request.POST['depto'],
+                    'city': request.POST['city'],
+                    'user_phone': privacy.encrypt(request.POST['user_phone']),
+                }
+
+                # delete old address
+                for address in addresses:
+                    if address['name'] == pk:
+                        addresses.remove(address)
+                        break
+
+                addresses.append(new_address)
+                user.addresses = json.dumps(addresses)
+                user.save()
+                messages.success(request, 'Dirección actualizada correctamente')
+                return redirect('addresses')
+            
+            context = {'page': 'address-detail', 'address': address}
+            return render(request, 'users/address-detail.html', context)
+
+    context = {'page': 'address-detail'}
+    return render(request, 'users/address-detail.html', context)
+
+
+def addressDelete(request, pk):
+    """Delete address"""
+    user = CustomUser.objects.get(id=request.user.id)
+    addresses = json.loads(user.addresses)
+    for address in addresses:
+        if address['name'] == pk:
+            addresses.remove(address)
+            user.addresses = json.dumps(addresses)
+            user.save()
+            messages.success(request, 'Dirección eliminada correctamente')
+            return redirect('addresses')
+
+    messages.error(request, 'Dirección no encontrada')
+    return redirect('addresses')
+
+def paymentMethods(request):
+    """Render payment methods list"""
+    context = {'page': 'payment-methods'}
+    return render(request, 'users/payment-methods.html', context)
+
+def newPaymentMethod(request):
+    """Render new payment methods form"""
+    context = {'page': 'new-method'}
+    return render(request, 'users/new-method.html', context)
+
+def paymentMethodDetail(request):
+    """Render payment method detail"""
+    context = {'page': 'method-detail'}
+    return render(request, 'users/method-detail.html', context)
+
+def checkout(request):
+    """Render checkout page"""
+    cart_items = request.session.get('cart_items', {})
+    if not cart_items:
+        messages.error(request, 'No tienes productos en tu carrito')
+        return redirect('home')
+
+    for key, value in cart_items.items():
+        menu = Menus.objects.get(id=key)
+        cart_items[key]['name'] = menu.name
+        cart_items[key]['price_total'] = int(value['quantity']) * int(value['price_month'])
+
+
+    if request.method == 'POST':
+        get_total_cart(cart_items)
+        user_name = request.POST['name']
+        user_email = request.POST['email']
+        user_phone = request.POST['phone']
+        user = CustomUser.objects.get(id=request.user.id)
+
+        address = request.POST['address']
+        aditional_info = request.POST['additional_info']
+        depto = request.POST['depto']
+        city = request.POST['city']
+
+        address_complete = {
+            'address': address,
+            'aditional_info': aditional_info,
+            'depto': depto,
+            'city': city,
+        }
+
+        delivery_time = request.POST['tipo-envio']
+        # promo_code = request.POST['promo-code']
+        promo_code = ''
+        total_price = cart_items['total']['price_month']
+        total_items = cart_items['total']['quantity']
+        # payment_method = request.POST['metodo-pago']
+        payment_method = 'whatsapp'
+
+        # get a json with the items in the cart but without the total key
+        items = json.dumps({key: value for key, value in cart_items.items() if key != 'total'})
+
+        order = Orders(
+            user=user,
+            items=items,
+            total_price=total_price,
+            total_products=total_items,
+            promo_code=promo_code,
+            address=json.dumps(address_complete),
+            delivery_time=delivery_time,
+            payment_method=payment_method,
+            status='pending',
+        )
+
+        order.save()
+  
+
+        # format the total price
+        total_price = f'{total_price:,}'
+
+        # format the items to fet the menu name, quantity and price
+        items = json.loads(items)
+        items = [f'{value["name"]} x {value["quantity"]} = {value["price_total"]}' for key, value in items.items()]
+
+        # format the items to be in a single string
+        items = '\n'.join(items)
+
+        # format the address
+        address = f'{address}, {depto}, {city}, {aditional_info}'
+        address = address.replace('\n', ' ')
+
+        # format the message to be sent to whatsapp
+        message = f"""Hola, soy {user_name} y acabo de hacer un pedido en la página web de Foreverdog. Mi correo es {user_email} y mi teléfono es {user_phone}. Mi pedido es el siguiente: \n\n
+                    id del pedido: {order.id}\n
+                    total mes: {total_price}\n
+                    menus: {items}\n
+                    dirección: {address}\n"""
+
+        # encode the message
+        message = urllib.parse.quote(message)
+        whatsapp_url = f'https://wa.me/3006235504?text={message}'
+
+        # Redirect the user to the WhatsApp URL
+        return redirect(whatsapp_url)
+
+
+    cart_items = get_total_cart(cart_items)
+    context = {'page': 'checkout', 'cart_items': cart_items}
+    return render(request, 'users/checkout.html', context)
+
+def validate_address(request):
+    """Validate address"""
+    output_message = 'ok'
+
+    required_fields = ['depto', 'city', 'address', 'user_phone', 'name_address']
+    for field in required_fields:
+        if not request.POST.get(field):
+            output_message = f'El campo {field} es requerido'
+
+    name_address = request.POST['name_address']
+    if len(name_address) > 50:
+        output_message = 'El nombre es demasiado largo'
+
+    if len(name_address) < 3:
+        output_message = 'El nombre es demasiado corto'
+
+    address = request.POST['address']
+    if len(address) > 50:
+        output_message = 'La dirección es demasiado larga'
+
+    if len(address) < 3:
+        output_message = 'La dirección es demasiado corta'
+
+    return output_message
+
+
+def add_to_cart(request, menu_id, pet_id):
+    """Add product to cart"""
+    puppy = Pet.objects.get(id=pet_id)
+
+    item_to_cart = {}
+    item_to_cart['price'] = get_price_from_weight(float(puppy.grams), float(puppy.weight))
+    item_to_cart['price_month'] = round(item_to_cart['price'] * 30, -3)
+    item_to_cart['pet_name'] = puppy.name
+    item_to_cart['menu_id'] = menu_id
+    item_to_cart['pet_id'] = pet_id
+    item_to_cart['quantity'] = 1
+
+    cart_items = request.session.get('cart_items', {})
+    if menu_id in cart_items:
+        cart_items[menu_id]['quantity'] += 1
+
+    cart_items[menu_id] = item_to_cart
+    request.session['cart_items'] = cart_items
+
+    return redirect('cart')
+
+
+def cart(request):
+    """Render cart page"""
+    cart_items = request.session.get('cart_items', {})
+
+    for key, item in cart_items.items():
+        menu = Menus.objects.get(id=item['menu_id'])
+        item['menu_name'] = menu.name
+
+    cart_items = get_total_cart(cart_items)
+    context = {'page': 'cart', 'cart_items': cart_items}
+    return render(request, 'users/cart.html', context)
+
+
+def update_session(request):
+    if request.method == 'POST':
+        menu_id = request.POST.get('menuId')
+        quantity = request.POST.get('quantity')
+
+        # Update the session with the new quantity        
+        request.session['cart_items'][menu_id]['quantity'] = int(quantity)
+        request.session.modified = True
+
+        return JsonResponse({'message': 'Quantity stored in session successfully.'})
+
+    return JsonResponse({'error': 'Invalid request method.'})
+
+
+def get_total_cart(cart_items):
+    cart_items['total'] = {}
+    cart_items['total']['price'] = 0
+    cart_items['total']['price_month'] = 0
+    cart_items['total']['quantity'] = 0
+    for key, item in cart_items.items():
+        if key != 'total':
+            cart_items['total']['price'] += item['price'] * item['quantity']
+            cart_items['total']['price_month'] += item['price_month'] * item['quantity']
+            cart_items['total']['quantity'] += item['quantity']
+
+    return cart_items
+
+
+def remove_item_cart(request, menu_id):
+    if request.method == 'POST':   
+        del request.session['cart_items'][menu_id]
+        request.session.modified = True
+
+        return redirect('cart')
+
+    return redirect('cart')
+
+
+def buy_now(request, menu_id, pet_id):
+    puppy = Pet.objects.get(id=pet_id)
+
+    item_to_cart = {}
+    item_to_cart['price'] = get_price_from_weight(float(puppy.grams), float(puppy.weight))
+    item_to_cart['price_month'] = round(item_to_cart['price'] * 30, -3)
+    item_to_cart['pet_name'] = puppy.name
+    item_to_cart['menu_id'] = menu_id
+    item_to_cart['pet_id'] = pet_id
+    item_to_cart['quantity'] = 1
+
+    cart_items = {}
+    cart_items[menu_id] = item_to_cart
+    request.session['cart_items'] = cart_items
+
+    return redirect('checkout')

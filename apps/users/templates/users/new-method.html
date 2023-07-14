@@ -1,0 +1,64 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<main class="main_container main_container--form not-background">
+    <div class="form_wrapper">
+        <section class="form">
+            <div class="form_header">
+                <h1 class="title-form">Agregar método de pago</h1>
+            </div>
+
+            {% if messages|length > 0 %}
+                <div style="display: flex; justify-content: center;">
+                    {% for message in messages %}
+                        <div class="alert alert--{% if message.tags == 'error' %}error{% elif message.tags == 'success' %}success{% endif %}">
+                            <p class="alert__message">{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form id="paymentMethod-form" method="POST" class="disabled-form">
+                {% csrf_token %}
+                <div class="field input">
+                    <label for="number_card" class="form-label">Número de la tarjeta</label>
+                    <input type="number" id="number_card" name="number_card" value="" required>
+                </div>
+
+                <div class="field input">
+                    <label for="due_date" class="form-label">Fecha de vencimiento</label>
+                    <input type="text" id="due_date" name="due_date" value="" required>
+                </div>
+
+                <div class="field input">
+                    <label for="ccv" class="form-label">CCV</label>
+                    <input type="number" id="ccv" name="ccv" value="" required>
+                </div>
+
+                <div class="field input select">
+                    <select id="document_type" name="document_type" option="Tipo de documento" required>
+                        <option value="" selected disabled>Tipo de documento</option>
+                        <option value="cc">Cédula de ciudadanía</option>
+                        <option value="ce">Cédula de extranjería</option>
+                        <option value="passport">Pasaporte</option>
+                    </select>
+                </div>
+
+                <div class="field input">
+                    <label for="document_number" class="form-label">Número de documento</label>
+                    <input type="text" id="document_number" name="document_number" value="" required>
+                </div>
+                
+                <div class="field button mt-2">
+                    <div class="wrapper-submit-button">
+                        <input id="SavePaymentMethod" type="submit" value="Guardar tarjeta">
+                        <div class="link mt-4"><a href="/payment-methods/">Cancelar</a></div>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+</main>
+
+{% endblock %}

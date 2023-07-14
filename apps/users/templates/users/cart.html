@@ -1,0 +1,206 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+{% load custom_tags %}
+
+<main class="main_container main_container--cart">
+    <section class="page-section section-xl">
+        <div class="cart-info">
+            <div class="page-header">
+                <h1 class="page-title">Carrito</h1>
+                {% comment %} <p><b>TOTAL ({{cart_items.total.quantity}} producto{% if cart_items.total.quantity > 1 %}s{% endif %}) ${{ cart_items.total.price_month|round_thousands|intcomma }}</b></p><br> {% endcomment %}
+                <p>Termina el proceso de compra ahora para darle a tu Foreverdog lo que se merece.</p>
+            </div>
+
+            <div class="cart-item-group mt-2">
+                {% for menu_id, values in cart_items.items %}
+                    {% if menu_id != 'total' %}
+                    <div class="item">
+                        <div class="item-image">
+                            <a href="#"><img src="{% static 'images/contact_detail_image2.svg' %}" alt=""></a>
+                        </div>
+                        <div class="item-attributes">
+                            <div class="item-name">
+                                <p><b>{{values.menu_name}}</b></p>
+                            </div>
+                            {% comment %} <div class="item-price">
+                                <p>${{ values.price_month|round_thousands|intcomma }}</p>
+                            </div> {% endcomment %}
+                            <div class="item-price-{{ menu_id }}" data-price="{{ values.price_month|round_thousands }}">
+                                <p id="item-price-{{ menu_id }}">Total: ${{ values.quantity|multiply:values.price_month|round_thousands|intcomma }}</p>
+                            </div>
+                            
+                            <div class="item-amount">
+                                <div class="wrapper-select">
+                                    <span>Cantidad:</span>
+                                    <select id="item-amount-{{ menu_id }}" name="item-amount" onChange="changeTotal('{{ menu_id }}', this.value, {{values}})" required>
+                                        <option value="1" {% if values.quantity == 1 %}selected{% endif %}>1</option>
+                                        <option value="2" {% if values.quantity == 2 %}selected{% endif %}>2</option>
+                                        <option value="3" {% if values.quantity == 3 %}selected{% endif %}>3</option>
+                                        <option value="4" {% if values.quantity == 4 %}selected{% endif %}>4</option>
+                                        <option value="5" {% if values.quantity == 5 %}selected{% endif %}>5</option>
+                                        <option value="6" {% if values.quantity == 6 %}selected{% endif %}>6</option>
+                                        <option value="7" {% if values.quantity == 7 %}selected{% endif %}>7</option>
+                                        <option value="8" {% if values.quantity == 8 %}selected{% endif %}>8</option>
+                                        <option value="9" {% if values.quantity == 9 %}selected{% endif %}>9</option>
+                                        <option value="10" {% if values.quantity == 10 %}selected{% endif %}>10</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="item-link">
+                                <a href="#">Ver detalle</a>
+                            </div>
+                        </div>
+                        <div class="item-action">
+                            <form action="{% url 'remove-item-cart' menu_id %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="menu_id" value="{{ menu_id }}">
+                                <button class="remove-item" type="submit"></button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <aside class="cart-summary mt-4">
+            <h4 class="cart-summary-title mb-2">Resumen del pedido</h4>
+            <div class="cart-summary-total-items">
+                <span class="summary-label">{{cart_items.total.quantity}} producto{% if cart_items.total.quantity > 1 %}s{% endif %}</span>
+                <span class="product-value">${{ cart_items.total.price_month|round_thousands|intcomma }}</span>
+            </div>
+            <div class="cart-summary-delivery-total">
+                <span class="summary-label">Envío</span>
+                <span class="delivery-value">A calcular</span>
+            </div>
+            <div class="cart-summary-price-total">
+                <span class="summary-label"><b>Total</b></span>
+                <span class="delivery-value"><b>${{ cart_items.total.price_month|round_thousands|intcomma }}</b></span>
+            </div>
+            <a class="link-button mt-2" href="/checkout">Proceder a pagar</a>
+        </aside>
+    </section>
+</main>
+<script>
+    // Get all the select elements
+    var selects = document.querySelectorAll('[id^="item-amount-"]');
+
+    // Add event listener to each select element
+    selects.forEach(function(select) {
+        select.addEventListener('change', function() {
+            // Get the menu_id from the select element's ID
+            var menuId = select.id.split('-')[2];
+
+            // Get the selected quantity value
+            var quantity = parseInt(select.value);
+
+            // Calculate the updated total price
+            var priceMonth = parseInt('{{ values.price_month }}'); // Retrieve the price_month value from the server-side variable
+
+            var total = quantity * priceMonth;
+
+            // Update the total price element
+            var totalPriceElement = document.getElementById('total-price-' + menuId);
+            totalPriceElement.textContent = '$' + total;
+        });
+    });
+</script>
+
+<script>
+    function changeTotal(menuId, select, values) {
+        // Get the selected quantity value
+        var quantity = parseInt(select) ?? 1;
+
+        // round the price_month value to thousands
+        values.price_month = roundToNearestThousand(values.price_month);
+
+        // Calculate the updated total price
+        var priceMonth = parseInt(values.price_month); // Retrieve the price_month value from the server-side variable
+        var total = quantity * priceMonth;
+
+        // Update the total price element
+        var totalPriceElement = document.getElementById('item-price-' + menuId);
+        totalPriceElement.textContent = 'Total: $' + total;
+
+        // Get the CSRF token from the cookie
+        var csrftoken = getCookie('csrftoken');
+
+        // Send the AJAX request with the CSRF token
+        $.ajax({
+            url: '/update-session/', // Replace with your actual URL
+            method: 'POST',
+            headers: { 'X-CSRFToken': csrftoken },
+            data: { menuId: menuId, quantity: quantity },
+            success: function(response) {
+                console.log('Quantity stored in session successfully.');
+            },
+            error: function(error) {
+                console.error('Error storing quantity in session:', error);
+            }
+        });
+        
+        calculateCartTotal();
+    }
+
+    function calculateCartTotal(){
+        var totalAmountSummary = $('.cart-summary-total-items .summary-label');
+        var totalPriceSummary = $('.cart-summary-total-items .product-value');
+        var cartItems = $(".cart-item-group .item");
+        var amountItem;
+        var priceItem;
+        var totalPriceCart = 0;
+        var totalAmountItems = 0;
+
+        $.each(cartItems, function(i, val){
+            amountItem = parseInt($(val).find("select").val());
+            priceItem = parseInt($(val).find("div[data-price]").attr("data-price"));
+            totalPriceCart += (priceItem * amountItem);
+            totalAmountItems += amountItem;
+        });
+        if(amountItem == 1){
+            $(totalAmountSummary).text(totalAmountItems + ' producto');
+        }else {
+            $(totalAmountSummary).text(totalAmountItems + ' productos');
+        }
+        $(totalPriceSummary).text("$"+totalPriceCart.toLocaleString());
+        $(".delivery-value b").text("$"+totalPriceCart.toLocaleString());
+        
+    }
+
+    // Helper function to retrieve the CSRF token from the cookie
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+
+    function roundToNearestThousand(number) {
+        var roundedNumber = Math.round(number / 1000) * 1000;
+        var difference = number - roundedNumber;
+
+        difference = Math.abs(difference);
+        if (difference === 500) {
+            if (roundedNumber % 2 === 0) {
+                // Round down to the nearest even number
+                return roundedNumber - 1000;
+            }
+          
+        }
+        
+        return roundedNumber;
+    }
+      
+</script>
+
+{% endblock %}

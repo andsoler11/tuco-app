@@ -1,0 +1,156 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+{% load custom_tags %}
+
+<main class="main_container main_container--checkout main_container--form not-background">
+    <section class="page-section section-xl form">
+        <form id="checkout-form" method="POST">
+            {% csrf_token %}
+            <div class="user-info">
+                <div class="page-header mb-2">
+                    <h1 class="page-title">Detalle del envío</h1>
+                    <p>Por favor, ingresa la información de envío para completar tu compra.</p>
+                </div>
+                
+                {% comment %} <div class="field-checkbox mb-2">
+                    <input type="checkbox" id="use-account" name="use-account" value="usar cuenta">
+                    <label for="use-account" class="form-label">Usar los datos de mi cuenta</label>
+                </div> {% endcomment %}
+
+                <div class="form-group mb-2">
+                    <h4 class="form-group-title">Datos de contacto</h4>
+                    <div class="field input">
+                        <label for="name" class="form-label">Nombre y apellido</label>
+                        <input type="text" id="name" name="name" value="" required>
+                    </div>
+                    <div class="field input">
+                        <label for="email" class="form-label">Correo electrónico</label>
+                        <input type="email" id="email" name="email" value="" required>
+                    </div>
+                    <div class="field input">
+                        <label for="phone" class="form-label">Teléfono</label>
+                        <input type="number" id="phone" name="phone" value="" required>
+                    </div>
+                </div>
+
+                <div class="form-group mb-2">
+                    <h4 class="form-group-title">Dirección de envío</h4>
+                    <div class="field input">
+                        <label for="address" class="form-label">Dirección</label>
+                        <input type="text" id="address" name="address" value="" required>
+                    </div>
+                    <div class="field input">
+                        <label for="additional_info" class="form-label">Información adicional</label>
+                        <textarea id="additional_info" name="additional_info" value="" required></textarea>
+                        <span class="small">Ejemplo: Barrio, edificio, torre, apartamento</span>
+                    </div>
+                    <div class="field input select-search-box">
+                        <select id="depto" class="search-box" name="depto" option="Departamento" required>
+                            <option value="" selected disabled>Departamento</option>
+                            <option value="depto1">Depto 1</option>
+                            <option value="depto2">Depto 2</option>
+                        </select>
+                    </div>
+                    <div class="field input select-search-box">
+                        <select id="city" class="search-box" name="city" required>
+                            <option value="" selected disabled>Ciudad</option>
+                            <option value="city1">Ciudad 1</option>
+                            <option value="city2">Ciudad 2</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h4 class="form-group-title">Tipo de envío</h4>
+                    <div class="radio_inputs_container">
+                        <div class="row">
+                            <p><input checked="" name="tipo-envio" type="radio" value="mensual">Mensual</p>
+                            <p>GRATIS</p>
+                        </div>
+                        {% comment %} <div class="row">
+                            <p><input name="tipo-envio" type="radio" value="quincenal">Quincenal</p>
+                            <p>$10.000</p>
+                        </div> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+
+            <aside class="cart-summary mt-4">
+                <h4 class="cart-summary-title mb-2">Resumen del pedido</h4>
+                <div class="cart-summary-total-items">
+                    <span class="summary-label">{{cart_items.total.quantity}} producto{% if cart_items.total.quantity > 1 %}s{% endif %}</span>
+                    <span class="product-value">${{ cart_items.total.price_month|round_thousands|intcomma }}</span>
+                </div>
+                <div class="cart-summary-delivery-total">
+                    <span class="summary-label">Envío</span>
+                    <span class="delivery-value green">Gratis</span>
+                </div>
+                <div class="cart-summary-price-total">
+                    <span class="summary-label"><b>Total</b></span>
+                    <span class="delivery-value green"><b>${{ cart_items.total.price_month|round_thousands|intcomma }}</b></span>
+                </div>
+
+                {% comment %} <div class="promocional-code mt-2">
+                    <h5>¿Tienes un código promocional?</h5>
+                    <div class="wrapper-code">
+                        <div class="field input">
+                            <label for="promo-code" class="form-label">Código</label>
+                            <input type="text" id="promo-code" name="promo-code" value="">
+                        </div>
+                        <div class="field button">
+                            <button type="button" class="button" id="PromoCode" onclick="validPromoCode()">Aplicar</button>
+                        </div>
+                    </div>
+                </div> {% endcomment %}
+
+                {% comment %} <div class="payment-method form-group mt-2">
+                    <h4 class="form-group-title">Método de pago</h4>
+                    <div class="radio_inputs_container">
+                        <div class="row">
+                            <p><input name="metodo-pago" type="radio" value="pse">PSE</p>
+                        </div>
+                    </div>
+                </div> {% endcomment %}
+
+                <div class="field-checkbox mt-2 mb-2">
+                    <input type="checkbox" id="accept-tyc" name="accept-tyc" value="Acepta TyC">
+                    <label for="accept-tyc" class="form-label">Acepto los <a href="#">términos y condiciones</a></label>
+                </div>
+
+                <div class="field button">
+                    <div class="wrapper-submit-button">
+                        <input id="payOrder" type="submit" value="Pagar">
+                    </div>
+                </div>
+
+                <div class="order-detail form-group mt-2">
+                    <h4 class="form-group-title">Tu pedido</h4>
+                    <div class="cart-item-group">
+                        {% for menu_id, values in cart_items.items %}
+                            {% if menu_id != 'total' %}
+                                <div class="item">
+                                    <div class="item-image">
+                                        <img src="{% static 'images/contact_detail_image2.svg' %}" alt="">
+                                    </div>
+                                    <div class="item-attributes">
+                                        <div class="item-name">
+                                            <p><b>{{values.name}}</b></p>
+                                        </div>
+                                        <div class="item-price">
+                                            <p>${{values.price_total|round_thousands|intcomma}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                
+            </aside>
+        </form>
+    </section>
+</main>
+
+{% endblock %}

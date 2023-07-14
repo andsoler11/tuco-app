@@ -385,7 +385,6 @@ $(document).ready(function(){
     }
   });
 
-
   // Registro usuarios
   $("#register-form").validate({
     rules: {
@@ -429,7 +428,6 @@ $(document).ready(function(){
       }
     }
   });
-
 
   // Recuperar contraseña
   $("#password-form").validate({
@@ -629,8 +627,55 @@ $(document).ready(function(){
     }
   });
 
+  // Agregar Método de pago
+  $("#paymentMethod-form").validate({
+    ignore: [],
+    errorPlacement: function(error, element) {
+      error.insertAfter(element);
+    },
+    rules: {
+      number_card: {
+        required: true,
+        number: true,
+      },
+      due_date: {
+        required: true,
+      },
+      ccv: {
+        required: true,
+        number: true,
+      },
+      document_type: {
+        required: true,
+      },
+      document_number: {
+        required: true,
+      },
+    },
+    messages: {
+      number_card: {
+        required: messageRequired,
+        number: messageNumber,
+      },
+      due_date: {
+        required: messageRequired,
+      },
+      ccv: {
+        required: messageRequired,
+        number: messageNumber,
+      },
+      document_type: {
+        required: messageRequired,
+      },
+      document_number: {
+        required: messageRequired,
+      }
+    }
+  });
+
   // Personaliza select field
   $(".form .field select").niceSelect();
+  $(".cart-item-group .item select").niceSelect();
   //$(".form_breed_sex_input .breed-input .list").prepend(`<input type="text" class="nice-select-search" placeholder="Escribe la raza de tu mascota">`);
 
   //Ajusta altura de textos en cards de menú
@@ -638,12 +683,24 @@ $(document).ready(function(){
     heightTitleCards();
   }
 
-  // Selecciona menú para realizar compra
-  $('.diet-card.select-option .check').click(function(){
+  // // Selecciona menú para realizar compra
+  // $('.diet-card.select-option .check').click(function(){
+  //   $('.diet-card.select-option').removeClass('checked');
+  //   $(this).parent().addClass('checked');
+
+  //   // Habilita btn de compra
+  //   $('.wrapper-button.button-buy-now a.link-button').removeAttr('disabled');
+  // });
+  $('.diet-card.select-option .check').click(function() {
     $('.diet-card.select-option').removeClass('checked');
     $(this).parent().addClass('checked');
 
-    // Habilita btn de compra
+    var menuUrl = $(this).parent().data('menu-url');
+
+    // Set the updated URL to the "Buy Now" button
+    $('.wrapper-button.button-buy-now a.link-button').attr('href', menuUrl);
+    
+    // Enable the button
     $('.wrapper-button.button-buy-now a.link-button').removeAttr('disabled');
   });
 
@@ -652,7 +709,7 @@ $(document).ready(function(){
   var arrayDataForm = {};
   $('#editDataForm').click(function(){
     var thisForm = $('.main_container--form form').attr('id');
-    var inputs = $('#'+thisForm).find('input, select').not('[type="hidden"], [type="submit"], [type="button"], [noChange]');
+    var inputs = $('#'+thisForm).find('input, select, textarea').not('[type="hidden"], [type="submit"], [type="button"], [noChange]');
 
     $(inputs).removeAttr('disabled');
 
@@ -666,13 +723,13 @@ $(document).ready(function(){
       var idVal = $(val).attr('id');
       arrayDataForm[idVal] = $(val).val();
     });
-    console.log(arrayDataForm);
+    //console.log(arrayDataForm);
   });
 
   // Cancela edición de formularios
   $('#cancel-edit-form').click(function(){
     var thisForm = $('.main_container--form form').attr('id');
-    var inputs = $('#'+thisForm).find('input, select').not('[type="hidden"], [type="submit"], [type="button"], [noChange]');
+    var inputs = $('#'+thisForm).find('input, select, textarea').not('[type="hidden"], [type="submit"], [type="button"], [noChange]');
 
     $(inputs).attr('disabled', 'disabled');
     $(inputs).removeClass('error');

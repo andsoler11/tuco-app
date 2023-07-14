@@ -72,6 +72,10 @@
     font-size: 1.38rem;
     font-weight: 500;
 }
+.diet-card-list .select-option .diet-description .price-month span {
+    color: #00AC3BE5;
+    font-weight: bold;
+}
 .diet-card-list .select-option .diet-description .price-day {
     font-size: .7rem;
     margin-top: .4rem;
@@ -192,6 +196,11 @@
     font-size: 25px;
     margin-bottom: 10px;
     font-weight: 900;
+}
+
+.prices_container__text.price_month span {
+    color: #00AC3BE5;
+    font-weight: bold;
 }
 
 .menu_link a {
