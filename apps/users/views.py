@@ -382,6 +382,7 @@ def checkout(request):
         user_email = request.POST['email']
         user_phone = request.POST['phone']
         user = CustomUser.objects.get(id=request.user.id)
+        pets = Pet.objects.filter(owner=user)
 
         address = request.POST['address']
         aditional_info = request.POST['additional_info']
@@ -435,12 +436,17 @@ def checkout(request):
         address = f'{address}, {depto}, {city}, {aditional_info}'
         address = address.replace('\n', ' ')
 
+        # format the pets to be in a single string
+        pets = [f'{pet.name} ({pet.breed})' for pet in pets]
+        pets = ', '.join(pets)
+
         # format the message to be sent to whatsapp
         message = f"""Hola, soy {user_name} y acabo de hacer un pedido en la página web de Foreverdog. Mi correo es {user_email} y mi teléfono es {user_phone}. Mi pedido es el siguiente: \n\n
                     id del pedido: {order.id}\n
                     total mes: {total_price}\n
                     menus: {items}\n
-                    dirección: {address}\n"""
+                    dirección: {address}\n
+                    mis mascotas: {pets}\n"""
 
         # encode the message
         message = urllib.parse.quote(message)
