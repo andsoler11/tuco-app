@@ -33,4 +33,22 @@ class CustomUser(AbstractUser):
     
 #     def total_price(self):
 #         return sum([item['price'] * item['quantity'] for item in self.items])
+
+
+class Orders(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
+    items = models.TextField(null=True, blank=True)
+    total_price = models.IntegerField(null=True, blank=True)
+    total_products = models.IntegerField(null=True, blank=True)
+    promo_code = models.CharField(max_length=255, null=True, blank=True)
+    address = models.TextField(null=True, blank=True)
+    delivery_time = models.CharField(max_length=255, null=True, blank=True)
+    payment_method = models.CharField(max_length=255, null=True, blank=True)
+    status = models.CharField(max_length=255, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.id)
+
     

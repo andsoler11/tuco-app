@@ -15,7 +15,7 @@
         <div class="diet-card-list mt-2">
           {% for menu in available_menus %}
             {% if menu.name != 'Iniciación' %}
-              <div class="diet-card select-option">
+              <div class="diet-card select-option" data-menu-url="{% url 'buy-now' menu.id pet.id %}">
                 <div class="check"></div>
                 <h2>{{ menu.name }}</h2>
                 <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Gastro">
@@ -31,7 +31,7 @@
         </div>
 
         <div class="wrapper-button button-buy-now">
-          <a href="/comprar" class="link-button" disabled>Comprar ahora</a>
+          <a href="" class="link-button" disabled>Comprar ahora</a>
         </div>
         
       {% else %}

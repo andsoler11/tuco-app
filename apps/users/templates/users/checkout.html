@@ -7,16 +7,17 @@
 <main class="main_container main_container--checkout main_container--form not-background">
     <section class="page-section section-xl form">
         <form id="checkout-form" method="POST">
+            {% csrf_token %}
             <div class="user-info">
                 <div class="page-header mb-2">
                     <h1 class="page-title">Detalle del envío</h1>
                     <p>Por favor, ingresa la información de envío para completar tu compra.</p>
                 </div>
                 
-                <div class="field-checkbox mb-2">
+                {% comment %} <div class="field-checkbox mb-2">
                     <input type="checkbox" id="use-account" name="use-account" value="usar cuenta">
                     <label for="use-account" class="form-label">Usar los datos de mi cuenta</label>
-                </div>
+                </div> {% endcomment %}
 
                 <div class="form-group mb-2">
                     <h4 class="form-group-title">Datos de contacto</h4>
@@ -68,10 +69,10 @@
                             <p><input checked="" name="tipo-envio" type="radio" value="mensual">Mensual</p>
                             <p>GRATIS</p>
                         </div>
-                        <div class="row">
+                        {% comment %} <div class="row">
                             <p><input name="tipo-envio" type="radio" value="quincenal">Quincenal</p>
                             <p>$10.000</p>
-                        </div>
+                        </div> {% endcomment %}
                     </div>
                 </div>
             </div>
@@ -91,7 +92,7 @@
                     <span class="delivery-value green"><b>${{ cart_items.total.price_month|round_thousands|intcomma }}</b></span>
                 </div>
 
-                <div class="promocional-code mt-2">
+                {% comment %} <div class="promocional-code mt-2">
                     <h5>¿Tienes un código promocional?</h5>
                     <div class="wrapper-code">
                         <div class="field input">
@@ -102,16 +103,16 @@
                             <button type="button" class="button" id="PromoCode" onclick="validPromoCode()">Aplicar</button>
                         </div>
                     </div>
-                </div>
+                </div> {% endcomment %}
 
-                <div class="payment-method form-group mt-2">
+                {% comment %} <div class="payment-method form-group mt-2">
                     <h4 class="form-group-title">Método de pago</h4>
                     <div class="radio_inputs_container">
                         <div class="row">
                             <p><input name="metodo-pago" type="radio" value="pse">PSE</p>
                         </div>
                     </div>
-                </div>
+                </div> {% endcomment %}
 
                 <div class="field-checkbox mt-2 mb-2">
                     <input type="checkbox" id="accept-tyc" name="accept-tyc" value="Acepta TyC">

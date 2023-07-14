@@ -683,12 +683,24 @@ $(document).ready(function(){
     heightTitleCards();
   }
 
-  // Selecciona menú para realizar compra
-  $('.diet-card.select-option .check').click(function(){
+  // // Selecciona menú para realizar compra
+  // $('.diet-card.select-option .check').click(function(){
+  //   $('.diet-card.select-option').removeClass('checked');
+  //   $(this).parent().addClass('checked');
+
+  //   // Habilita btn de compra
+  //   $('.wrapper-button.button-buy-now a.link-button').removeAttr('disabled');
+  // });
+  $('.diet-card.select-option .check').click(function() {
     $('.diet-card.select-option').removeClass('checked');
     $(this).parent().addClass('checked');
 
-    // Habilita btn de compra
+    var menuUrl = $(this).parent().data('menu-url');
+
+    // Set the updated URL to the "Buy Now" button
+    $('.wrapper-button.button-buy-now a.link-button').attr('href', menuUrl);
+    
+    // Enable the button
     $('.wrapper-button.button-buy-now a.link-button').removeAttr('disabled');
   });
 
