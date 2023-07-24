@@ -55,7 +55,7 @@ def formulate_home(request, menu_id=None):
             owner = None
         ##########################################################
 
-        ip = request.META.get('HTTP_X_REAL_IP') or request.META.get('REMOTE_ADDR')
+        ip = "no_ip"
         if request.META.get('HTTP_X_FORWARDED_FOR'):
             ip = request.META.get('HTTP_X_FORWARDED_FOR').split(',')[0]
         if type(ip) == list:
