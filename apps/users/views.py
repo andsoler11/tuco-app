@@ -375,7 +375,6 @@ def checkout(request):
         cart_items[key]['name'] = menu.name
         cart_items[key]['price_total'] = int(value['quantity']) * int(value['price_month'])
 
-
     if request.method == 'POST':
         get_total_cart(cart_items)
         user_name = request.POST['name']
@@ -437,7 +436,8 @@ def checkout(request):
         address = address.replace('\n', ' ')
 
         # format the pets to be in a single string
-        pets = [f'{pet.name} ({pet.breed})' for pet in pets]
+        pet_ids_in_cart = [value['pet_id'] for key, value in cart_items.items() if key != 'total']
+        pets = [f'{pet.name} ({pet.breed})' for pet in pets if str(pet.id) in pet_ids_in_cart]
         pets = ', '.join(pets)
 
         # format the message to be sent to whatsapp

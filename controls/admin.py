@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from django.urls import path
 from django.contrib import admin
 from django.shortcuts import render
 from .models import Email
@@ -44,7 +44,7 @@ def generate_html_data(pets_menus, total_menus, pets_grams, menu_ingredients, me
     html_data += f"<h1 style='text-align: center;'>DATOS TOTALES</h1>"
     # Add a table for the total weeks for each menu
     html_data += "<table style='border-collapse: collapse; width: 50%; margin: 0 auto;'>"
-    html_data += "<tr><th style='padding: 8px; border: 1px solid #ddd;'>Menu</th><th style='padding: 8px; border: 1px solid #ddd;'>Total Weeks</th></tr>"
+    html_data += "<tr><th style='padding: 8px; border: 1px solid #ddd;'>Menu</th><th style='padding: 8px; border: 1px solid #ddd;'>Semanas totales</th></tr>"
     for menu, weeks in total_menus.items():
         if menu.startswith("total semanas "):
             menu_name = menu.split("total semanas ")[1]
@@ -53,7 +53,7 @@ def generate_html_data(pets_menus, total_menus, pets_grams, menu_ingredients, me
     html_data += "<br><br><br>"
     # Add a table for the total grams per menu
     html_data += "<table style='border-collapse: collapse; width: 50%; margin: 0 auto;'>"
-    html_data += "<tr><th style='padding: 8px; border: 1px solid #ddd;'>Menu</th><th style='padding: 8px; border: 1px solid #ddd;'>Total Grams</th></tr>"
+    html_data += "<tr><th style='padding: 8px; border: 1px solid #ddd;'>Menu</th><th style='padding: 8px; border: 1px solid #ddd;'>Gramos totales</th></tr>"
     for menu, grams in pets_grams.items():
         if menu.startswith("total gramos"):
             menu_name = menu.split("total gramos")[1]
@@ -62,7 +62,7 @@ def generate_html_data(pets_menus, total_menus, pets_grams, menu_ingredients, me
     html_data += "<br><br><br>"
     # Add a table for the total grams per ingredient of menu
     html_data += "<table style='border-collapse: collapse; width: 50%; margin: 0 auto;'>"
-    html_data += "<tr><th style='padding: 8px; border: 1px solid #ddd;'>Ingredient</th><th style='padding: 8px; border: 1px solid #ddd;'>Total Grams</th></tr>"
+    html_data += "<tr><th style='padding: 8px; border: 1px solid #ddd;'>Ingrediente</th><th style='padding: 8px; border: 1px solid #ddd;'>Gramos totales</th></tr>"
     for ingredient, grams in menu_ingredients.items():
         html_data += f"<tr><td style='padding: 8px; border: 1px solid #ddd;'>{ingredient}</td><td style='padding: 8px; border: 1px solid #ddd;'>{grams}</td></tr>"
     html_data += "</table>"
@@ -78,7 +78,6 @@ class EmailAdmin(admin.ModelAdmin):
     search_fields = ('subject', 'to_address', 'sent_at')
 
     def get_urls(self):
-        from django.urls import path
         urls = super().get_urls()
         custom_urls = [
             path('send-email/', self.admin_site.admin_view(self.send_custom_email_view), name='send_custom_email'),
@@ -227,7 +226,8 @@ class EmailAdmin(admin.ModelAdmin):
 
             mensaje['De'] = settings.EMAIL_HOST_USER
             mensaje['Para'] = settings.EMAIL_RECEIVER
-            mensaje['Asunto'] = 'Informe de datos'
+            date = datetime.now().strftime("%d/%m/%Y %H:%M")
+            mensaje['Asunto'] = 'Informe de datos ' + date
             smtp_server.sendmail(mensaje['De'], mensaje['Para'], mensaje.as_string())
             smtp_server.quit()
 
@@ -241,7 +241,6 @@ class EmailAdmin(admin.ModelAdmin):
             )
 
             email_data.save()
-
 
         context = {
             'page': 'menu-selection',
