@@ -135,7 +135,7 @@ class EmailAdmin(admin.ModelAdmin):
 
                 # calculate the total grams for the selected menu
                 daily_grams = pet.grams
-                total_grams_selected_menu = daily_grams * 7 * num_weeks_selected_menu
+                total_grams_selected_menu = (daily_grams * 7 * num_weeks_selected_menu) + daily_grams
                 if num_weeks_iniciacion_menu > 0:
                     total_grams_iniciacion_menu = daily_grams * 7 * num_weeks_iniciacion_menu
                     menu_iniciacion = Menus.objects.get(name='Iniciación')
