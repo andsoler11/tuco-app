@@ -292,15 +292,18 @@ def convert_json_to_string(json_string):
     return output_string
 
 
-def get_price_from_weight(grams, weight):
-    if grams <= 345:
+def get_price_from_weight(grams, price):
+    if price <= 0:
         price = 2220
+
+    if grams <= 345:
+        price = price
     elif grams > 345 and grams <= 500:
-        price = 1975
+        price = (price - (price * 0.11))
     elif grams > 500 and grams <= 800:
-        price = 1925
+        price = (price - (price * 0.13))
     else:
-        price = 1900
+        price = (price - (price * 0.14))
 
     price_grams = round((grams / 100) * price)
     return price_grams

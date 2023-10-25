@@ -16,11 +16,11 @@
           {% for menu in available_menus %}
             {% if menu.name != 'Iniciación' %}
               <div class="diet-card select-option" data-menu-url="{% url 'buy-now' menu.id pet.id %}">
-                <div class="check"></div>
+<!--                <div class="check"></div>-->
                 <h2>{{ menu.name }}</h2>
                 <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Gastro">
                 <div class="diet-description">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
+                  <p>{{ menu.description }}</p>
                   <div class="price-month"><span>${% widthratio menu.price 1 30 as price_month %}{{ price_month|round_thousands|intcomma }}</span> mensual</div>
                   <div class="price-day">${{menu.price|round_thousands|intcomma}} al día</div>
                 </div>
