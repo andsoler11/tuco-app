@@ -131,7 +131,7 @@ def menus_home(request, pk=None):
     if pk is not None:
         puppy_data = Pet.objects.get(id=pk)
         for menu in available_menus:
-            menu.price = get_price_from_weight(int(puppy_data.grams), float(puppy_data.weight))
+            menu.price = get_price_from_weight(int(puppy_data.grams), float(menu.price_per_100_grams))
 
     context = {
         'page': page,
@@ -241,7 +241,7 @@ def menu_selection(request):
         for k, v in puppies_grams.items():
             grams = float(v.get('grams'))
             weight = float(v.get('weight'))
-            menu.prices[k] = {'price': get_price_from_weight(grams, weight), 'grams': grams, 'id': v.get('id')}
+            menu.prices[k] = {'price': get_price_from_weight(grams, menu.price_per_100_grams), 'grams': grams, 'id': v.get('id')}
 
     context = {'menus': menus, 'page': 'menu-selection'}
     return render(request, 'dishes/menu-selection.html', context)
@@ -258,11 +258,11 @@ def menu_detail(request, menu_id, pet_id=None):
 
     if pet_id:
         puppy = Pet.objects.get(id=pet_id)
-        button_message = 'Agregar al carrito'
+        button_message = 'Seleccionar menu'
         puppies_grams = {
             puppy.name: {
                 'grams': int(puppy.grams),
-                'price': get_price_from_weight(float(puppy.grams), float(puppy.weight)),
+                'price': get_price_from_weight(float(puppy.grams), float(menu.price_per_100_grams)),
                 'id': puppy.id
             }
         }
@@ -314,7 +314,7 @@ def menu_pet(request, pk):
     puppies_grams = {
         puppy.name: {
             'grams': float(puppy.grams),
-            'price': get_price_from_weight(float(puppy.grams), float(puppy.weight)),
+            'price': get_price_from_weight(float(puppy.grams), float(menu.price_per_100_grams)),
             'id': puppy.id
         }
     }

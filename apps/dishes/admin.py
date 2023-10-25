@@ -25,7 +25,7 @@ class MenusAdminForm(forms.ModelForm):
 
 @admin.register(Menus)
 class MenusAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description', 'get_percents', 'get_nutrition_information')
+    list_display = ('name', 'description', 'get_percents', 'get_nutrition_information', 'price_per_100_grams')
     form = MenusAdminForm
 
     def get_percents(self, obj):
@@ -35,7 +35,6 @@ class MenusAdmin(admin.ModelAdmin):
 
     def get_nutrition_information(self, obj):
         nutrition_dict = json.loads(obj.nutrition_information)
-        print(nutrition_dict)
         return ', '.join([f'{k}: {v}' for k, v in nutrition_dict.items()])
     get_nutrition_information.short_description = 'Nutrition Information'
 

@@ -487,11 +487,24 @@ def validate_address(request):
 
 
 def add_to_cart(request, menu_id, pet_id):
+    pet = Pet.objects.get(id=pet_id)
+    menu = Menus.objects.get(id=menu_id)
+
+    if not pet:
+        messages.error(request, 'No se ha encontrado la mascota')
+        return redirect('home')
+
+    pet.menu = menu
+    pet.save()
+
+    return render(request, 'temporally_message.html')
+
     """Add product to cart"""
     puppy = Pet.objects.get(id=pet_id)
 
+    menu = Menus.objects.get(id=menu_id)
     item_to_cart = {}
-    item_to_cart['price'] = get_price_from_weight(float(puppy.grams), float(puppy.weight))
+    item_to_cart['price'] = get_price_from_weight(float(puppy.grams), float(menu.price_per_100_grams))
     item_to_cart['price_month'] = round(item_to_cart['price'] * 30, -3)
     item_to_cart['pet_name'] = puppy.name
     item_to_cart['menu_id'] = menu_id
@@ -562,8 +575,10 @@ def remove_item_cart(request, menu_id):
 def buy_now(request, menu_id, pet_id):
     puppy = Pet.objects.get(id=pet_id)
 
+    menu = Menus.objects.get(id=menu_id)
+
     item_to_cart = {}
-    item_to_cart['price'] = get_price_from_weight(float(puppy.grams), float(puppy.weight))
+    item_to_cart['price'] = get_price_from_weight(float(puppy.grams), float(menu.price_per_100_grams))
     item_to_cart['price_month'] = round(item_to_cart['price'] * 30, -3)
     item_to_cart['pet_name'] = puppy.name
     item_to_cart['menu_id'] = menu_id
