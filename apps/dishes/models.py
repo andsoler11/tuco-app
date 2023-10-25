@@ -111,6 +111,7 @@ class Menus(models.Model):
     nutrition_information = models.TextField(null=True, blank=True)
     percents = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
+    price_per_100_grams = models.DecimalField(max_digits=12, decimal_places=6, default=0.0, null=True, blank=True)
 
     def __str__(self):
         return str(self.name)
