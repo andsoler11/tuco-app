@@ -752,10 +752,20 @@ input[type="number"]::-webkit-inner-spin-button {
 #testimonials .owl-carousel .card {
     text-align: left;
 }
+
+#testimonials .owl-carousel .card .image-content {
+    width: 11rem;
+    height: 11rem;
+    overflow: hidden;
+    background-color: antiquewhite;
+    border-radius: 50%;
+}
+
 #testimonials .owl-carousel .card img {
-    width: 70%;
+    width: 100%;
     height: auto;
     margin-bottom: 2rem;
+    object-fit: cover;
 }
 #testimonials .owl-dots {
     margin-top: 2rem;
