@@ -7,7 +7,7 @@ from .forms import CustomUserCreationForm
 from utils.privacy import Privacy
 from django.contrib.auth.decorators import login_required
 from apps.users.utils import *
-from apps.dishes.models import Menus, Pet
+from apps.dishes.models import Menus, Pet, ContactDetail
 from apps.dishes.utils import *
 from django.http import JsonResponse
 import urllib
@@ -29,21 +29,21 @@ def userLogin(request):
     if request.user.is_authenticated:
         return redirect('dishes')
 
-    if request.method == 'POST':
-        username = request.POST['email'].lower()
-        password = request.POST['password']
-        username_mask = privacy.secure_email(username)['mask']
-
-        try:
-            user = CustomUser.objects.get(username=username_mask)
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('dishes')
-            else:
-                messages.error(request, 'Usuario o contraseña incorrectos')
-        except:
-            messages.error(request, 'El usuario no existe')
+    # if request.method == 'POST':
+    #     username = request.POST['email'].lower()
+    #     password = request.POST['password']
+    #     username_mask = privacy.secure_email(username)['mask']
+    #
+    #     try:
+    #         user = CustomUser.objects.get(username=username_mask)
+    #         user = authenticate(request, username=username, password=password)
+    #         if user is not None:
+    #             login(request, user)
+    #             return redirect('dishes')
+    #         else:
+    #             messages.error(request, 'Usuario o contraseña incorrectos')
+    #     except:
+    #         messages.error(request, 'El usuario no existe')
 
     return render(request, 'users/login_register.html', context)
 
@@ -53,34 +53,34 @@ def registerUser(request):
     page = 'register'
     form = CustomUserCreationForm
 
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            email_secured = privacy.secure_email(user.email)
-            if CustomUser.objects.filter(email_hash=email_secured['hash']).exists():
-                messages.error(request, 'Este correo ya está registrado')
-                return redirect('register')
-
-            user.username = email_secured['mask']
-            user.email = email_secured['encrypted']
-            user.email_mask = email_secured['mask']
-            user.email_hash = email_secured['hash']
-
-            phone = user.phone_number
-            user.phone_number = privacy.encrypt(phone)
-            user.phone_number_mask = Privacy.mask_phone_number(phone)
-
-            user.full_name = privacy.encrypt(user.full_name)
-            user.save()
-
-            messages.success(request, '¡Te has registrado exitosamente!')
-            login(request, user)
-            return redirect('dishes')
-
-        else:
-            for msg in form.errors:
-                messages.error(request, f"{form.errors[msg]}")
+    # if request.method == 'POST':
+    #     form = CustomUserCreationForm(request.POST)
+    #     if form.is_valid():
+    #         user = form.save(commit=False)
+    #         email_secured = privacy.secure_email(user.email)
+    #         if CustomUser.objects.filter(email_hash=email_secured['hash']).exists():
+    #             messages.error(request, 'Este correo ya está registrado')
+    #             return redirect('register')
+    #
+    #         user.username = email_secured['mask']
+    #         user.email = email_secured['encrypted']
+    #         user.email_mask = email_secured['mask']
+    #         user.email_hash = email_secured['hash']
+    #
+    #         phone = user.phone_number
+    #         user.phone_number = privacy.encrypt(phone)
+    #         user.phone_number_mask = Privacy.mask_phone_number(phone)
+    #
+    #         user.full_name = privacy.encrypt(user.full_name)
+    #         user.save()
+    #
+    #         messages.success(request, '¡Te has registrado exitosamente!')
+    #         login(request, user)
+    #         return redirect('dishes')
+    #
+    #     else:
+    #         for msg in form.errors:
+    #             messages.error(request, f"{form.errors[msg]}")
     
 
     context = {'page': page, 'form': form}
@@ -499,26 +499,26 @@ def add_to_cart(request, menu_id, pet_id):
 
     return render(request, 'temporally_message.html')
 
-    """Add product to cart"""
-    puppy = Pet.objects.get(id=pet_id)
-
-    menu = Menus.objects.get(id=menu_id)
-    item_to_cart = {}
-    item_to_cart['price'] = get_price_from_weight(float(puppy.grams), float(menu.price_per_100_grams))
-    item_to_cart['price_month'] = round(item_to_cart['price'] * 30, -3)
-    item_to_cart['pet_name'] = puppy.name
-    item_to_cart['menu_id'] = menu_id
-    item_to_cart['pet_id'] = pet_id
-    item_to_cart['quantity'] = 1
-
-    cart_items = request.session.get('cart_items', {})
-    if menu_id in cart_items:
-        cart_items[menu_id]['quantity'] += 1
-
-    cart_items[menu_id] = item_to_cart
-    request.session['cart_items'] = cart_items
-
-    return redirect('cart')
+    # """Add product to cart"""
+    # puppy = Pet.objects.get(id=pet_id)
+    #
+    # menu = Menus.objects.get(id=menu_id)
+    # item_to_cart = {}
+    # item_to_cart['price'] = get_price_from_weight(float(puppy.grams), float(menu.price_per_100_grams))
+    # item_to_cart['price_month'] = round(item_to_cart['price'] * 30, -3)
+    # item_to_cart['pet_name'] = puppy.name
+    # item_to_cart['menu_id'] = menu_id
+    # item_to_cart['pet_id'] = pet_id
+    # item_to_cart['quantity'] = 1
+    #
+    # cart_items = request.session.get('cart_items', {})
+    # if menu_id in cart_items:
+    #     cart_items[menu_id]['quantity'] += 1
+    #
+    # cart_items[menu_id] = item_to_cart
+    # request.session['cart_items'] = cart_items
+    #
+    # return redirect('cart')
 
 
 def cart(request):
@@ -590,3 +590,24 @@ def buy_now(request, menu_id, pet_id):
     request.session['cart_items'] = cart_items
 
     return redirect('checkout')
+
+def temporal_checkout_redirect_whatsapp(request, menu_id, pet_id):
+    puppy = Pet.objects.get(id=pet_id)
+    menu = Menus.objects.get(id=menu_id)
+
+    contact = ContactDetail.objects.get(pet=puppy)
+    email_contact = privacy.decrypt(contact.email_contact)
+
+    price = get_price_from_weight(float(puppy.grams), float(menu.price_per_100_grams))
+    price_month = round(price * 30, -3)
+
+    message = f"""Hola, soy {contact.name_contact} y acabo de hacer un pedido en la página web de Foreverdog. Mi correo es {email_contact}. Mi pedido es el siguiente: \n
+                menu: {menu.name}\n
+                precio: {price_month} mensual\n
+                mascota: {puppy.name}\n
+                """
+
+    message = urllib.parse.quote(message)
+    whatsapp_url = f'https://wa.me/3006235504?text={message}'
+
+    return redirect(whatsapp_url)

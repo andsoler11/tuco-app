@@ -492,12 +492,12 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 .home-wrapper.hero .wrapper-text {
     width: 400px;
-    text-align: right;
+    text-align: left;
     display: flex;
     flex-direction: column;
 }
 .home-wrapper.hero .wrapper-text .link-button {
-    align-self: end;
+    align-self: start;
 }
 
 .page-section {
@@ -547,8 +547,8 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .page-section.hero {
     color: #fff;
-    align-items: end;
-    max-width: 700px;
+    align-items: start;
+    max-width: 70rem;
 }
 
 .hero p {

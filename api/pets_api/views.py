@@ -114,3 +114,21 @@ class MenusView(generics.ListCreateAPIView):
         menu = get_object_or_404(Menus, pk=pk)
         menu.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class AdminPetListView(generics.ListCreateAPIView):
+    queryset = Pet.objects.all()
+    serializer_class = PetSerializer
+
+    def get(self, request, *args, **kwargs):
+        """function to get all the pets"""
+
+        # check if the user is superuser
+        # if not request.user.is_superuser:
+        #     return Response({'error': 'You are not authorized to access this resource'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        # return only the pets of the user
+        pets = Pet.objects.all()
+        serializer = PetSerializer(pets, many=True)
+        return Response(serializer.data)
+
