@@ -630,51 +630,66 @@ input[type="number"]::-webkit-inner-spin-button {
 /*//////*/
 /*HOME - MEET OUR DOGTOR*/
 
-#meet-our-dogtor .wrapper-banner {
-    display: flex;
-    flex-direction: row-reverse;
-    padding: 1rem 4rem;
-    border-radius: 8px;
-}
 
-#meet-our-dogtor .wrapper-banner .text-content {
+#meet-our-dogtor .wrapper-banner-dogtor {
     display: flex;
-    flex-direction: column;
-    padding: 2rem 0;
+    flex-direction: row;
+    border-radius: 8px;
     text-align: left;
 }
 
-#meet-our-dogtor .wrapper-banner .text-content a {
+
+#meet-our-dogtor .wrapper-banner-dogtor .text-content {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    text-align: left;
+}
+
+#meet-our-dogtor .wrapper-banner-dogtor .text-content h3 {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+#meet-our-dogtor .wrapper-banner-dogtor .text-content p {
+  font-size: 1em;
+  margin-bottom: 1em;
+}
+
+#meet-our-dogtor .wrapper-banner-dogtor .text-content a {
     margin-top: 1rem;
-    font-weight: bold;
+    font-weight: 400;
     text-decoration: underline;
 }
 
-#meet-our-dogtor .wrapper-banner .image-content {
-    flex: 1;
-}
-#meet-our-dogtor .wrapper-banner .text-content {
-    flex: 1.5;
+#meet-our-dogtor .wrapper-banner-dogtor .image-content {
+    display: flex;
+    width: 100%;
 }
 
-#meet-our-dogtor .wrapper-banner.light-blue{
+#meet-our-dogtor .wrapper-banner-dogtor .image-content img {
+    object-fit: cover;
+    border-radius: 0 8px 8px 0;
+}
+
+#meet-our-dogtor .wrapper-banner-dogtor.light-blue{
     background-color: var(--light-blue);
 }
-#meet-our-dogtor .wrapper-banner.olive-green{
+#meet-our-dogtor .wrapper-banner-dogtor.olive-green{
     background-color: var(--olive-green);
 }
-#meet-our-dogtor .wrapper-banner.light-yellow{
+#meet-our-dogtor .wrapper-banner-dogtor.light-yellow{
     background-color: var(--light-yellow);
 }
 
-#meet-our-dogtor .wrapper-banner.light-blue .text-content,
-#meet-our-dogtor .wrapper-banner.light-blue .text-content a,
-#meet-our-dogtor .wrapper-banner.olive-green .text-content,
-#meet-our-dogtor .wrapper-banner.olive-green .text-content a{
+#meet-our-dogtor .wrapper-banner-dogtor.light-blue .text-content,
+#meet-our-dogtor .wrapper-banner-dogtor.light-blue .text-content a,
+#meet-our-dogtor .wrapper-banner-dogtor.olive-green .text-content,
+#meet-our-dogtor .wrapper-banner-dogtor.olive-green .text-content a{
     color: var(--beige);
 }
-#meet-our-dogtor .wrapper-banner.light-yellow .text-content,
-#meet-our-dogtor .wrapper-banner.light-yellow .text-content a {
+#meet-our-dogtor .wrapper-banner-dogtor.light-yellow .text-content,
+#meet-our-dogtor .wrapper-banner-dogtor.light-yellow .text-content a {
     color: var(--black-font);
 }
 /*HOME - MEET OUR DOGTOR*/
@@ -749,15 +764,21 @@ input[type="number"]::-webkit-inner-spin-button {
 /*HOME - WHY CHOOSE US*/
 
 /*HOME - TESTIMONIALS*/
+
+
+
+
 #testimonials .owl-carousel .card {
-    text-align: left;
+    /*background: #5B7097;*/
+    text-align: center;
+    padding: 1rem;
 }
 
 #testimonials .owl-carousel .card .image-content {
     width: 11rem;
     height: 11rem;
     overflow: hidden;
-    background-color: antiquewhite;
+    background-color: #FFC397;
     border-radius: 50%;
 }
 
@@ -770,6 +791,51 @@ input[type="number"]::-webkit-inner-spin-button {
 #testimonials .owl-dots {
     margin-top: 2rem;
 }
+
+#testimonials .stars span {
+  color: #FAD586; /* Color de las estrellas */
+}
+
+#testimonials .circle-background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+
+#testimonials .footer-card {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#testimonials .footer-card-container {
+    background: #84AEAE;
+    height: 2rem;
+    width: 50%;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#testimonials .footer-card-container img {
+    width: 1.7rem !important;
+    height: 1rem !important;
+    margin-left: 1rem !important;
+    margin-bottom: unset !important;
+}
+
+#testimonials .footer-card-container span {
+    font-size: 0.8rem;
+    font-weight: 400;
+    margin-right: 0.8rem;
+}
+
+
 /*HOME - TESTIMONIALS*/
 
 /*HOME - QUESTIONS*/
@@ -1070,7 +1136,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
     /*HOME - MEET OUR DOGTOR*/
 
-    #meet-our-dogtor .wrapper-banner {
+    #meet-our-dogtor .wrapper-banner-dogtor {
         padding: 1rem 2rem;
     }
     /*HOME - MEET OUR DOGTOR*/
@@ -1083,7 +1149,7 @@ input[type="number"]::-webkit-inner-spin-button {
     .page-section h3 {
         margin-bottom: calc(var(--base-space) * 2);
     }
-    #meet-our-dogtor .wrapper-banner .text-content {
+    #meet-our-dogtor .wrapper-banner-dogtor .text-content {
         padding: 1rem 1rem 2rem 0;
     }
     .main_container--home #why-choose.page-section {
@@ -1190,7 +1256,7 @@ input[type="number"]::-webkit-inner-spin-button {
     }
 
     /*HOME - MEET OUR DOGTOR*/
-    #meet-our-dogtor .wrapper-banner{
+    #meet-our-dogtor .wrapper-banner-dogtor{
         flex-direction: column;
     }
     /*HOME - MEET OUR DOGTOR*/
