@@ -45,7 +45,11 @@
           {% for menu in available_menus %}
             <div class="diet-card">
               <h2>{{ menu.name }}</h2>
-              <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Gastro">
+                {% if menu.image_url %}
+                    <img src="{% static 'images/'|add:menu.image_url %}" alt="Menú de Gastro">
+                {% else %}
+                    <img src="{% static 'images/contact_detail_image2.svg' %}" alt="Menú de Gastro">
+                {% endif %}
               <a href="{% url 'menu-detail' menu.id %}">Ver menú</a>
             </div>
             {% endfor %}
@@ -62,7 +66,7 @@
             <div class="text-content">
                 <h3>Necesidad única, menú único</h3>
                 <p>¿Tu Forever Dog tiene alguna patología o alergia? <b>Contáctanos y crearemos un menú adaptado a sus necesidades</b>.</p>
-              <a href="/#">Personaliza su dieta</a>
+              <a href="https://wa.me/3006235504?text=Hola! quiero personalizar la dieta de mi mascota">Personaliza su dieta</a>
             </div>
           </div>
     </section>
