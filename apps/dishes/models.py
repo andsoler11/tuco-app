@@ -49,6 +49,14 @@ AGE_TYPES = {
 }
 
 
+MENUS_IMAGES_URL = {
+    ('imagen_res.svg', 'Res'),
+    ('imagen_cerdo.svg', 'Cerdo'),
+    ('imagen_iniciacion.svg', 'Iniciación'),
+    ('imagen_pollo.png', 'Pollo'),
+}
+
+
 class Pet(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
@@ -110,6 +118,7 @@ class Menus(models.Model):
     ingredients_description = models.TextField(null=True, blank=True)
     nutrition_information = models.TextField(null=True, blank=True)
     percents = models.TextField(null=True, blank=True)
+    image_url = models.CharField(max_length=255, null=True, blank=True, choices=MENUS_IMAGES_URL, default='imagen_res.svg')
     created = models.DateTimeField(auto_now_add=True)
     price_per_100_grams = models.DecimalField(max_digits=12, decimal_places=6, default=0.0, null=True, blank=True)
 

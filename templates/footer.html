@@ -7,42 +7,44 @@
         </div>
 
         <div class="footer_media_image_container">
-            <a href="{% url 'login' %}"><img src="{% static 'images/tiktok_logo.svg' %}" alt="tiktok" class="footer_media_image"></a>
-            <a href="{% url 'login' %}"><img src="{% static 'images/facebook_logo.svg' %}" alt="facebook" class="footer_media_image"></a>
-            <a href="{% url 'login' %}"><img src="{% static 'images/instagram_logo.svg' %}" alt="instagram" class="footer_media_image"></a>
+            <a href="https://www.tiktok.com/@forever_dog_food?_t=8jWKQhmnwlZ&_r=1" target="_blank"><img src="{% static 'images/tiktok_logo.svg' %}" alt="tiktok" class="footer_media_image"></a>
+            <a href="https://www.facebook.com/share/Ga6ewbK5ok6j9LHv/?mibextid=WC7FNe" target="_blank"><img src="{% static 'images/facebook_logo.svg' %}" alt="facebook" class="footer_media_image"></a>
+            <a href="https://www.instagram.com/forever_dog_food?igsh=MWt2Zmo5NzB3MGw2cA%3D%3D&utm_source=qr" target="_blank"><img src="{% static 'images/instagram_logo.svg' %}" alt="instagram" class="footer_media_image"></a>
         </div>
 
         <div class="footer_links_account_container">
-            <div class="footer_links_account_data">
-                <h3>Mi cuenta</h3>
-                <ul>
-                    <li><a href="#">Mis pedidos</a></li>
-                    <li><a href="#">Programa de referidos</a></li>
-                    <li><a href="#">Política de envíos y devoluciones</a></li>
-                </ul>
-            </div>
-
-            <div class="footer_links_account_data">
-                <h3>Nuestra Cocina</h3>
-                <ul>
-                    <li><a href="#">¿Cómo funciona Forever Dog?</a></li>
-                    <li><a href="#">Beneficios</a></li>
-                    <li><a href="#">Nuestros menús</a></li>
-                    <li><a href="#">Nuestros ingredientes</a></li>
-                    <li><a href="#">Nuestro proceso</a></li>
-                </ul>
-            </div>
+<!--            <div class="footer_links_account_data">-->
+<!--                <h3>Mi cuenta</h3>-->
+<!--                <ul>-->
+<!--                    <li><a href="#">Mis pedidos</a></li>-->
+<!--                    <li><a href="#">Programa de referidos</a></li>-->
+<!--                    <li><a href="#">Política de envíos y devoluciones</a></li>-->
+<!--                </ul>-->
+<!--            </div>-->
 
             <div class="footer_links_account_data">
                 <h3>Conócenos</h3>
                 <ul>
-                    <li><a href="#">¿Por qué Forerver Dog?</a></li>
-                    <li><a href="#">Nuestra historia</a></li>
-                    <li><a href="#">Preguntas frecuentes</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Contacto</a></li>
+                    <li><a href="{% url 'homepage' %}#meet-our-dogtor">¿Cómo funciona Forever Dog?</a></li>
+                    <li><a href="{% url 'homepage' %}#why-choose">Beneficios</a></li>
+                    <li><a href="{% url 'menus' %}">Nuestros menús</a></li>
+                    <li><a href="{% url 'homepage' %}#frequent-questions">Preguntas frecuentes</a></li>
+
+<!--                    <li><a href="#">Nuestros ingredientes</a></li>-->
+<!--                    <li><a href="#">Nuestro proceso</a></li>-->
                 </ul>
             </div>
+
+<!--            <div class="footer_links_account_data">-->
+<!--                <h3>Conócenos</h3>-->
+<!--                <ul>-->
+<!--                    <li><a href="#">¿Por qué Forerver Dog?</a></li>-->
+<!--                    <li><a href="#">Nuestra historia</a></li>-->
+<!--                    <li><a href="{% url 'homepage' %}#frequent-questions">Preguntas frecuentes</a></li>-->
+<!--                    <li><a href="#">Blog</a></li>-->
+<!--                    <li><a href="#">Contacto</a></li>-->
+<!--                </ul>-->
+<!--            </div>-->
         </div>
 
         <div class="footer_bottom">
